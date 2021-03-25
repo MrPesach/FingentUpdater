@@ -1,0 +1,7 @@
+<ExtensionList>
+    <Extension Id="com.rcg">
+       <HostList>
+           <Host Name="IDSN" Port="51503"/>
+        </HostList>
+    </Extension>
+</ExtensionList>
