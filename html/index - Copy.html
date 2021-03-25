@@ -1,0 +1,87 @@
+<html>
+<head>
+        <script type="text/javascript" src="../js/JQuery/jquery.js"></script>
+<script type="text/javascript" src="../lib/CSInterface.js"></script>
+<script type="text/javascript" src="../js/rcgMainJs.js"></script>
+
+ 
+</head>
+<body style="background-color:powderblue;">
+    <input value="Import" type="button" onclick="GetItems()" />
+<!-- 
+<h1 id="h1First" >This is a Heading</h1>
+<input value="Export" type="button" onclick="onclickTestMultiJSX('getSampleMessage()');" />
+
+<input value="Download"  type="button" onclick="DownloadFile()" />
+<input value="Copy"  type="button" onclick="MoveFileFromOneLocationToAnother()" />
+-->
+
+<input value="Copy Page 1"  type="button" onclick="CopyPage1()" />
+<input value="Copy Page 2"  type="button" onclick="CopyPage2()" />
+
+  <section class="plugin-wrapper">
+        <div class="plugin-header">
+            <div class="plugin-header-hd">Product Updater</div>
+            <img src="../img/plugin-logo.png"/>
+        </div>
+        <div class="plugin-container">
+           <p  class="plugin-container-p">Below is the list of dynamic text blocks identified by the Price updater</p>
+           <div class="plugin-info-box"> 
+              <div class="plugin-info-collapse">
+                <div class="info-list-wrapper">
+                  <div class="info-hd">Page 1</div>
+                    <ul class="info-list error-list" id="ulPage1">
+                      <li><img src="../img/error.png"/ class="tick"> <span class="spanPage1"> RC10938-1 | ln </span></li>
+                      <li><img src="../img/error.png"/ class="tick"> <span class="spanPage1">RC10938-2 | ln</span></li>
+                      <li><img src="../img/error.png"/ class="tick"> <span class="spanPage1">RC10938-3 | ln</span></li>
+                      <li><img src="../img/error.png"/ class="tick"> <span class="spanPage1">RC10938-4 | ln</span></li>
+                      <li><img src="../img/error.png"/ class="tick"><span class="spanPage1">RC10938-5 | ln</span> </li>
+                      <li><img src="../img/error.png"/ class="tick"><span class="spanPage1">RC10938-6 | ln</span> </li>
+                      <li><img src="../img/error.png"/ class="tick"> <span class="spanPage1">RC10938-7 | ln</span></li>
+                      <li><img src="../img/error.png"/ class="tick"><span class="spanPage1">RC10938-8 | ln</span> </li>
+                    </ul>
+                    <p class="sub-hd">Warnings</p>
+                    <ul class="info-list warring-list">
+                      <li></li>
+                      <li><img src="../img/warring.png"/ class="tick"> RC10938-18 | Price Missing</li>
+                      <li><img src="../img/warring.png"/ class="tick"> RC10938-18 | ln</li>
+                    </ul>
+                </div>
+                
+
+                <div class="info-list-wrapper">
+                        <div class="info-hd">Page 2</div>
+                          <ul class="info-list error-list" id="ulPage2">
+                            <li><img src="../img/error.png"/ class="tick"><span class="spanPage2">RC10930-11 | ln</span> </li>
+                            <li><img src="../img/error.png"/ class="tick"> <span class="spanPage2">RC10931-12 | ln</span></li>
+                            <li><img src="../img/error.png"/ class="tick"><span class="spanPage2">RC10932-13 | ln</span> </li>
+                            <li><img src="../img/error.png"/ class="tick"><span class="spanPage2">RC10933-14 | ln</span> </li>
+                            <li><img src="../img/error.png"/ class="tick"><span class="spanPage2">RC10934-15 | ln</span> </li>
+                            <li><img src="../img/error.png"/ class="tick"><span class="spanPage2">RC10935-16 | ln</span> </li>
+                            <li><img src="../img/error.png"/ class="tick"><span class="spanPage2">RC10936-17 | ln</span> </li>
+                            <li><img src="../img/error.png"/ class="tick"> <span class="spanPage2">RC10937-18 | ln</span></li>
+                          </ul>
+                          <p class="sub-hd">Warnings</p>
+                          <ul class="info-list warring-list">
+                            <li></li>
+                            <li><img src="../img/warring.png"/ class="tick"> RC10938-18 | Price Missing</li>
+                            <li><img src="../img/warring.png"/ class="tick"> RC10938-18 | ln</li>
+                          </ul>
+                      </div>
+
+
+
+              </div>
+           </div>
+           <p  class="plugin-container-p d-flex align-items-center m-t-15 m-b-0"><img src="../img/error-circle.png"/ class=" m-r-10"> Product updater has found some invalid naming conventions. Please fix these errors and run this tool again</p>
+           <div class="btn-wrapper text-right">
+             <button class="btn-secondary">Cancel</button>
+             <button class="btn-primary">Proceed <img src="../img/arrow.png"/></button>
+           </div>
+        </div>
+     </section>
+
+
+
+</body>
+</html>
