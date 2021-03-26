@@ -415,20 +415,50 @@ function GetProductDetails()
      ////alert(productDetails);
         if(productDetails != null)
         {
+            ////alert(productDetails);
+            try
+            {
+                var data = jQuery.parseJSON(productDetails);
+                productData = data.Products;
+            }
+            catch(e)
+            {
+                alert('Invalid json format')
+            }
+         /*   alert('productDetails.IndexFilePath'+data.IndexFilePath)
+            for (var i = 0; i < productDetails.length; i++) 
+            {
+                  alert(i+'---> '+productDetails[i].Product);
+            }
+*/
+
+           /* var ss= {"TeamList" : [{"teamid" : "1","teamname" : "Barcelona"}]};
+            alert('ss.TeamList[0].teamname-'+ss.TeamList[0].teamname);
+            */
+       //     var s = jQuery.parseJSON(productDetails);
+         //  alert('s.TeamList[0].teamname-'+s.TeamList[0].teamname);
            /// var s= { "name":"John", "age":30, "city":"New York"};
           /* var s=[];
            s.push({ "name":"John", "age":30, "city":"New York"});
             var ss = JSON.stringify(s);
             productDetails = productDetails.trim();
-            var ss = JSON.stringify(productDetails);
-alert(ss);
+           
 */
-            ///var obj = jQuery.parseJSON( '[{ "name":"John", "age":30, "city":"New York"}]' );
-            var obj = jQuery.parseJSON(JSON.stringify(productDetails));
+ 
+/*var obj = jQuery.parseJSON(''+productDetails+''+';');
+        alert(obj.TeamList);
+
+var text = '{ "name":"John", "age":"function () {return 30;}", "city":"New York"}';
+var obj = JSON.parse(text);
+obj.age = eval("(" + obj.age + ")");
+alert(obj.age);
+*/
+           /// var obj = jQuery.parseJSON( {'Products': [{"name":"John", "age":30, "city":"New York"}]} );
+           // var obj = jQuery.parseJSON(JSON.stringify(productDetails));
           /// var data = $.parseJSON(obj)
 
-            alert(obj);
-            productData =  obj.Products;
+          ///  alert(obj);
+           //// productData =  obj.Products;
             //alert(obj.Products);
           /*  for (var i = 0; i < productData.length; i++) 
             {
