@@ -474,7 +474,7 @@ var isItaNewPageForSucess = false;
 var pageName ='';
 ////alert('Total pages-'+allPages.length);
 for(var p = 0; p < allPages.length;p++)
-	{
+{
 	////alert('page name '+ allPages[p].name);
 	 isItaNewPageForError = true;
 	 isItaNewPageForWarning = true;
@@ -513,14 +513,17 @@ for(var p = 0; p < allPages.length;p++)
 							   var weightFromAppData = productData[pdt].Weight;	
 							   var rateFromAppData = productData[pdt].Price;
 							   var lengthFromAppData = productData[pdt].Length;
-						   
+							   var leftSqure=	pdtFromInDesign.split('[');
+							   var rightSqure=	pdtFromInDesign.split(']');
+
 							   if(pdtFromInDesign != null && pdtFromInDesign != '' 
-							   && pdtFromInDesign != undefined	&&  pdtFromInDesign.indexOf(pdtFromAppData) > -1)
+							   && pdtFromInDesign != undefined	
+							   && pdtFromInDesign.indexOf(pdtFromAppData) > -1
+							   && leftSqure.length < 3 || rightSqure.length < 3)
 							   {	 
-									   var leftSqure=	pdtFromInDesign.split('[');
-									   var rightSqure=	pdtFromInDesign.split(']');
-									   if(leftSqure.length < 3 || rightSqure.length < 3)
-									   {
+									////	a = "this is [test] line i [want] text [inside] square [brackets]"
+										//// words = a.match(/[^[\]]+(?=])/g)
+
 										if(pdtFromInDesign.indexOf(']g') > -1)
 										{
 											var weightSections = pdtFromInDesign.split('[');
@@ -564,8 +567,10 @@ for(var p = 0; p < allPages.length;p++)
 										{
 											stringReturnValue += "R12W"+newTextForIndesign+'C12L'+pageName;
 										}
-									   }
-							   
+
+										tff2.contents = newTextForIndesign;
+									  
+									   
 							   break;
 							   } // found if close
 							   
@@ -592,38 +597,76 @@ for(var p = 0; p < allPages.length;p++)
 				 if(pdtFromInDesign != null && pdtFromInDesign != '' 
 				 && pdtFromInDesign != undefined &&  pdtFromInDesign.indexOf('[') > -1)
 				 {
-					///	alert(pageName+' ---->'+pdtFromInDesign);
+					///	alert(pageName + ' ---->' + pdtFromInDesign);
 				for(var pdt = 0; pdt < productData.length;pdt++)
 				{
 					try
 					{
-				    newTextForIndesign = '';
-					var pdtFromAppData = productData[pdt].Product;
-					var weightFromAppData = productData[pdt].Weight;	
-					var rateFromAppData = productData[pdt].Price;
-					var lengthFromAppData = productData[pdt].Length;
-				
-					if(pdtFromInDesign != null && pdtFromInDesign != '' 
-					&& pdtFromInDesign != undefined	&&  pdtFromInDesign.indexOf(pdtFromAppData) > -1)
-					{	
-							var leftSqure=	pdtFromInDesign.split('[');
-							var rightSqure=	pdtFromInDesign.split(']');
-							if(leftSqure.length < 3 || rightSqure.length < 3 
-								|| pdtFromInDesign.indexOf(']g') == -1 
-								|| pdtFromInDesign.indexOf('$[') == -1)
-							{		
-								if(stringReturnValue.length == 0)
-								{
-									stringReturnValue +=  newTextForIndesign+'C12L'+ pageName;
-								}
-								else
-								{
-									stringReturnValue += "R12W"+newTextForIndesign+'C12L'+pageName;
-								}
-							}
-					
-					break;
-					} // found if close
+						newTextForIndesign = '';
+						var pdtFromAppData = productData[pdt].Product;
+						var weightFromAppData = productData[pdt].Weight;	
+						var rateFromAppData = productData[pdt].Price;
+						var lengthFromAppData = productData[pdt].Length;
+						var leftSqure=	pdtFromInDesign.split('[');
+						var rightSqure=	pdtFromInDesign.split(']');
+
+						if(pdtFromInDesign != null && pdtFromInDesign != '' 
+						&& pdtFromInDesign != undefined	
+						&& pdtFromInDesign.indexOf(pdtFromAppData) > -1
+						&& leftSqure.length < 3 || rightSqure.length < 3)
+						{	 
+							 ////	a = "this is [test] line i [want] text [inside] square [brackets]"
+								 //// words = a.match(/[^[\]]+(?=])/g)
+
+								 if(pdtFromInDesign.indexOf(']g') > -1)
+								 {
+									 var weightSections = pdtFromInDesign.split('[');
+									 if(weightSections != null && weightSections != '' && weightSections.length > 0)
+									 {
+										 newTextForIndesign = weightSections[0] + weightFromAppData + 'g';
+									 }
+								 }
+								 
+								 //// Rate Section
+								  if(pdtFromInDesign.indexOf('$') > -1)
+								 {
+									 var ratesSections = pdtFromInDesign.split('$');
+									 var rateSecSub = '';
+									 //alert('ratesSections.length'+ratesSections.length);
+									 if(ratesSections != null && ratesSections !='' && ratesSections.length > 0)
+									 {
+										 newTextForIndesign += ' $' + rateFromAppData;
+										 rateSecSub = ratesSections[1].split(']');
+										 if(rateSecSub != null && rateSecSub != '' && rateSecSub.length > 0)
+										 {
+											 newTextForIndesign += rateSecSub[1];
+										 }
+									 }
+									 else
+									 {
+										 newTextForIndesign += ' $' + rateFromAppData;
+									 }
+								 }
+		 
+								 if(newTextForIndesign == '')
+								 {
+									 newTextForIndesign = pdtFromInDesign ;
+								 }
+
+								 if(stringReturnValue.length == 0)
+								 {
+									 stringReturnValue +=  newTextForIndesign+'C12L'+ pageName;
+								 }
+								 else
+								 {
+									 stringReturnValue += "R12W"+newTextForIndesign+'C12L'+pageName;
+								 }
+
+								 tff2.contents = newTextForIndesign;
+							   
+								
+						break;
+						} // found if close
 					
 					///alert('pdtFromInDesign-'+pdtFromInDesign+' | pdtFromAppData-'+pdtFromAppData+' | newTextForIndesign-'+newTextForIndesign);
 				}
@@ -663,33 +706,71 @@ var tf = currentPage.textFrames.everyItem().getElements();
 							try
 							{
 								
-							newTextForIndesign = '';
-							var pdtFromAppData = productData[g].Product;
-							var weightFromAppData = productData[g].Weight;	
-							var rateFromAppData = productData[g].Price;
-							var lengthFromAppData = productData[g].Length;
-						
-							if(pdtFromInDesign != null && pdtFromInDesign != '' 
-							&& pdtFromInDesign != undefined	&&  pdtFromInDesign.indexOf(pdtFromAppData) > -1)
-							{	
-									var leftSqure=	pdtFromInDesign.split('[');
-									var rightSqure=	pdtFromInDesign.split(']');
-									if(leftSqure.length < 3 || rightSqure.length < 3 
-										|| pdtFromInDesign.indexOf(']g') == -1 
-										|| pdtFromInDesign.indexOf('$[') == -1)
-									{
-										if(stringReturnValue.length == 0)
-										{
-											stringReturnValue +=  newTextForIndesign+'C12L'+ pageName;
-										}
-										else
-										{
-											stringReturnValue += "R12W"+newTextForIndesign+'C12L'+pageName;
-										}
-									}
-							
-							break;
-							} // found if close
+								newTextForIndesign = '';
+								var pdtFromAppData = productData[pdt].Product;
+								var weightFromAppData = productData[pdt].Weight;	
+								var rateFromAppData = productData[pdt].Price;
+								var lengthFromAppData = productData[pdt].Length;
+								var leftSqure=	pdtFromInDesign.split('[');
+								var rightSqure=	pdtFromInDesign.split(']');
+ 
+								if(pdtFromInDesign != null && pdtFromInDesign != '' 
+								&& pdtFromInDesign != undefined	
+								&& pdtFromInDesign.indexOf(pdtFromAppData) > -1
+								&& leftSqure.length < 3 || rightSqure.length < 3)
+								{	 
+									 ////	a = "this is [test] line i [want] text [inside] square [brackets]"
+										 //// words = a.match(/[^[\]]+(?=])/g)
+ 
+										 if(pdtFromInDesign.indexOf(']g') > -1)
+										 {
+											 var weightSections = pdtFromInDesign.split('[');
+											 if(weightSections != null && weightSections != '' && weightSections.length > 0)
+											 {
+												 newTextForIndesign = weightSections[0] + weightFromAppData + 'g';
+											 }
+										 }
+										 
+										 //// Rate Section
+										  if(pdtFromInDesign.indexOf('$') > -1)
+										 {
+											 var ratesSections = pdtFromInDesign.split('$');
+											 var rateSecSub = '';
+											 //alert('ratesSections.length'+ratesSections.length);
+											 if(ratesSections != null && ratesSections !='' && ratesSections.length > 0)
+											 {
+												 newTextForIndesign += ' $' + rateFromAppData;
+												 rateSecSub = ratesSections[1].split(']');
+												 if(rateSecSub != null && rateSecSub != '' && rateSecSub.length > 0)
+												 {
+													 newTextForIndesign += rateSecSub[1];
+												 }
+											 }
+											 else
+											 {
+												 newTextForIndesign += ' $' + rateFromAppData;
+											 }
+										 }
+				 
+										 if(newTextForIndesign == '')
+										 {
+											 newTextForIndesign = pdtFromInDesign ;
+										 }
+ 
+										 if(stringReturnValue.length == 0)
+										 {
+											 stringReturnValue +=  newTextForIndesign+'C12L'+ pageName;
+										 }
+										 else
+										 {
+											 stringReturnValue += "R12W"+newTextForIndesign+'C12L'+pageName;
+										 }
+ 
+										 tff2.contents = newTextForIndesign;
+									   
+										
+								break;
+								} // found if close
 							
 						}
 						catch(er)

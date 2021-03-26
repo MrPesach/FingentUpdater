@@ -411,8 +411,38 @@ function GetProductDetails()
     {
         ///alert(process.env.APPDATA);
         var fs = require('fs');    
-        productData = fs.readFileSync(process.env.APPDATA + '/RCG/ProductDetails.txt',{encoding:'utf8'});
-      ///alert(productData);
+       var productDetails = fs.readFileSync(process.env.APPDATA + '/RCG/ProductDetails.txt',{encoding:'utf8'});
+     ////alert(productDetails);
+        if(productDetails != null)
+        {
+           /// var s= { "name":"John", "age":30, "city":"New York"};
+          /* var s=[];
+           s.push({ "name":"John", "age":30, "city":"New York"});
+            var ss = JSON.stringify(s);
+            productDetails = productDetails.trim();
+            var ss = JSON.stringify(productDetails);
+alert(ss);
+*/
+            ///var obj = jQuery.parseJSON( '[{ "name":"John", "age":30, "city":"New York"}]' );
+            var obj = jQuery.parseJSON(JSON.stringify(productDetails));
+          /// var data = $.parseJSON(obj)
+
+            alert(obj);
+            productData =  obj.Products;
+            //alert(obj.Products);
+          /*  for (var i = 0; i < productData.length; i++) 
+            {
+                  alert(i+'---> '+productData[i]);
+            }
+            */
+
+            /*
+            var json = jQuery.parseJSON(productDetails);
+         
+            alert(productData);
+            */
+        }
+      var productDetails
         if(productData != null && productData != '' && productData != undefined)
         {
             GetProductDetailsFromIndesignFile();
@@ -425,7 +455,7 @@ function GetProductDetails()
     //// alert(productData);
     }
     catch(e){
-        alert('Error from GetProductDetails');
+        alert('Error from GetProductDetails'+e);
        }   
 }
 
