@@ -1,5 +1,6 @@
 function GetProductDetailsFromIndesignFile(productData) 
 {
+	alert('GetProductDetailsFromIndesignFile');
 	var wholeProductFromInDesign = [];
 	var stringReturnValue = '';
 	var errorReturnValue = '';
@@ -7,7 +8,7 @@ function GetProductDetailsFromIndesignFile(productData)
 	var sucessReturnValue = '';
 	try
 	{
-		///alert( productData.length);
+		alert( 'GetProductDetailsFromIndesignFile--- in jsx productData.length-'+productData.length);
 	var isProductFound = false;
 	var productStatus = 101;
 	/// 101 -> Product In Success,
@@ -468,17 +469,11 @@ var myDoc = app.activeDocument;
 var curDoc = app.documents[0];
 //get pages 
 var allPages = curDoc.pages;
-var isItaNewPageForError = false;
-var isItaNewPageForWarning = false;
-var isItaNewPageForSucess = false;
 var pageName ='';
 ////alert('Total pages-'+allPages.length);
 for(var p = 0; p < allPages.length;p++)
 {
 	////alert('page name '+ allPages[p].name);
-	 isItaNewPageForError = true;
-	 isItaNewPageForWarning = true;
-	 isItaNewPageForSucess = true;
 	currentPage = allPages[p];
 	pageName = currentPage.name;
 	var pg = app.activeDocument.pages[0];

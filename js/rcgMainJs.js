@@ -412,74 +412,65 @@ function GetProductDetails()
         ///alert(process.env.APPDATA);
         var fs = require('fs');    
        var productDetails = fs.readFileSync(process.env.APPDATA + '/RCG/ProductDetails.txt',{encoding:'utf8'});
-     ////alert(productDetails);
-        if(productDetails != null)
+     ///alert(productDetails);
+        if(productDetails != null && productDetails != '' && productDetails != undefined)
         {
             ////alert(productDetails);
             try
             {
                 var data = jQuery.parseJSON(productDetails);
                 productData = data.Products;
+                var newJson = [];
+                for(var t1 = 0; t1 < productData.length;t1++)
+                {
+                    newJson.push(productData[t1]); 
+                }
+                productData  =  newJson;          
             }
             catch(e)
             {
                 alert('Invalid json format')
             }
-         /*   alert('productDetails.IndexFilePath'+data.IndexFilePath)
-            for (var i = 0; i < productDetails.length; i++) 
+        
+            var fnAndArgs = 'GetProductDetailsFromIndesignFile(' + productData + ')';
+            alert(fnAndArgs);
+            CSLibrary.evalScript(fnAndArgs, function(result) 
             {
-                  alert(i+'---> '+productDetails[i].Product);
-            }
-*/
-
-           /* var ss= {"TeamList" : [{"teamid" : "1","teamname" : "Barcelona"}]};
-            alert('ss.TeamList[0].teamname-'+ss.TeamList[0].teamname);
-            */
-       //     var s = jQuery.parseJSON(productDetails);
-         //  alert('s.TeamList[0].teamname-'+s.TeamList[0].teamname);
-           /// var s= { "name":"John", "age":30, "city":"New York"};
-          /* var s=[];
-           s.push({ "name":"John", "age":30, "city":"New York"});
-            var ss = JSON.stringify(s);
-            productDetails = productDetails.trim();
-           
-*/
- 
-/*var obj = jQuery.parseJSON(''+productDetails+''+';');
-        alert(obj.TeamList);
-
-var text = '{ "name":"John", "age":"function () {return 30;}", "city":"New York"}';
-var obj = JSON.parse(text);
-obj.age = eval("(" + obj.age + ")");
-alert(obj.age);
-*/
-           /// var obj = jQuery.parseJSON( {'Products': [{"name":"John", "age":30, "city":"New York"}]} );
-           // var obj = jQuery.parseJSON(JSON.stringify(productDetails));
-          /// var data = $.parseJSON(obj)
-
-          ///  alert(obj);
-           //// productData =  obj.Products;
-            //alert(obj.Products);
-          /*  for (var i = 0; i < productData.length; i++) 
-            {
-                  alert(i+'---> '+productData[i]);
-            }
-            */
-
-            /*
-            var json = jQuery.parseJSON(productDetails);
-         
-            alert(productData);
-            */
-        }
-      var productDetails
-        if(productData != null && productData != '' && productData != undefined)
-        {
-            GetProductDetailsFromIndesignFile();
+                try
+                {
+                
+                ///alert('GetProductDetailsFromIndesignFile in js-'+result);
+       
+                if(result != null && result != '' && result != undefined )
+                { 
+                    var splitResults = result.split('T123T');
+                    if(splitResults.length == 3)
+                    {                    
+                        errorValues = splitResults[0];
+                        warningValues = splitResults[1];
+                        successValues= splitResults[2];
+                        $('#btnScanningProceed').prop('disabled', false);
+                        $('.maskedCircle').remove();
+                        $('#divScanningProgressBar').css("width", "100%");
+                        alert('Process completed');
+                        $('#btnScanningProceed').trigger('click');
+                    }
+                }
+                else
+                {
+                    alert('There is no product details!');
+                }      
+            
+                }
+                catch(er)
+                {
+                    alert('Error from GetProductDetailsFromIndesignFile-'+er);
+                }
+            });
         }
         else
         {
-             alert('There is no product details!');
+            alert('There is no product details!');
         }
     
     //// alert(productData);
@@ -490,55 +481,6 @@ alert(obj.age);
 }
 
 ////////////// JSX CALLS  //////////////
-function GetProductDetailsFromIndesignFile()
-{
-    var fnAndArgs = 'GetProductDetailsFromIndesignFile(' + productData + ')';
-    CSLibrary.evalScript(fnAndArgs, function(result) 
-    {
-        try
-        {
-           /*
-           if(result == null || result == undefined || result == '')
-            {
-                alert('null');
-            }
-            */
-          ///  result=  JSON.parse(result);
-           ////alert(result);
-          var splitResults = result.split('T123T');
-/*
-          for (var i = 0; i < splitResults.length; i++) 
-          {
-                alert(i+'---> '+splitResults[i]);
-          }
-          */
-        /// alert(result);
-          if(splitResults.length == 3)
-          {
-            errorValues = splitResults[0];
-            warningValues = splitResults[1];
-            successValues= splitResults[2];
-          }
-          /// alert('warningValues-'+splitResults[1].length);
-            ///wholeProductFromInDesign = JSON.parse(result);
-        /// alert(wholeProductFromInDesign.length);
-        /// if(wholeProductFromInDesign != null && wholeProductFromInDesign.length > 0)
-        ///  {
-                
-                $('#btnScanningProceed').prop('disabled', false);
-                $('.maskedCircle').remove();
-                $('#divScanningProgressBar').css("width", "100%");
-                ///alert('Indesign documents updated sucessfully');
-                alert('Process completed');
-                $('#btnScanningProceed').trigger('click');
-        ///  }   
-        }
-        catch(er)
-        {
-            alert('Error from GetProductDetailsFromIndesignFile-'+er);
-        }
-    });
-}
 
 
 function UpdateProductDetailsIntheIndesignFile()
