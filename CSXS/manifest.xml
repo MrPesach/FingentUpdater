@@ -19,7 +19,7 @@
             <DispatchInfo>
                 <Resources>
                     <MainPath>./html/index.html</MainPath>
-					<ScriptPath>./jsx/rcg.jsx</ScriptPath>
+					<ScriptPath>./jsx/indesignFileOperations.jsx</ScriptPath>
                     <CEFCommandLine>
 						<Parameter>--enable-nodejs</Parameter>
                     </CEFCommandLine>

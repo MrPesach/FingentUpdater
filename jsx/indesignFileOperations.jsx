@@ -1,5 +1,6 @@
-function GetProductDetailsFromIndesignFile(productData) 
+function GetProductDetailsFromIndesignFile() 
 {
+	var productData=[];
 	alert('GetProductDetailsFromIndesignFile');
 	var wholeProductFromInDesign = [];
 	var stringReturnValue = '';

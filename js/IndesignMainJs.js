@@ -418,6 +418,8 @@ function GetProductDetails()
             ////alert(productDetails);
             try
             {
+                ///var obj = JSON.parse('{ "name":"John", "age":30, "city":"New York"}');
+                ///var myJSON = JSON.stringify(obj);
                 var data = jQuery.parseJSON(productDetails);
                 productData = data.Products;
                 var newJson = [];
@@ -425,15 +427,16 @@ function GetProductDetails()
                 {
                     newJson.push(productData[t1]); 
                 }
-                productData  =  newJson;          
+                productData  =  JSON.stringify(newJson);;          
             }
             catch(e)
             {
                 alert('Invalid json format')
             }
         
-            var fnAndArgs = 'GetProductDetailsFromIndesignFile(' + productData + ')';
-            alert(fnAndArgs);
+            ///var fnAndArgs = 'GetProductDetailsFromIndesignFile(' + productData + ')';
+            ///alert(fnAndArgs);
+            var fnAndArgs = 'GetProductDetailsFromIndesignFile()';
             CSLibrary.evalScript(fnAndArgs, function(result) 
             {
                 try
