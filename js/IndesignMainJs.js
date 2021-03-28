@@ -394,6 +394,16 @@ $('#btnProceedScanning').live( "click", function() {
 
 /////////////////////////////////// Scanning Result End /////////////////////////////////////////////////////
 
+/////////////////////////////////// goto index file creation Result Statrt /////////////////////////////////////////////////////
+$('#btnGotoIndexFileCreation').live( "click", function() {
+    $.get( "../html/IndexFileCreation.html", function( data ) 
+    {
+                $('#divPageContentDiv').html( data );
+                
+    });
+});
+
+/////////////////////////////////// Scanning Result End /////////////////////////////////////////////////////
 
 
 }
@@ -415,20 +425,30 @@ function GetProductDetails()
      ///alert(productDetails);
         if(productDetails != null && productDetails != '' && productDetails != undefined)
         {
-            ////alert(productDetails);
+            ///alert(productDetails);
             try
             {
                 ///var obj = JSON.parse('{ "name":"John", "age":30, "city":"New York"}');
                 ///var myJSON = JSON.stringify(obj);
-               //// var data = jQuery.parseJSON(productDetails);
-                productData = productDetails.Products;
-              /*  var newJson = [];
-                for(var t1 = 0; t1 < productData.length;t1++)
+               var data = jQuery.parseJSON(productDetails);
+                productData = data.Products;
+              /*  if(productData != null && productData != '' && productData != undefined)
                 {
-                    newJson.push(productData[t1]); 
+                    alert('productData-'+productData.length);
                 }
-                productData  =  JSON.stringify(newJson);
-                */         
+                else
+                {
+                    alert('Else');
+                }
+               /// 
+               */
+                var newJson = [];
+                for(var t = 0; t < productData.length;t++)
+                {
+                ////    alert(productData[t1].Product);
+                    newJson.push(productData[t]); 
+                }
+                productData  =  JSON.stringify(newJson);                      
             }
             catch(e)
             {
@@ -436,8 +456,8 @@ function GetProductDetails()
             }
         
             var fnAndArgs = 'GetProductDetailsFromIndesignFile(' + productData + ')';
-            ////alert(fnAndArgs);
-            ////var fnAndArgs = 'GetProductDetailsFromIndesignFile()';
+            ///alert(fnAndArgs);
+            
             CSLibrary.evalScript(fnAndArgs, function(result) 
             {
                 try
@@ -495,6 +515,19 @@ function UpdateProductDetailsIntheIndesignFile()
         try
         {
          
+if(result.length > 0)
+{
+    alert('Updated successfully.');
+    
+    $('#btnGotoIndexFileCreation').prop('disabled', false);
+    $('.maskedCircle').remove();
+    $('#divScanningProgressBar').css("width", "100%");
+}
+else
+{
+
+}
+
         }
         catch(er)
         {

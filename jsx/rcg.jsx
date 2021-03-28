@@ -1,8 +1,8 @@
-alert('in jsx');
+
 
 function GetProductDetailsFromIndesignFile(productData) 
 {	
-	alert('GetProductDetailsFromIndesignFile');
+	////alert('GetProductDetailsFromIndesignFile'+productData);
 	var wholeProductFromInDesign = [];
 	var stringReturnValue = '';
 	var errorReturnValue = '';
@@ -10,7 +10,7 @@ function GetProductDetailsFromIndesignFile(productData)
 	var sucessReturnValue = '';
 	try
 	{
-		alert( 'GetProductDetailsFromIndesignFile--- in jsx productData.length-'+productData.length);
+	
 	var isProductFound = false;
 	var productStatus = 101;
 	/// 101 -> Product In Success,
@@ -22,6 +22,7 @@ function GetProductDetailsFromIndesignFile(productData)
 		////alert('There is no product details!');
 		return wholeProductFromInDesign;
 	}
+	////alert( 'GetProductDetailsFromIndesignFile--- in jsx productData.length-'+productData.length);
 		////return 'this is the message from getMessageFromUtil';
 
 		/////////////////////////////////GROUP START//////////////////////////////////////////////////////
@@ -576,7 +577,7 @@ for(var p = 0; p < allPages.length;p++)
 						   }
 						   catch(er)
 						   {					
-							   alert('Group section-'+er);
+							   alert('UpdateProductDetailsIntheIndesignFile Group section-'+er);
 						   }
 							   
 						   } //productData loop closed
@@ -589,8 +590,8 @@ for(var p = 0; p < allPages.length;p++)
 	  ///	alert('group name '+grp);
 			for(var t = 0; t < grp.textFrames.length;t++)
 			{       
-				 var tff = grp.textFrames[t];
-		         var pdtFromInDesign = tff.contents;
+				 var tffInnerGroup = grp.textFrames[t];
+		         var pdtFromInDesign = tffInnerGroup.contents;
 				 if(pdtFromInDesign != null && pdtFromInDesign != '' 
 				 && pdtFromInDesign != undefined &&  pdtFromInDesign.indexOf('[') > -1)
 				 {
@@ -659,7 +660,7 @@ for(var p = 0; p < allPages.length;p++)
 									 stringReturnValue += "R12W"+newTextForIndesign+'C12L'+pageName;
 								 }
 
-								 tff2.contents = newTextForIndesign;
+								 tffInnerGroup.contents = newTextForIndesign;
 							   
 								
 						break;
@@ -669,7 +670,7 @@ for(var p = 0; p < allPages.length;p++)
 				}
 				catch(er)
 				{					
-					alert('Group section-'+er);
+					alert('UpdateProductDetailsIntheIndesignFile inner Group section-'+er);
 				}
 					
 				} //productData loop closed
@@ -687,12 +688,12 @@ for(var p = 0; p < allPages.length;p++)
 	
 //////////////////////////////////NORMAL INDESIGN UPDATE START /////////////////////////////////////////////////////
 /////var tf = app.documents[0].textFrames.everyItem().getElements();	
-var tf = currentPage.textFrames.everyItem().getElements();				
+var tfNormal = currentPage.textFrames.everyItem().getElements();				
 	///alert('Normal nnnn   -'+ tf.length);
 ///alert('Normal-'+ tf.length);
-				for (var i = 0; i < tf.length; i++) 
+				for (var i = 0; i < tfNormal.length; i++) 
 				{
-					var pdtFromInDesign = tf[i].contents;
+					var pdtFromInDesign = tfNormal[i].contents;
 					if(pdtFromInDesign != null && pdtFromInDesign != '' 
 					&& pdtFromInDesign != undefined &&  pdtFromInDesign.indexOf('[') > -1)
 					{
@@ -704,10 +705,10 @@ var tf = currentPage.textFrames.everyItem().getElements();
 							{
 								
 								newTextForIndesign = '';
-								var pdtFromAppData = productData[pdt].Product;
-								var weightFromAppData = productData[pdt].Weight;	
-								var rateFromAppData = productData[pdt].Price;
-								var lengthFromAppData = productData[pdt].Length;
+								var pdtFromAppData = productData[g].Product;
+								var weightFromAppData = productData[g].Weight;	
+								var rateFromAppData = productData[g].Price;
+								var lengthFromAppData = productData[g].Length;
 								var leftSqure=	pdtFromInDesign.split('[');
 								var rightSqure=	pdtFromInDesign.split(']');
  
@@ -763,7 +764,7 @@ var tf = currentPage.textFrames.everyItem().getElements();
 											 stringReturnValue += "R12W"+newTextForIndesign+'C12L'+pageName;
 										 }
  
-										 tff2.contents = newTextForIndesign;
+										 tfNormal.contents = newTextForIndesign;
 									   
 										
 								break;
@@ -772,7 +773,7 @@ var tf = currentPage.textFrames.everyItem().getElements();
 						}
 						catch(er)
 						{					
-							alert('Normal section-'+er);
+							alert('UpdateProductDetailsIntheIndesignFile Normal section-'+er);
 						}
 							
 						}///productData loop
