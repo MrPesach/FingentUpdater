@@ -387,7 +387,7 @@ $('#btnProceedScanning').live( "click", function() {
     $.get( "../html/CommunicatingWithAppAndIndesign.html", function( data ) 
     {
                 $('#divPageContentDiv').html( data );
-                UpdateProductDetailsIntheIndesignFile();
+                UpdateProductDetailsIntheIndesignFile(successValues);
                
     });
 });
@@ -401,6 +401,9 @@ $('#btnGotoIndexFileCreation').live( "click", function() {
                 $('#divPageContentDiv').html( data );
                 
     });
+});
+$('#btnOk').live( "click", function() {
+    window.close();
 });
 
 ///////////////////////////////////  Go to index file creation End /////////////////////////////////////////////////////
@@ -463,8 +466,7 @@ function GetProductDetails()
                 try
                 {
                 
-                ///alert('GetProductDetailsFromIndesignFile in js-'+result);
-       
+                ///alert('GetProductDetailsFromIndesignFile in js-'+result);       
                 if(result != null && result != '' && result != undefined )
                 { 
                     var splitResults = result.split('T123T');
@@ -478,6 +480,10 @@ function GetProductDetails()
                         $('#divScanningProgressBar').css("width", "100%");
                         alert('Process completed');
                         $('#btnScanningProceed').trigger('click');
+                    }
+                    else
+                    {
+                        alert(result);
                     }
                 }
                 else
@@ -514,19 +520,17 @@ function UpdateProductDetailsIntheIndesignFile()
     {
         try
         {
-         
-if(result.length > 0)
-{
-    $('#btnGotoIndexFileCreation').prop('disabled', false);
-    $('.maskedCircle').remove();
-    $('#divScanningProgressBar').css("width", "100%");
-    alert('Updated successfully.');
-}
-else
-{
-
-}
-
+            if(result.length > 0)
+            {
+                $('#btnGotoIndexFileCreation').prop('disabled', false);
+                $('.maskedCircle').remove();
+                $('#divScanningProgressBar').css("width", "100%");
+                alert('Updated successfully.');
+            }
+            else
+            {
+                alert('no result in UpdateProductDetailsIntheIndesignFile');
+            }
         }
         catch(er)
         {
