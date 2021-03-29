@@ -213,7 +213,7 @@ if(errorValues != '' && errorValues.length > 0)
     }
 }
 
-if(successValues != '' && successValues.length > 0) 
+if(successValues != '' && successValues.length > 0 && warningValues.length == 0 && errorValues.length == 0) 
 {
     try
     {
@@ -387,6 +387,7 @@ $('#btnProceedScanning').live( "click", function() {
     $.get( "../html/CommunicatingWithAppAndIndesign.html", function( data ) 
     {
                 $('#divPageContentDiv').html( data );
+                alert('successValues'+successValues);
                 UpdateProductDetailsIntheIndesignFile(successValues);
                
     });
@@ -470,11 +471,13 @@ function GetProductDetails()
                 if(result != null && result != '' && result != undefined )
                 { 
                     var splitResults = result.split('T123T');
+                    $('#spanEror').text('splitResults.length-'+splitResults.length);
                     if(splitResults.length == 3)
                     {                    
                         errorValues = splitResults[0];
                         warningValues = splitResults[1];
                         successValues= splitResults[2];
+                        ///alert(successValues);
                         $('#btnScanningProceed').prop('disabled', false);
                         $('.maskedCircle').remove();
                         $('#divScanningProgressBar').css("width", "100%");
@@ -494,6 +497,7 @@ function GetProductDetails()
                 }
                 catch(er)
                 {
+                    $('#spanEror').text('Error from GetProductDetailsFromIndesignFile-'+er);
                     alert('Error from GetProductDetailsFromIndesignFile-'+er);
                 }
             });

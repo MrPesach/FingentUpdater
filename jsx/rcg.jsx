@@ -4,7 +4,7 @@
 function GetProductDetailsFromIndesignFile(productData) {
 	////alert('GetProductDetailsFromIndesignFile'+productData);
 	var wholeProductFromInDesign = [];
-	var stringReturnValue = '';
+	var successReturnValue = '';
 	var errorReturnValue = '';
 	var warningReturnValue = '';
 	try {
@@ -39,24 +39,20 @@ function GetProductDetailsFromIndesignFile(productData) {
 		var pageName = '';
 		////alert('Total pages-'+allPages.length);
 		for (var p = 0; p < allPages.length; p++) {
-			/*
+			/**/
 			if(p > 0)
 			{
 				continue;
 			}
-			*/
+			
 			////alert('page name '+ allPages[p].name);
 			isItaNewPageForError = true;
 			isItaNewPageForWarning = true;
 			isItaNewPageForSucess = true;
 			currentPage = allPages[p];
 			pageName = currentPage.name;
-			/*
-			if(pageName != '165')
-			{
-				return;
-			}
-			*/
+			
+			
 			////	var pages = app.documents[0].pages;
 		////	var pg = app.activeDocument.pages[0];
 			///alert('pg.name-'+pageName);
@@ -112,10 +108,10 @@ function GetProductDetailsFromIndesignFile(productData) {
 
 
 											if (errorReturnValue.length == 0) {
-												errorReturnValue += (isItaNewPageForError ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L1C12L0C12LGG";
+												errorReturnValue += (isItaNewPageForError == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L1C12L0C12LGG";
 											}
 											else {
-												errorReturnValue += "R12W" + (isItaNewPageForError ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L1C12L0C12LGG";
+												errorReturnValue += "R12W" + (isItaNewPageForError == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L1C12L0C12LGG";
 											}
 											isItaNewPageForError = false;
 											///alert(errorReturnValue);
@@ -147,10 +143,10 @@ function GetProductDetailsFromIndesignFile(productData) {
 										'IsItaNewPage': isItaNewPageForWarning
 									});
 								if (warningReturnValue.length == 0) {
-									warningReturnValue += (isItaNewPageForWarning ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L0C12L1C12LGG";
+									warningReturnValue += (isItaNewPageForWarning == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L0C12L1C12LGG";
 								}
 								else {
-									warningReturnValue += "R12W" + (isItaNewPageForWarning ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L0C12L1C12LGG";
+									warningReturnValue += "R12W" + (isItaNewPageForWarning == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L0C12L1C12LGG";
 								}
 								isItaNewPageForWarning = false;
 
@@ -165,11 +161,11 @@ function GetProductDetailsFromIndesignFile(productData) {
 										'IsWarning': true,
 										'IsItaNewPage': isItaNewPageForSucess
 									});
-								if (sucessReturnValue.length == 0) {
-									sucessReturnValue += (isItaNewPageForSucess ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L0C12L1C12LGG";
+								if (successReturnValue.length == 0) {
+									successReturnValue += (isItaNewPageForSucess == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L0C12L1C12LGG";
 								}
 								else {
-									sucessReturnValue += "R12W" + (isItaNewPageForSucess ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L0C12L1C12LGG";
+									successReturnValue += "R12W" + (isItaNewPageForSucess == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L0C12L1C12LGG";
 								}
 								isItaNewPageForSucess = false;
 							}
@@ -220,10 +216,10 @@ function GetProductDetailsFromIndesignFile(productData) {
 
 
 										if (errorReturnValue.length == 0) {
-											errorReturnValue += (isItaNewPageForError ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L1C12L0C12LG";
+											errorReturnValue += (isItaNewPageForError == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L1C12L0C12LG";
 										}
 										else {
-											errorReturnValue += "R12W" + (isItaNewPageForError ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L1C12L0C12LG";
+											errorReturnValue += "R12W" + (isItaNewPageForError == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L1C12L0C12LG";
 										}
 										isItaNewPageForError = false;
 										///alert(errorReturnValue);
@@ -255,10 +251,10 @@ function GetProductDetailsFromIndesignFile(productData) {
 									'IsItaNewPage': isItaNewPageForWarning
 								});
 							if (warningReturnValue.length == 0) {
-								warningReturnValue += (isItaNewPageForWarning ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L0C12L1C12LG";
+								warningReturnValue += (isItaNewPageForWarning == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L0C12L1C12LG";
 							}
 							else {
-								warningReturnValue += "R12W" + (isItaNewPageForWarning ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L0C12L1C12LG";
+								warningReturnValue += "R12W" + (isItaNewPageForWarning == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L0C12L1C12LG";
 							}
 							isItaNewPageForWarning = false;
 
@@ -273,11 +269,11 @@ function GetProductDetailsFromIndesignFile(productData) {
 									'IsWarning': true,
 									'IsItaNewPage': isItaNewPageForSucess
 								});
-							if (sucessReturnValue.length == 0) {
-								sucessReturnValue += (isItaNewPageForSucess ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L0C12L1C12LG";
+							if (successReturnValue.length == 0) {
+								successReturnValue += (isItaNewPageForSucess == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L0C12L1C12LG";
 							}
 							else {
-								sucessReturnValue += "R12W" + (isItaNewPageForSucess ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L0C12L1C12LG";
+								successReturnValue += "R12W" + (isItaNewPageForSucess == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L0C12L1C12LG";
 							}
 							isItaNewPageForSucess = false;
 						}
@@ -336,10 +332,10 @@ function GetProductDetailsFromIndesignFile(productData) {
 
 
 									if (errorReturnValue.length == 0) {
-										errorReturnValue += (isItaNewPageForError ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L1C12L0C12LI";
+										errorReturnValue += (isItaNewPageForError == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L1C12L0C12LI";
 									}
 									else {
-										errorReturnValue += "R12W" + (isItaNewPageForError ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L1C12L0C12LI";
+										errorReturnValue += "R12W" + (isItaNewPageForError == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L1C12L0C12LI";
 									}
 									isItaNewPageForError = false;
 								}
@@ -359,6 +355,7 @@ function GetProductDetailsFromIndesignFile(productData) {
 
 					}///productData loop
 
+					///alert('pdtFromInDesign-' + pdtFromInDesign + 'productStatus-'+productStatus)
 					if (productStatus == 102) //// Product missing from group 	/// 102 -> Product In Warning
 					{
 					/////	alert(pdtFromInDesign + ' Product In Warning');
@@ -371,10 +368,10 @@ function GetProductDetailsFromIndesignFile(productData) {
 								'IsItaNewPage': isItaNewPageForWarning
 							});
 						if (warningReturnValue.length == 0) {
-							warningReturnValue += (isItaNewPageForWarning ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L0C12L1C12LI";
+							warningReturnValue += (isItaNewPageForWarning == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L0C12L1C12LI";
 						}
 						else {
-							warningReturnValue += "R12W" + (isItaNewPageForWarning ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L0C12L1C12LI";
+							warningReturnValue += "R12W" + (isItaNewPageForWarning == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L0C12L1C12LI";
 						}
 						isItaNewPageForWarning = false;
 
@@ -390,13 +387,14 @@ function GetProductDetailsFromIndesignFile(productData) {
 								'IsWarning': true,
 								'IsItaNewPage': isItaNewPageForSucess
 							});
-						if (sucessReturnValue.length == 0) {
-							sucessReturnValue += (isItaNewPageForSucess ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L0C12L1C12LI";
+						if (successReturnValue.length == 0) {
+							successReturnValue += (isItaNewPageForSucess == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L0C12L1C12LI";
 						}
 						else {
-							sucessReturnValue += "R12W" + (isItaNewPageForSucess ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L0C12L1C12LI";
+							successReturnValue += "R12W" + (isItaNewPageForSucess == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L0C12L1C12LI";
 						}
 						isItaNewPageForSucess = false;
+						///alert('successReturnValue-'+successReturnValue);
 					}
 
 				}//[ atleast one
@@ -406,15 +404,13 @@ function GetProductDetailsFromIndesignFile(productData) {
 
 
 		}//page loop close
-////alert('errorReturnValue'+errorReturnValue);
-////alert('warningReturnValue'+warningReturnValue);
-////alert('sucessReturnValue'+sucessReturnValue);
-		if (errorReturnValue.length > 0 || warningReturnValue.length > 0) {
-			return (errorReturnValue + "T123T" + warningReturnValue + "T123T");
-		}
-		else {
-			return (errorReturnValue + "T123T" + warningReturnValue + "T123T" + sucessReturnValue);
-		}
+
+///alert('errorReturnValue'+errorReturnValue);
+///alert('warningReturnValue'+warningReturnValue);
+///alert('successReturnValue-'+successReturnValue);
+			
+			return (errorReturnValue + "T123T" + warningReturnValue + "T123T" + successReturnValue);
+
 
 	}
 	catch (er) {
@@ -535,14 +531,14 @@ function UpdateProductDetailsIntheIndesignFile(productData, successValues) {
 			/////var tf = app.documents[0].textFrames.everyItem().getElements();	
 			var tfNormal = currentPage.textFrames.everyItem().getElements();
 			///alert('Normal nnnn   -'+ tfNormal.length);
-			alert('Normal-'+ tfNormal.length+'sucessReturnValue'+globalSuccessValues);
+			////alert('Normal-'+ tfNormal.length+'successReturnValue'+globalSuccessValues);
 			for (var i = 0; i < tfNormal.length; i++) {
 				var pdtFromInDesign = tfNormal[i].contents;
 				if (pdtFromInDesign != null 
 					&& pdtFromInDesign != ''
 					&& pdtFromInDesign != undefined)
 					 {
-						alert(pdtFromInDesign);
+						////alert(pdtFromInDesign);
 					for (var g = 0; g < productData.length; g++) {
 						try {
 							if (globalSuccessValues != '' 
