@@ -420,14 +420,27 @@ function GetProductDetailsFromIndesignFile(productData) {
 
 /////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////
-function UpdateProductDetailsIntheIndesignFile(productData, successValues) {
-	globalSuccessValues = successValues;
-	///alert('UpdateProductDetailsIntheIndesignFile');
+function UpdateProductDetailsIntheIndesignFile(productData) {
+	alert('UpdateProductDetailsIntheIndesignFile');
+	///globalSuccessValues = successValues;
+	///alert('UpdateProductDetailsIntheIndesignFile globalSuccessValues' + globalSuccessValues);
 	var stringReturnValue = '';
 	try {
 
 		if (productData == null || productData == '' || productData == undefined) {
 			return stringReturnValue;
+		}
+
+		var result = GetProductDetailsFromIndesignFile(productData);
+		if(result != null && result != '' && result != undefined )
+		{ 
+			var splitResults = result.split('T123T');
+			////$('#spanEror').text('splitResults.length-'+splitResults.length);
+			if(splitResults.length == 3)
+			{     
+				globalSuccessValues = splitResults[2];
+				////alert('globalSuccessValues-'+globalSuccessValues);
+			}
 		}
 
 		/////////////////////////////////GROUP INDESIGN UPDATE START//////////////////////////////////////////////////////
@@ -541,6 +554,7 @@ function UpdateProductDetailsIntheIndesignFile(productData, successValues) {
 						////alert(pdtFromInDesign);
 					for (var g = 0; g < productData.length; g++) {
 						try {
+							//alert(globalSuccessValues);
 							if (globalSuccessValues != '' 
 							&& globalSuccessValues.length > 0
 							&& globalSuccessValues.indexOf(pdtFromInDesign) > -1)
@@ -601,37 +615,38 @@ if(pdtFromInDesign.indexOf('BRC1466') == -1)
 
 		for (var inc = 0; inc < indesignProducts.length; inc++) {
 			var item = indesignProducts[inc];
-			
-			 ////alert(	item);
-			
+			 ///alert(	item);
 			//// First Item
 			if (item.indexOf('[') == -1 && item.indexOf(']') == -1 && item.indexOf('$') == -1 && inc == 0) {
 				newTextForIndesign += item;
 			}
-			else if (item == '$') {
-				newTextForIndesign += item;
-			}
-			else if (item.indexOf('[') > -1 && item.indexOf(']g') > -1 && item.indexOf('wt') > -1)//Weight
+			else if (item.indexOf(']') > -1 && item.indexOf('ln') > -1) 
 			{
-				newTextForIndesign += weightFromAppData + 'g';
-			}
-			else if (item.indexOf('[') > -1 && item.indexOf(']') > -1 && item.indexOf('$') > -1) {
-
-			}
-			else if (item.indexOf('$[') > -1 && item.indexOf(']') > -1 && item.indexOf('pr') > -1)////Price
+				newTextForIndesign += '\n' + lengthFromAppData;
+			}			
+			else if (item.indexOf(']g') > -1 && item.indexOf('wt') > -1)//Weight
 			{
-				newTextForIndesign += '$' + rateFromAppData;
-			}
-			else if (item.indexOf('[') > -1 && item.indexOf(']') > -1 && item.indexOf('ln') > -1) 
+				newTextForIndesign += '\n' + weightFromAppData + 'g';
+			}			
+			else if (item.indexOf('pr]') > -1)////Price
 			{
-				newTextForIndesign += lengthFromAppData;
-			}
+				var priceSplits = item.split(']');
+				if(priceSplits.length > 1)
+				{
+					newTextForIndesign += '\n' + '$' + rateFromAppData + ' ' + priceSplits[1];
+				}
+				else
+				{
+					newTextForIndesign += '\n' + '$' + rateFromAppData;
+				}				
+			}			
 			else {
 				newTextForIndesign += item;
+				///alert(' newTextForIndesign-'+newTextForIndesign);
 			}
 			//if else close
 		}// for loop end
-		alert('pdtFromInDesign-'+pdtFromInDesign+'newTextForIndesign-'+newTextForIndesign)
+		///alert('pdtFromInDesign-'+pdtFromInDesign+'--->   newTextForIndesign-'+newTextForIndesign)
 	}//if end
 
 	return newTextForIndesign;

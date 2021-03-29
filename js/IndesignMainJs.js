@@ -387,8 +387,8 @@ $('#btnProceedScanning').live( "click", function() {
     $.get( "../html/CommunicatingWithAppAndIndesign.html", function( data ) 
     {
                 $('#divPageContentDiv').html( data );
-                alert('successValues'+successValues);
-                UpdateProductDetailsIntheIndesignFile(successValues);
+                /////alert('successValues'+successValues);
+                UpdateProductDetailsIntheIndesignFile();
                
     });
 });
@@ -471,7 +471,7 @@ function GetProductDetails()
                 if(result != null && result != '' && result != undefined )
                 { 
                     var splitResults = result.split('T123T');
-                    $('#spanEror').text('splitResults.length-'+splitResults.length);
+                    ////$('#spanEror').text('splitResults.length-'+splitResults.length);
                     if(splitResults.length == 3)
                     {                    
                         errorValues = splitResults[0];
@@ -520,6 +520,7 @@ function GetProductDetails()
 function UpdateProductDetailsIntheIndesignFile()
 {
     var fnAndArgs = 'UpdateProductDetailsIntheIndesignFile(' + productData + ')';
+    ///alert(fnAndArgs);
     CSLibrary.evalScript(fnAndArgs, function(result) 
     {
         try
