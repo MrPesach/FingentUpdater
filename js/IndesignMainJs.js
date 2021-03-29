@@ -394,7 +394,7 @@ $('#btnProceedScanning').live( "click", function() {
 
 /////////////////////////////////// Scanning Result End /////////////////////////////////////////////////////
 
-/////////////////////////////////// goto index file creation Result Statrt /////////////////////////////////////////////////////
+/////////////////////////////////// Go to index file creation Statrt /////////////////////////////////////////////////////
 $('#btnGotoIndexFileCreation').live( "click", function() {
     $.get( "../html/IndexFileCreation.html", function( data ) 
     {
@@ -403,7 +403,7 @@ $('#btnGotoIndexFileCreation').live( "click", function() {
     });
 });
 
-/////////////////////////////////// Scanning Result End /////////////////////////////////////////////////////
+///////////////////////////////////  Go to index file creation End /////////////////////////////////////////////////////
 
 
 }
@@ -517,11 +517,10 @@ function UpdateProductDetailsIntheIndesignFile()
          
 if(result.length > 0)
 {
-    alert('Updated successfully.');
-    
     $('#btnGotoIndexFileCreation').prop('disabled', false);
     $('.maskedCircle').remove();
     $('#divScanningProgressBar').css("width", "100%");
+    alert('Updated successfully.');
 }
 else
 {
