@@ -473,6 +473,10 @@ function UpdateProductDetailsIntheIndesignFile(productData) {
 							///	alert(pageName+' ---->'+pdtFromInDesign);
 							for (var pdt = 0; pdt < productData.length; pdt++) {
 								try {
+									if (globalSuccessValues != '' 
+									&& globalSuccessValues.length > 0
+									&& globalSuccessValues.indexOf(pdtFromInDesign) > -1)
+									{
 									newTextForIndesign = '';
 									var pdtFromAppData = productData[pdt].Product;
 									var weightFromAppData = productData[pdt].Weight;
@@ -481,10 +485,11 @@ function UpdateProductDetailsIntheIndesignFile(productData) {
 									newTextForIndesign = GenerateNewCaptionForProduct(pdtFromInDesign, pdtFromAppData, weightFromAppData, rateFromAppData, lengthFromAppData,"G");
 									if (newTextForIndesign != '' && newTextForIndesign.length > 0) {
 										innerGrp.textFrames[t2].contents = newTextForIndesign;
-										stringReturnValue += "R12W" + newTextForIndesign + 'C12L' + pageName;
+										stringReturnValue += "R12W" + pdtFromAppData + 'C12L' + pageName;
 										break;
 										// found if close
 									}
+								}
 								}
 								catch (er) {
 									alert('UpdateProductDetailsIntheIndesignFile Group section-' + er);
@@ -508,17 +513,22 @@ function UpdateProductDetailsIntheIndesignFile(productData) {
 						///	alert(pageName + ' ---->' + pdtFromInDesign);
 						for (var pdt = 0; pdt < productData.length; pdt++) {
 							try {
-								newTextForIndesign = '';
-								var pdtFromAppData = productData[pdt].Product;
-								var weightFromAppData = productData[pdt].Weight;
-								var rateFromAppData = productData[pdt].Price;
-								var lengthFromAppData = productData[pdt].Length;
-								newTextForIndesign = GenerateNewCaptionForProduct(pdtFromInDesign, pdtFromAppData, weightFromAppData, rateFromAppData, lengthFromAppData, "GG");
-								if (newTextForIndesign != '' && newTextForIndesign.length > 0) {
-									grp.textFrames[t].contents = newTextForIndesign;
-									stringReturnValue += "R12W" + newTextForIndesign + 'C12L' + pageName;
-									break;
-									// found if close
+								if (globalSuccessValues != '' 
+								&& globalSuccessValues.length > 0
+								&& globalSuccessValues.indexOf(pdtFromInDesign) > -1)
+								{
+									newTextForIndesign = '';
+									var pdtFromAppData = productData[pdt].Product;
+									var weightFromAppData = productData[pdt].Weight;
+									var rateFromAppData = productData[pdt].Price;
+									var lengthFromAppData = productData[pdt].Length;
+									newTextForIndesign = GenerateNewCaptionForProduct(pdtFromInDesign, pdtFromAppData, weightFromAppData, rateFromAppData, lengthFromAppData, "GG");
+									if (newTextForIndesign != '' && newTextForIndesign.length > 0) {
+										grp.textFrames[t].contents = newTextForIndesign;
+										stringReturnValue += "R12W" + pdtFromAppData + 'C12L' + pageName;
+										break;
+										// found if close
+									}
 								}
 							}
 							catch (er) {
@@ -563,7 +573,7 @@ function UpdateProductDetailsIntheIndesignFile(productData) {
 								///alert('newTextForIndesign'+newTextForIndesign);
 								if (newTextForIndesign != '' && newTextForIndesign.length > 0) {
 									tfNormal[i].contents = newTextForIndesign;
-									stringReturnValue += "R12W" + newTextForIndesign + 'C12L' + pageName;
+									stringReturnValue += "R12W" + pdtFromAppData + 'C12L' + pageName;
 									break;
 									// found if close
 								}
@@ -639,6 +649,7 @@ if(pdtFromInDesign.indexOf('BRC1466') == -1)
 				newTextForIndesign += item;
 				///alert(' newTextForIndesign-'+newTextForIndesign);
 			}
+			////alert('item-'+item +' - newTextForIndesign-'+newTextForIndesign);
 			//if else close
 		}// for loop end
 		///alert('pdtFromInDesign-'+pdtFromInDesign+'--->   newTextForIndesign-'+newTextForIndesign)

@@ -5,6 +5,7 @@ var errorValues = '';
 var warningValues = '';
 var successValues = '';
 var resultForIndex = '';
+var indexFilePath ='';
 
 $(document).ready(function () { 
     try{
@@ -149,8 +150,9 @@ if(errorValues != '' && errorValues.length > 0)
         $('#divErrors').html(errorHtml);
     }
     catch(er)
-    {
-        alert('btnScanningProceed click error- '+er);
+    { 
+        $('#spanEror').text('Error btnScanningProceed from -' + er);
+        alert('btnScanningProceed click error- ' + er);
     }
 }
 
@@ -210,7 +212,8 @@ if(errorValues != '' && errorValues.length > 0)
     }
     catch(er)
     {
-        alert('btnScanningProceed click warning '+er);
+        $('#spanEror').text('Error from btnScanningProceed-' + er);
+        alert('btnScanningProceed click warning ' + er);
     }
 }
 
@@ -258,7 +261,8 @@ if(successValues != '' && successValues.length > 0 && warningValues.length == 0 
 }
 catch(er)
 {
-    alert('btnScanningProceed click warning '+er);
+    $('#spanEror').text('Error from btnScanningProceed -' + er);
+    alert('btnScanningProceed click warning ' + er);
 }
 }
                
@@ -408,16 +412,138 @@ $('#btnOk').live( "click", function() {
     window.close();
 });
 
+$('#btnDownloadIndexFile').live( "click", function() {
+    alert('btnDownloadIndexFile'+indexFilePath);
+    if(indexFilePath == '')
+    {
+        alert('Need to set the index file path!')
+    }
+    else
+    {
+    var fs = require('fs');
+    var baseUrl = process.env.APPDATA + '\\RCG\\index.csv';    
+    fs.rename(baseUrl, indexFilePath, function (err) 
+    {      
+      if (err) 
+      {
+
+      }     
+      else
+      {
+        alert('Index file downloaded('+indexFilePath+')');
+      }
+    });
+}
+});
+
+
 ///////////////////////////////////  Go to index file creation End /////////////////////////////////////////////////////
 
 
 }
-catch(e){
-    alert('Error from ready function-'+e);       
+catch(er){
+    $('#spanEror').text('Error from ready function-' + er);
+    alert('Error from ready function-' + er);       
 }  
 }); 
 
 
+function DownloadFile()
+{
+    var fs = require('fs')
+    
+    var oldPath = 'D:\\RCG\\From\\TestFile.txt'
+    var newPath = 'D:\\RCG\\To\\TestFile.txt'
+    
+    fs.rename(oldPath, newPath, function (err) {
+        alert(err);
+      if (err) throw err
+      console.log('Successfully renamed - AKA moved!')
+    });
+}
+
+function Create()
+{
+    try{
+        var fs = require('fs');
+       var baseUrl = process.env.APPDATA + '\\RCG\\index.csv';
+       alert(baseUrl);
+
+       var  JSONData=[
+        {
+        Product: 'ZYWER4246',
+        Length: '1',
+        Weight: '90',
+        Price: '4000'
+        },
+        {
+        Product: 'ZER677',
+        Length: '1',
+        Weight: '90',
+        Price: '4000'
+        },
+        {
+        Product: '517ER',
+        Length: '1',
+        Weight: '90',
+        Price: '4000'
+        },
+        {
+        Product: 'ZYWER4291',
+        Length: '1',
+        Weight: '90',
+        Price: '4000'
+        }
+    ];
+
+        var csvContent =  "Style Code,Page No \r\n";
+        for(var t = 0; t < JSONData.length;t++)
+        {
+            csvContent += JSONData[t].Product + ',' + JSONData[t].Length + "\r\n";
+        }
+
+        var baseUrl = process.env.APPDATA + '\\RCG\\index.csv';
+        fs.writeFile(baseUrl, csvContent, function (err) 
+        { 
+                                if (err)
+                                {
+                                    alert('Operation failed'+err);
+                                }                                
+                                else
+                                {
+                                    alert('File created.');
+                                }        
+        });
+    
+    /*
+    const fs = require('fs');
+const https = require('https');
+  
+// URL of the image
+const url = 'C:\\Users\\rcg.user\\Desktop\\INDD Files\\3-3-2021\\Catalog 165-180.indd';
+  
+https.get(url,(res) => {
+    alert('url-'+url);
+    // Image will be stored at this path
+    const path = `${__dirname}/files/img.indd`; 
+    const filePath = fs.createWriteStream(path);
+    res.pipe(filePath);
+    filePath.on('finish',() => {
+        filePath.close();
+        console.log('Download Completed'); 
+    })
+});
+*/
+
+
+
+    }
+    catch(er)
+    {
+        $('#spanEror').text('Error from -' + er);
+            alert(er);
+    }
+}
 
 
 function GetProductDetails()
@@ -437,6 +563,7 @@ function GetProductDetails()
                 ///var myJSON = JSON.stringify(obj);
                var data = jQuery.parseJSON(productDetails);
                 productData = data.Products;
+                indexFilePath = data.IndexFilePath;
               /*  if(productData != null && productData != '' && productData != undefined)
                 {
                     alert('productData-'+productData.length);
@@ -455,19 +582,18 @@ function GetProductDetails()
                 }
                 productData  =  JSON.stringify(newJson);                      
             }
-            catch(e)
+            catch(er)
             {
+                $('#spanEror').text('Error Invalid json format from -' + er);
                 alert('Invalid json format')
             }
         
             var fnAndArgs = 'GetProductDetailsFromIndesignFile(' + productData + ')';
             ///alert(fnAndArgs);
-            
             CSLibrary.evalScript(fnAndArgs, function(result) 
             {
                 try
                 {
-                
                 ///alert('GetProductDetailsFromIndesignFile in js-'+result);       
                 if(result != null && result != '' && result != undefined )
                 { 
@@ -477,7 +603,7 @@ function GetProductDetails()
                     {                    
                         errorValues = splitResults[0];
                         warningValues = splitResults[1];
-                        successValues= splitResults[2];
+                        successValues = splitResults[2];
                         ///alert(successValues);
                         $('#btnScanningProceed').prop('disabled', false);
                         $('.maskedCircle').remove();
@@ -498,8 +624,8 @@ function GetProductDetails()
                 }
                 catch(er)
                 {
-                    $('#spanEror').text('Error from GetProductDetailsFromIndesignFile-'+er);
-                    alert('Error from GetProductDetailsFromIndesignFile-'+er);
+                    $('#spanEror').text('Error from GetProductDetailsFromIndesignFile-' + er);
+                    ///alert('Error from GetProductDetailsFromIndesignFile-'+er);
                 }
             });
         }
@@ -510,14 +636,13 @@ function GetProductDetails()
     
     //// alert(productData);
     }
-    catch(e){
-        alert('Error from GetProductDetails'+e);
+    catch(er){
+        $('#spanEror').text('Error from GetProductDetails-' + er);
+        alert('Error from GetProductDetails' + er);
        }   
 }
 
 ////////////// JSX CALLS  //////////////
-
-
 function UpdateProductDetailsIntheIndesignFile()
 {
     var fnAndArgs = 'UpdateProductDetailsIntheIndesignFile(' + productData + ')';
@@ -527,19 +652,31 @@ function UpdateProductDetailsIntheIndesignFile()
         try
         {
             if(result.length > 0)
-            {
+            {               
                 resultForIndex = result;
                 var rows =   resultForIndex.split('R12W'); 
                 ////alert('rows.length'+rows.length);
-                var errorHtml ="";
+                var errorHtml = "Style Code,Page No \r\n";
                 for(var row = 0; row < rows.length;row++)
                 {
                     var eachRow = rows[row];
-                   
                     var columns = eachRow.split('C12L');
                    //// alert((row+1)+'. '+columns[0] + '--> '+columns[1])
+                   errorHtml += columns[0]  + ',' + columns[1]  + "\r\n";
                 }
-
+                var fs = require('fs');
+                var baseUrl = process.env.APPDATA + '\\RCG\\index.csv';
+                fs.writeFile(baseUrl, errorHtml, function (err)
+                { 
+                    if (err)
+                    {
+                       //// alert('Operation failed'+err);
+                    }                    
+                    else
+                    {
+                       //// alert('File created.');
+                    }                   
+                });
               ///  alert(result);
                 $('#btnGotoIndexFileCreation').prop('disabled', false);
                 $('.maskedCircle').remove();
@@ -548,137 +685,16 @@ function UpdateProductDetailsIntheIndesignFile()
             }
             else
             {
-                alert('no result in UpdateProductDetailsIntheIndesignFile');
+                alert('Result not found!');
             }
         }
         catch(er)
         {
-            alert('Error from UpdateProductDetailsIntheIndesignFile-'+er);
+            $('#spanEror').text('Error from -' + er);
+            ////alert('Error from UpdateProductDetailsIntheIndesignFile-'+ er);
         }
     });
 }
-
-function JSONToCSVConvertor() {
-    alert('JSONToCSVConvertor');
-        try
-        {
-    
-            var  JSONData=[
-                {
-                Product: 'ZYWER4246',
-                Length: '1',
-                Weight: '90',
-                Price: '4000'
-                },
-                {
-                Product: 'ZER677',
-                Length: '1',
-                Weight: '90',
-                Price: '4000'
-                },
-                {
-                Product: '517ER',
-                Length: '1',
-                Weight: '90',
-                Price: '4000'
-                },
-                {
-                Product: 'ZYWER4291',
-                Length: '1',
-                Weight: '90',
-                Price: '4000'
-                }
-            ];
-
-            const json2csv = require('json2csv').parse;
-
-const csvString = json2csv(JSONData);
-res.setHeader('Content-disposition', 'attachment; filename=shifts-report.csv');
-res.set('Content-Type', 'text/csv');
-res.status(200).send(csvString);
-           
-           /* var ReportTitle = 'Product,Length,Weight,Price';
-            var ShowLabel = false;
-    
-                //If JSONData is not an object then JSON.parse will parse the JSON string in an Object
-                var arrData = typeof JSONData != 'object' ? JSON.parse(JSONData) : JSONData;
-            
-                var CSV = '';
-                //Set Report title in first row or line
-            
-                CSV += ReportTitle + '\r\n\n';
-            
-                //This condition will generate the Label/Header
-                if (ShowLabel) {
-                var row = "";
-            
-                //This loop will extract the label from 1st index of on array
-                for (var index in arrData[0]) {
-            
-                    //Now convert each value to string and comma-seprated
-                    row += index + ',';
-                }
-            
-                row = row.slice(0, -1);
-            
-                //append Label row with line break
-                CSV += row + '\r\n';
-                }
-            
-                //1st loop is to extract each row
-                for (var i = 0; i < arrData.length; i++) {
-                var row = "";
-            
-                //2nd loop will extract each column and convert it in string comma-seprated
-                for (var index in arrData[i]) {
-                    row += '"' + arrData[i][index] + '",';
-                }
-            
-                row.slice(0, row.length - 1);
-            
-                //add a line break after each row
-                CSV += row + '\r\n';
-                }
-            
-                if (CSV == '') {
-                alert("Invalid data");
-                return;
-                }
-            
-                //Generate a file name
-                var fileName = "aneesh_";
-                //this will remove the blank-spaces from the title and replace it with an underscore
-                fileName += ReportTitle.replace(/ /g, "_");
-            
-                //Initialize file format you want csv or xls
-                var uri = 'data:text/csv;charset=utf-8,' + escape(CSV);
-            
-                // Now the little tricky part.
-                // you can use either>> window.open(uri);
-                // but this will not work in some browsers
-                // or you will not get the correct file extension    
-            
-                //this trick will generate a temp <a /> tag
-                var link = document.createElement("a");
-                link.href = uri;
-            
-                //set the visibility hidden so it will not effect on your web-layout
-                link.style = "visibility:hidden";
-                link.download = fileName + ".csv";
-            
-                //this part will append the anchor tag and remove it after automatic click
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                */
-            }
-            catch(er)
-            {
-                alert(er);
-            }
-      }
-    
-
 
 
 /*
