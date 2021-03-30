@@ -39,7 +39,7 @@ function GetProductDetailsFromIndesignFile(productData) {
 		var pageName = '';
 		////alert('Total pages-'+allPages.length);
 		for (var p = 0; p < allPages.length; p++) {
-			/**/
+			/* */
 			if(p > 0)
 			{
 				continue;
@@ -50,24 +50,15 @@ function GetProductDetailsFromIndesignFile(productData) {
 			isItaNewPageForWarning = true;
 			isItaNewPageForSucess = true;
 			currentPage = allPages[p];
-			pageName = currentPage.name;
-			
-			
-			////	var pages = app.documents[0].pages;
-		////	var pg = app.activeDocument.pages[0];
+			pageName = currentPage.name;		
 			///alert('pg.name-'+pageName);
-
-
 			var groups = currentPage.groups;
 			////var tf_ingroup_counter = 0;
 			///alert('pageName-'+pageName+'Group length-' + groups.length);
-
 			var newTextForIndesign = '';
-		
 			for (var g = 0; g < groups.length; g++) {
 				var grp = groups[g];
 				//////////////////////////////Group Within Group////////////////////////////////////////////////
-			
 				var innerGrps = grp.groups;
 				for (var t1 = 0; t1 < innerGrps.length; t1++) {
 					var innerGrp = innerGrps[t1];
@@ -92,7 +83,6 @@ function GetProductDetailsFromIndesignFile(productData) {
 									if (pdtFromInDesign != null && pdtFromInDesign != ''
 										&& pdtFromInDesign != undefined && pdtFromInDesign.indexOf(pdtFromAppData) > -1) {
 										
-																	
 										if (pdtFromInDesign.indexOf(']g') == -1
 											|| pdtFromInDesign.indexOf('$[') == -1) {
 											productStatus = 103;		/// 103 -> Product In Error,
@@ -119,7 +109,8 @@ function GetProductDetailsFromIndesignFile(productData) {
 
 										break;
 									} // found if close
-									else {
+									else 
+									{
 										productStatus = 102;	/// 102 -> Product In Warning,
 									}
 
@@ -130,7 +121,6 @@ function GetProductDetailsFromIndesignFile(productData) {
 								}
 
 							} //productData loop closed
-
 
 							if (productStatus == 102) //// Product missing 102 -> Product In Warning
 							{
@@ -153,8 +143,7 @@ function GetProductDetailsFromIndesignFile(productData) {
 							}
 							else if (productStatus == 101) /// 101 -> Product In Success,
 							{
-								wholeProductFromInDesign.push(
-									{
+								wholeProductFromInDesign.push({
 										'PageName': pageName,
 										'Product': pdtFromInDesign,
 										'IsError': false,
@@ -183,7 +172,8 @@ function GetProductDetailsFromIndesignFile(productData) {
 					var tff = grp.textFrames[t];
 					var pdtFromInDesign = tff.contents;
 					if (pdtFromInDesign != null && pdtFromInDesign != ''
-						&& pdtFromInDesign != undefined && pdtFromInDesign.indexOf('[') > -1) {
+						&& pdtFromInDesign != undefined 
+						&& pdtFromInDesign.indexOf('[') > -1) {
 
 					
 						productStatus = 101;//success
@@ -196,10 +186,10 @@ function GetProductDetailsFromIndesignFile(productData) {
 								var rateFromAppData = productData[pdt].Price;
 								var lengthFromAppData = productData[pdt].Length;
 
-								if (pdtFromInDesign != null && pdtFromInDesign != ''
-									&& pdtFromInDesign != undefined && pdtFromInDesign.indexOf(pdtFromAppData) > -1) {
-									
-
+								if (pdtFromInDesign != null 
+									&& pdtFromInDesign != ''
+									&& pdtFromInDesign != undefined 
+									&& pdtFromInDesign.indexOf(pdtFromAppData) > -1) {
 								
 									if ( pdtFromInDesign.indexOf(']g') == -1
 										|| pdtFromInDesign.indexOf('$[') == -1) {
@@ -421,7 +411,7 @@ function GetProductDetailsFromIndesignFile(productData) {
 /////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////
 function UpdateProductDetailsIntheIndesignFile(productData) {
-	alert('UpdateProductDetailsIntheIndesignFile');
+	///alert('UpdateProductDetailsIntheIndesignFile');
 	///globalSuccessValues = successValues;
 	///alert('UpdateProductDetailsIntheIndesignFile globalSuccessValues' + globalSuccessValues);
 	var stringReturnValue = '';
@@ -453,10 +443,12 @@ function UpdateProductDetailsIntheIndesignFile(productData) {
 		var pageName = '';
 		////alert('Total pages-'+allPages.length);
 		for (var p = 0; p < allPages.length; p++) {
+			/*
 			if(p > 0)
 			{
 				continue;
 			}
+			*/
 			////alert('page name '+ allPages[p].name);
 			currentPage = allPages[p];
 			pageName = currentPage.name;
@@ -472,11 +464,12 @@ function UpdateProductDetailsIntheIndesignFile(productData) {
 				var innerGrps = grp.groups;
 				for (var t1 = 0; t1 < innerGrps.length; t1++) {
 					var innerGrp = innerGrps[t1];
-					for (var t2 = 0; t2 < innerGrp.textFrames.length; t2++) {
-						
+					for (var t2 = 0; t2 < innerGrp.textFrames.length; t2++) 
+					{	
 						var pdtFromInDesign = innerGrp.textFrames[t2].contents;
-						if (pdtFromInDesign != null && pdtFromInDesign != ''
-							&& pdtFromInDesign != undefined && pdtFromInDesign.indexOf('[') > -1) {
+						if (pdtFromInDesign != null 
+							&& pdtFromInDesign != ''
+							&& pdtFromInDesign != undefined > -1) {
 							///	alert(pageName+' ---->'+pdtFromInDesign);
 							for (var pdt = 0; pdt < productData.length; pdt++) {
 								try {
@@ -508,8 +501,10 @@ function UpdateProductDetailsIntheIndesignFile(productData) {
 				///	alert('group name '+grp);
 				for (var t = 0; t < grp.textFrames.length; t++) {
 					var pdtFromInDesign = grp.textFrames[t].contents;
-					if (pdtFromInDesign != null && pdtFromInDesign != ''
-						&& pdtFromInDesign != undefined && pdtFromInDesign.indexOf('[') > -1) {
+					if (pdtFromInDesign != null 
+						&& pdtFromInDesign != ''
+						&& pdtFromInDesign != undefined)
+						 {
 						///	alert(pageName + ' ---->' + pdtFromInDesign);
 						for (var pdt = 0; pdt < productData.length; pdt++) {
 							try {
@@ -551,7 +546,7 @@ function UpdateProductDetailsIntheIndesignFile(productData) {
 					&& pdtFromInDesign != ''
 					&& pdtFromInDesign != undefined)
 					 {
-						////alert(pdtFromInDesign);
+					////alert(pdtFromInDesign);
 					for (var g = 0; g < productData.length; g++) {
 						try {
 							//alert(globalSuccessValues);
@@ -603,7 +598,7 @@ if(pdtFromInDesign.indexOf('BRC1466') == -1)
 {
 	return "";
 }
-		*/
+*/
 /// alert('pdtFromInDesign-'+pdtFromInDesign+' | pdtFromAppData-'+pdtFromAppData+' | from-'+from);
 	if (pdtFromInDesign != null && pdtFromInDesign != ''
 		&& pdtFromInDesign != undefined

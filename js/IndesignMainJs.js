@@ -4,6 +4,7 @@ var wholeProductFromInDesign = '';
 var errorValues = '';
 var warningValues = '';
 var successValues = '';
+var resultForIndex = '';
 
 $(document).ready(function () { 
     try{
@@ -399,8 +400,8 @@ $('#btnProceedScanning').live( "click", function() {
 $('#btnGotoIndexFileCreation').live( "click", function() {
     $.get( "../html/IndexFileCreation.html", function( data ) 
     {
-                $('#divPageContentDiv').html( data );
-                
+                $('#divPageContentDiv').html(data);
+
     });
 });
 $('#btnOk').live( "click", function() {
@@ -527,6 +528,19 @@ function UpdateProductDetailsIntheIndesignFile()
         {
             if(result.length > 0)
             {
+                resultForIndex = result;
+                var rows =   resultForIndex.split('R12W'); 
+                ////alert('rows.length'+rows.length);
+                var errorHtml ="";
+                for(var row = 0; row < rows.length;row++)
+                {
+                    var eachRow = rows[row];
+                   
+                    var columns = eachRow.split('C12L');
+                   //// alert((row+1)+'. '+columns[0] + '--> '+columns[1])
+                }
+
+              ///  alert(result);
                 $('#btnGotoIndexFileCreation').prop('disabled', false);
                 $('.maskedCircle').remove();
                 $('#divScanningProgressBar').css("width", "100%");
