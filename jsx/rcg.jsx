@@ -39,12 +39,17 @@ function GetProductDetailsFromIndesignFile(productData) {
 		var pageName = '';
 		////alert('Total pages-'+allPages.length);
 		for (var p = 0; p < allPages.length; p++) {
-			/* */
+			/* 
 			if(p > 0)
 			{
 				continue;
 			}
 			
+if(allPages[p].name != '168')
+{
+	continue;
+}
+*/
 			////alert('page name '+ allPages[p].name);
 			isItaNewPageForError = true;
 			isItaNewPageForWarning = true;
@@ -176,8 +181,7 @@ function GetProductDetailsFromIndesignFile(productData) {
 						&& pdtFromInDesign.indexOf('[') > -1) {
 
 					
-						productStatus = 101;//success
-						///alert('grp '+pageName+' ---->'+pdtFromInDesign);
+						productStatus = 101;//success					
 						for (var pdt = 0; pdt < productData.length; pdt++) {
 							try {
 								newTextForIndesign = '';
@@ -279,10 +283,16 @@ function GetProductDetailsFromIndesignFile(productData) {
 			/////var tf = app.documents[0].textFrames.everyItem().getElements();	
 			var tfNormal = currentPage.textFrames.everyItem().getElements();
 			///alert('Normal nnnn   -'+ tf.length);
-			///alert('Normal-'+ tfNormal.length);
+			////alert('Normal-'+ tfNormal.length);
 			for (var i = 0; i < tfNormal.length; i++) {
 				var pdtFromInDesign = tfNormal[i].contents;
-				///alert('Normal pdtFromInDesign '+pdtFromInDesign+'pageName-'+pageName);
+				/*
+				if(pdtFromInDesign.indexOf('RC2552') == -1)
+				{
+					continue;
+				}
+				*/
+				////alert('Normal pdtFromInDesign '+pdtFromInDesign+'pageName-'+pageName);
 				if (pdtFromInDesign != null 
 					&& pdtFromInDesign != ''
 					&& pdtFromInDesign != undefined 
@@ -291,12 +301,13 @@ function GetProductDetailsFromIndesignFile(productData) {
 					/// 101 -> Product In Success,
 					/// 102 -> Product In Warning,
 					/// 103 -> Product In Error,
-					////alert(pdtFromInDesign);
+					///alert('productData.length'+productData.length);
 					for (var g = 0; g < productData.length; g++) {
 						try {
 
 							newTextForIndesign = '';
 							var pdtFromAppData = productData[g].Product;
+							///alert('pdtFromAppData->'+pdtFromAppData);
 							var weightFromAppData = productData[g].Weight;
 							var rateFromAppData = productData[g].Price;
 							var lengthFromAppData = productData[g].Length;
@@ -334,13 +345,13 @@ function GetProductDetailsFromIndesignFile(productData) {
 							} // found if close
 							else {
 								productStatus = 102;	/// 102 -> Product In Warning,
+								///alert('in warning');
 							}
 
 							///alert('pdtFromInDesign-'+pdtFromInDesign+' | pdtFromAppData-'+pdtFromAppData+' | newTextForIndesign-'+newTextForIndesign);
 						}
 						catch (er) {
-							alert('Normal section-' + er);
-							g = productData.length - 1;
+							alert('Normal section-' + er);							
 						}
 
 					}///productData loop
@@ -348,7 +359,7 @@ function GetProductDetailsFromIndesignFile(productData) {
 					///alert('pdtFromInDesign-' + pdtFromInDesign + 'productStatus-'+productStatus)
 					if (productStatus == 102) //// Product missing from group 	/// 102 -> Product In Warning
 					{
-					/////	alert(pdtFromInDesign + ' Product In Warning');
+						////alert(pdtFromInDesign + ' Product In Warning');
 						wholeProductFromInDesign.push(
 							{
 								'PageName': pageName,
@@ -384,10 +395,14 @@ function GetProductDetailsFromIndesignFile(productData) {
 							successReturnValue += "R12W" + (isItaNewPageForSucess == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L0C12L1C12LI";
 						}
 						isItaNewPageForSucess = false;
-						///alert('successReturnValue-'+successReturnValue);
+						////alert('successReturnValue-'+successReturnValue);
 					}
 
 				}//[ atleast one
+				else
+				{
+					///alert('Invalid entry')
+				}
 
 			} //text frame close
 			//////////////////////////////////NORMAL END /////////////////////////////////////////////////////			
@@ -395,7 +410,7 @@ function GetProductDetailsFromIndesignFile(productData) {
 
 		}//page loop close
 
-///alert('errorReturnValue'+errorReturnValue);
+//alert('errorReturnValue'+errorReturnValue);
 ///alert('warningReturnValue'+warningReturnValue);
 ///alert('successReturnValue-'+successReturnValue);
 			

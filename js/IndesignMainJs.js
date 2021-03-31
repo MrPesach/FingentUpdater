@@ -12,12 +12,7 @@ $(document).ready(function () {
     try{
        /// alert(' js ready');
        
-        $.get( "../html/indexSub.html", function( data ) 
-        {
-                    $('#divPageContentDiv').html( data );
-        });
-
-
+       LoadIndexSubPage();
 
 /////////////////////////////////////Index Page Start///////////////////////////////////////////////////
 
@@ -39,58 +34,10 @@ $(document).ready(function () {
 
 $('#btnIndesignScanCancel').live( "click", function() {
     ///alert( 'alert from aTagProccedToScanningPage' );
-    $.get( "../html/indexSub.html", function( data ) 
-    {
-                $('#divPageContentDiv').html( data );
-    }); 
-
+    LoadIndexSubPage();
 });
 
- /*Collapse*/
-
- /*
- var coll = document.getElementsByClassName("info-hd");
- var i;
-
-for (i = 0; i < coll.length; i++) {
-  coll[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var content = this.nextElementSibling;
-    if (content.style.display === "none") {
-      content.style.display = "block";
-    } else {
-      content.style.display = "none";
-    }
-  });
-}
-*/
-
-/*Copy button text change on click*/
-
-/*
-var btnCopy = document.getElementsByClassName("btn-copy-text");
-var btnText;
-console.log(btnText)
- var j;
-
- btnCopy[0].addEventListener("click", function() {
-     btnCopy[0].innerHTML = 'Missing Values Copied';  
-     setTimeout(function(){ 
-       btnCopy[0].innerHTML = 'Copy Missing Values';  
-   }, 2000);      
-  });
-
-  btnCopy[1].addEventListener("click", function() {
-     btnCopy[1].innerHTML = 'Error Copied';  
-     setTimeout(function(){ 
-       btnCopy[1].innerHTML = 'Copy Error';  
-   }, 2000);      
-  });
-*/
-
-
-
-
+ 
 $('#btnScanningProceed').live( "click", function() 
 {
     ///alert( 'alert from aTagProccedToScanningPage' );
@@ -101,14 +48,17 @@ $('#btnScanningProceed').live( "click", function()
 if(errorValues != '' && errorValues.length > 0) 
 {
     try
-    {
+    {       
+         $('#btnErrorCopy').show(); 
         $('#divErrors').show(); 
         if(warningValues != '' && warningValues.length > 0)
         {
+            $('#btnWarningsCopy').show();
             $('#divWarnings').show();
         }
         else
         {
+            $('#btnWarningsCopy').hide();
             $('#divWarnings').remove();
         }
        
@@ -118,12 +68,11 @@ if(errorValues != '' && errorValues.length > 0)
         $('#divCopyCtrls').remove();
         var rows =   errorValues.split('R12W'); 
         ////alert('rows.length'+rows.length);
-        var errorHtml ="";
+        var errorHtml =  "<div class='row' style='color:#FF3E5A'> Errors</div>";
         for(var row = 0; row < rows.length;row++)
         {
             var eachRow = rows[row];           
-            var columns = eachRow.split('C12L');
-            errorHtml +=  "<div class='row' style='color:#FF3E5A'> Errors</div>";
+            var columns = eachRow.split('C12L');           
             if(columns[0] == 1)///is it a new page
             {
                 //product
@@ -136,12 +85,12 @@ if(errorValues != '' && errorValues.length > 0)
                     errorHtml +=  "</ul> <div id='divErrorPage"+ row +"' class='info-hd errorPage'>Page-"+columns[1] +"</div>";
                  }
                 errorHtml +=  "<ul style='display:none;' class='info-list error-list' id='ulErrors"+ row +"'>";
-                errorHtml +=  "<li><img src='../img/error.png' class='tick'> <span class='PdtCls'> "+ columns[2] +"("+  columns[5] +") </span></li>";
+                errorHtml +=  "<li><img src='../img/error.png' class='tick'> <span class='PdtCls' title="+  columns[5] +">"+ columns[2] + "</span></li>";
             }
             else
             {  
                 //product
-                errorHtml +=  "<li><img src='../img/error.png' class='tick'> <span class='PdtCls'> "+ columns[2] +"("+  columns[5] +") </span> </li>";
+                errorHtml +=  "<li><img src='../img/error.png' class='tick'> <span class='PdtCls' title="+  columns[5] +">"+ columns[2] +"</span> </li>";
             }
         }
 
@@ -159,13 +108,17 @@ if(errorValues != '' && errorValues.length > 0)
     {
         try
         {
+           
+            $('#btnWarningsCopy').show();
             $('#divWarnings').show();
             if(errorValues != '' && errorValues.length > 0) 
-            {
+            { 
+                $('#btnErrorCopy').show(); 
                 $('#divErrors').show(); 
             }
             else
             {
+                $('#btnErrorCopy').hide(); 
                 $('#divErrors').remove(); 
             }           
            
@@ -195,12 +148,12 @@ if(errorValues != '' && errorValues.length > 0)
                     warningHtml +=  "</ul><div id='divWarningPage"+ row +"' class='info-hd warningPage'>Page-"+columns[1] +"</div>";
                 }
                 warningHtml +=  " <ul style='display:none;' class='info-list error-list warring-list' id='ulWarnings"+ row +"'>";
-                warningHtml +=  "<li><img src='../img/warring.png' class='tick'> <span class='PdtCls'> "+ columns[2] + "("+  columns[5]+") </span></li>";
+                warningHtml +=  "<li><img src='../img/warring.png' class='tick'> <span class='PdtCls' title="+  columns[5] +"> "+ columns[2] + "</span></li>";
             }
             else
             {  
                 //product
-                warningHtml +=  "<li><img src='../img/warring.png' class='tick'> <span class='PdtCls'> "+ columns[2]  +"("+  columns[5]+") </span> </li>";
+                warningHtml +=  "<li><img src='../img/warring.png' class='tick'> <span class='PdtCls' title="+  columns[5] +"> "+ columns[2]  + "</span> </li>";
             }
         }
         warningHtml +=  " </ul>";
@@ -243,12 +196,12 @@ if(successValues != '' && successValues.length > 0 && warningValues.length == 0 
                 successHtml +=  "</ul><div id='divSuccess" + row + "' class='info-hd successPage'>Page-"+columns[1] +"</div>";
             }
             successHtml +=  " <ul style='display:none;' class='info-list' id='ulSuccess" + row +"'>";
-            successHtml +=  "<li><img src='../img/tick.png' class='tick'> <span class='PdtCls'> "+ columns[2] +"("+  columns[5]+") </span> </li>";
+            successHtml +=  "<li><img src='../img/tick.png' class='tick'> <span class='PdtCls' title="+  columns[5] +"> "+ columns[2] + " </span> </li>";
         }
         else
         {  
             //product
-            successHtml +=  "<li><img src='../img/tick.png' class='tick'> <span class='PdtCls'> "+ columns[2] +"("+  columns[5]+")  </span></li>";
+            successHtml +=  "<li><img src='../img/tick.png' class='tick'> <span class='PdtCls' title="+  columns[5] +"> "+ columns[2] +" </span></li>";
         }
     }
     successHtml +=  " </ul>";
@@ -475,6 +428,13 @@ catch(er){
 }  
 }); 
 
+function LoadIndexSubPage()
+{
+    $.get( "../html/indexSub.html", function( data ) 
+    {
+                $('#divPageContentDiv').html( data );
+    });
+}
 
 function DownloadFile()
 {
@@ -581,47 +541,65 @@ function GetProductDetails()
         ///alert(process.env.APPDATA);
         var fs = require('fs');    
        var productDetails = fs.readFileSync(process.env.APPDATA + '/RCG/ProductDetails.txt',{encoding:'utf8'});
-     ///alert(productDetails);
+     ////alert(productDetails);
         if(productDetails != null && productDetails != '' && productDetails != undefined)
         {
             ///alert(productDetails);
             try
             {
-                ///var obj = JSON.parse('{ "name":"John", "age":30, "city":"New York"}');
-                ///var myJSON = JSON.stringify(obj);
-               var data = jQuery.parseJSON(productDetails);
+               
+              /*
+                var data = jQuery.parseJSON(productDetails);
                 productData = data.Products;
                 indexFilePath = data.IndexFilePath;
-              /*  if(productData != null && productData != '' && productData != undefined)
-                {
-                    alert('productData-'+productData.length);
-                }
-                else
-                {
-                    alert('Else');
-                }
-               /// 
-               */
                 var newJson = [];
                 for(var t = 0; t < productData.length;t++)
                 {
-                ////    alert(productData[t1].Product);
+                    alert(productData[t1].Product+'-'+productData[t1].Length+'-'+productData[t1].Weight+'-'+productData[t1].Price);
                     newJson.push(productData[t]); 
                 }
-                productData  =  JSON.stringify(newJson);                      
+                productData  =  JSON.stringify(newJson); */                      
+
+///alert(productDetails);
+        try
+        {
+            var indexFiles = productDetails.split(',');
+            var index = jQuery.parseJSON(indexFiles[0]+'}');
+            indexFilePath = index.IndexFilePath;
+            //alert('indexFilePath-'+indexFilePath);
+            var matches = productDetails.match(/\[(.*?)\]/);
+            productData = jQuery.parseJSON(matches[0]); 
+            var newJson = [];
+            for(var t = 0; t < productData.length;t++)
+            {
+                newJson.push(productData[t]); 
+               ////alert(productData[t].Product);
+               
+            }
+            productData  =  JSON.stringify(newJson);
+        }
+        catch(er)
+        {
+            alert('test '+er);
+        }
+              
+               
+
             }
             catch(er)
             {
                 $('#spanEror').text('Error Invalid json format from -' + er);
-                alert('Invalid json format')
+                alert('Invalid json format');
+                LoadIndexSubPage();
+                return;
             }
-        
+
+        try
+        {
             var fnAndArgs = 'GetProductDetailsFromIndesignFile(' + productData + ')';
             ///alert(fnAndArgs);
             CSLibrary.evalScript(fnAndArgs, function(result) 
-            {
-                try
-                {
+            {  
                 ///alert('GetProductDetailsFromIndesignFile in js-'+result);       
                 if(result != null && result != '' && result != undefined )
                 { 
@@ -646,20 +624,23 @@ function GetProductDetails()
                 }
                 else
                 {
-                    alert('There is no product details!');
+                    alert('There is no product details!');   
+                    LoadIndexSubPage();                
                 }      
             
-                }
+               
+            }); 
+        }
                 catch(er)
                 {
                     $('#spanEror').text('Error from GetProductDetailsFromIndesignFile-' + er);
                     ///alert('Error from GetProductDetailsFromIndesignFile-'+er);
                 }
-            });
         }
         else
         {
             alert('There is no product details!');
+            LoadIndexSubPage();
         }
     
     //// alert(productData);
@@ -938,4 +919,41 @@ function Test()
     var dirHome = process.env [process.platform =="win32"?"USERPROFILE":"HOME"];
     var dirDesktop = require ("path"). join (dirHome,"Desktop");
     alert(dir_desktop);
+}
+
+function JsonConvert()
+{
+ try
+         {
+  ///  alert('JsonConvert');
+    var fs = require('fs');    
+    var productDetails = fs.readFileSync(process.env.APPDATA + '/RCG/ProductDetails.txt',{encoding:'utf8'});
+  ///alert(productDetails);
+     if(productDetails != null && productDetails != '' && productDetails != undefined)
+     {
+         ///alert(productDetails);
+        
+         var indexFiles = productDetails.split(',');
+         var index = jQuery.parseJSON(indexFiles[0]+'}');
+         alert(index.IndexFilePath);
+
+            var matches = productDetails.match(/\[(.*?)\]/);
+           var json = jQuery.parseJSON(matches[0]); ;
+            for(var t = 0; t < json.length;t++)
+            {
+                alert(json[t].Product);
+               
+            }
+
+            if (matches) {
+                var submatch = matches[0];
+            }
+      
+    }
+   }
+         catch(er)
+         {
+             alert(er);
+            $('#spanEror').text('Error JsonConvert from -' + er);
+         }
 }
