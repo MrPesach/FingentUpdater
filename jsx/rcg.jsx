@@ -44,12 +44,12 @@ function GetProductDetailsFromIndesignFile(productData) {
 			{
 				continue;
 			}
-			
-if(allPages[p].name != '168')
+		
+if(allPages[p].name != '166')
 {
 	continue;
 }
-*/
+*/	
 			////alert('page name '+ allPages[p].name);
 			isItaNewPageForError = true;
 			isItaNewPageForWarning = true;
@@ -110,6 +110,10 @@ if(allPages[p].name != '168')
 											}
 											isItaNewPageForError = false;
 											///alert(errorReturnValue);
+										}
+										else
+										{
+											productStatus = 101;									
 										}
 
 										break;
@@ -218,7 +222,10 @@ if(allPages[p].name != '168')
 										isItaNewPageForError = false;
 										///alert(errorReturnValue);
 									}
-
+									else
+									{
+										productStatus = 101;									
+									}
 									break;
 								} // found if close
 								else {
@@ -286,8 +293,8 @@ if(allPages[p].name != '168')
 			////alert('Normal-'+ tfNormal.length);
 			for (var i = 0; i < tfNormal.length; i++) {
 				var pdtFromInDesign = tfNormal[i].contents;
-				/*
-				if(pdtFromInDesign.indexOf('RC2552') == -1)
+			/*	
+				if(pdtFromInDesign.indexOf('BRC2765') == -1)
 				{
 					continue;
 				}
@@ -316,11 +323,13 @@ if(allPages[p].name != '168')
 								&& pdtFromInDesign != ''
 								&& pdtFromInDesign != undefined 
 								&& pdtFromInDesign.indexOf(pdtFromAppData) > -1) {
-								
+								///alert('Product found');
 								/// Product found in indesign
-								if (pdtFromInDesign.indexOf(']g') == -1
-									|| pdtFromInDesign.indexOf('$[') == -1) {
-									////	alert(pdtFromInDesign + 'Normal error pdtFromInDesign '+pdtFromInDesign+'pageName-'+pageName);
+								var indexOfweight = pdtFromInDesign.indexOf(']g') ;
+								var indexOfPrice = pdtFromInDesign.indexOf('$[');
+								///alert('indexOfweight='+indexOfweight+'indexOfPrice- '+indexOfPrice+'productStatus'+productStatus);
+								if (indexOfweight == -1  || indexOfPrice == -1) {
+									///	alert(pdtFromInDesign + 'Normal error pdtFromInDesign '+pdtFromInDesign+'pageName-'+pageName);
 									productStatus = 103;		/// 103 -> Product In Error,
 									wholeProductFromInDesign.push(
 										{
@@ -339,6 +348,10 @@ if(allPages[p].name != '168')
 										errorReturnValue += "R12W" + (isItaNewPageForError == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L1C12L0C12LI";
 									}
 									isItaNewPageForError = false;
+								}
+								else
+								{
+									productStatus = 101;									
 								}
 
 								break;
@@ -371,7 +384,8 @@ if(allPages[p].name != '168')
 						if (warningReturnValue.length == 0) {
 							warningReturnValue += (isItaNewPageForWarning == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L0C12L1C12LI";
 						}
-						else {
+						else 
+						{
 							warningReturnValue += "R12W" + (isItaNewPageForWarning == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L0C12L1C12LI";
 						}
 						isItaNewPageForWarning = false;
@@ -490,7 +504,8 @@ function UpdateProductDetailsIntheIndesignFile(productData) {
 								try {
 									if (globalSuccessValues != '' 
 									&& globalSuccessValues.length > 0
-									&& globalSuccessValues.indexOf(pdtFromInDesign) > -1)
+									&& globalSuccessValues.indexOf(pdtFromInDesign) > -1
+									&& pdtFromInDesign.indexOf(pdtFromAppData) > -1)
 									{
 									newTextForIndesign = '';
 									var pdtFromAppData = productData[pdt].Product;
@@ -534,7 +549,8 @@ function UpdateProductDetailsIntheIndesignFile(productData) {
 							try {
 								if (globalSuccessValues != '' 
 								&& globalSuccessValues.length > 0
-								&& globalSuccessValues.indexOf(pdtFromInDesign) > -1)
+								&& globalSuccessValues.indexOf(pdtFromInDesign) > -1
+								&& pdtFromInDesign.indexOf(pdtFromAppData) > -1)
 								{
 									newTextForIndesign = '';
 									var pdtFromAppData = productData[pdt].Product;
@@ -575,20 +591,28 @@ function UpdateProductDetailsIntheIndesignFile(productData) {
 			////alert('Normal-'+ tfNormal.length+'successReturnValue'+globalSuccessValues);
 			for (var i = 0; i < tfNormal.length; i++) {
 				var pdtFromInDesign = tfNormal[i].contents;
+/*
+				if(pdtFromInDesign.indexOf('BRC2765') == -1)
+{
+	continue;
+}
+*/
+
 				if (pdtFromInDesign != null 
 					&& pdtFromInDesign != ''
 					&& pdtFromInDesign != undefined)
 					 {
-					////alert(pdtFromInDesign);
+					///alert(pdtFromInDesign);
 					for (var g = 0; g < productData.length; g++) {
 						try {
-							//alert(globalSuccessValues);
+							var pdtFromAppData = productData[g].Product;
+							///alert(globalSuccessValues);
 							if (globalSuccessValues != '' 
 							&& globalSuccessValues.length > 0
-							&& globalSuccessValues.indexOf(pdtFromInDesign) > -1)
+							&& globalSuccessValues.indexOf(pdtFromInDesign) > -1
+							&& pdtFromInDesign.indexOf(pdtFromAppData) > -1)
 							{
-								newTextForIndesign = '';
-								var pdtFromAppData = productData[g].Product;
+								newTextForIndesign = '';								
 								var weightFromAppData = productData[g].Weight;
 								var rateFromAppData = productData[g].Price;
 								var lengthFromAppData = productData[g].Length;
@@ -630,13 +654,13 @@ function UpdateProductDetailsIntheIndesignFile(productData) {
 
 function GenerateNewCaptionForProduct(pdtFromInDesign, pdtFromAppData, weightFromAppData, rateFromAppData, lengthFromAppData,from) {
 	var newTextForIndesign = '';
-/*
-if(pdtFromInDesign.indexOf('BRC1466') == -1)
+/* 
+if(pdtFromInDesign.indexOf('BRC2765') == -1)
 {
 	return "";
 }
 */
-/// alert('pdtFromInDesign-'+pdtFromInDesign+' | pdtFromAppData-'+pdtFromAppData+' | from-'+from);
+ ////alert('pdtFromInDesign-'+pdtFromInDesign+' | pdtFromAppData-'+pdtFromAppData+' | from-'+from);
 	if (pdtFromInDesign != null && pdtFromInDesign != ''
 		&& pdtFromInDesign != undefined
 		&& pdtFromInDesign.indexOf(pdtFromAppData) > -1
@@ -681,6 +705,6 @@ if(pdtFromInDesign.indexOf('BRC1466') == -1)
 		}// for loop end
 		///alert('pdtFromInDesign-'+pdtFromInDesign+'--->   newTextForIndesign-'+newTextForIndesign)
 	}//if end
-
-	return '9846 '+newTextForIndesign;
+////alert('9846 '+newTextForIndesign);
+	return newTextForIndesign;
 }//function close

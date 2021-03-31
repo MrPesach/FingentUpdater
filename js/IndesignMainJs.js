@@ -34,7 +34,7 @@ $(document).ready(function () {
 
 $('#btnIndesignScanCancel').live( "click", function() {
     ///alert( 'alert from aTagProccedToScanningPage' );
-    LoadIndexSubPage();
+    ////LoadIndexSubPage();
 });
 
  
@@ -320,11 +320,11 @@ alert('Copied');
 ////////////////////////////////////Scanning Indesign Result Start/////////////////////////////////////////////////
 $('#btnCancelScanningResult').live( "click", function() {
     ///alert( 'alert from aTagProccedToScanningPage' );
-    $.get( "../html/ScanningInDesign.html", function( data ) 
+   /* $.get( "../html/ScanningInDesign.html", function( data ) 
     {
                 $('#divPageContentDiv').html( data );
     });
-
+*/
 });
 
 ////////////////////////////////////Scanning Indesign Result End/////////////////////////////////////////////////
