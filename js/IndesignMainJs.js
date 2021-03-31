@@ -448,7 +448,7 @@ $('#btnDownloadIndexFile').live( "click", function() {
                 { 
                     if (er)
                     {
-                        alert('Operation failed('+er+")");
+                        alert('Operation failed.');
                         $('#spanEror').text('Error from btnDownloadIndexFile -' + er);
                     }                    
                     else
