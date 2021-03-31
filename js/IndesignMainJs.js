@@ -423,7 +423,14 @@ $('#btnDownloadIndexFile').live( "click", function() {
     {
         var fs = require('fs');  
         if (fs.existsSync(indexFilePath)) 
+        {   
+        }
+        else
         {
+            alert('Index file path does not exists(' + indexFilePath + ')');
+            var dirHome = process.env [process.platform =="win32"?"USERPROFILE":"HOME"];
+            indexFilePath = require ("path"). join (dirHome,"Desktop");
+        }
        //// alert('resultForIndex'+resultForIndex);
             if(resultForIndex != '' && resultForIndex != null && resultForIndex != undefined)
             {
@@ -450,11 +457,7 @@ $('#btnDownloadIndexFile').live( "click", function() {
                     }                   
                 });
             }
-        }
-        else
-        {
-            alert('Index file path does not exists(' + indexFilePath + ')');
-        }
+       
 
 
         /* var fs = require('fs');
@@ -941,3 +944,10 @@ $(document).ready(function () {
     }); 
 }); 
 */
+
+function Test()
+{
+    var dirHome = process.env [process.platform =="win32"?"USERPROFILE":"HOME"];
+    var dirDesktop = require ("path"). join (dirHome,"Desktop");
+    alert(dir_desktop);
+}
