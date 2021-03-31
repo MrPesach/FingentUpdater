@@ -377,12 +377,15 @@ $('#btnDownloadIndexFile').live( "click", function() {
             {
                 var rows =   resultForIndex.split('R12W'); 
                 ////alert('rows.length'+rows.length);
-                var csvContent = "SKU,Page No \r\n";
+                var csvContent = "SKU,Page\r\n";
                 for(var row = 0; row < rows.length;row++)
                 {
                     var eachRow = rows[row];
-                    var columns = eachRow.split('C12L');           
-                    csvContent += columns[0]  + ',' + columns[1]  + "\r\n";
+                    if(eachRow != '' && eachRow != null && eachRow != undefined)
+                    {
+                        var columns = eachRow.split('C12L');           
+                        csvContent += columns[0]  + ',' + columns[1]  + "\r\n";
+                    }                    
                 }
                 
                 fs.writeFile(indexFilePath+"\\index.csv", csvContent, function (er)
@@ -484,7 +487,7 @@ function Create()
         }
     ];
 
-        var csvContent =  "Style Code,Page No \r\n";
+        var csvContent =  "Style Code,Page\r\n";
         for(var t = 0; t < JSONData.length;t++)
         {
             csvContent += JSONData[t].Product + ',' + JSONData[t].Length + "\r\n";
@@ -560,7 +563,7 @@ function GetProductDetails()
                 }
                 productData  =  JSON.stringify(newJson); */                      
 
-///alert(productDetails);
+                    ///alert(productDetails);
         try
         {
             var indexFiles = productDetails.split(',');
