@@ -113,7 +113,6 @@ if(errorValues != '' && errorValues.length > 0)
         }
        
         $('#divSuccess').remove();
-
         $('#pFooterForErrorWarning').show();
         $('#pFooterForSuccess').remove();
         $('#divCopyCtrls').remove();
@@ -122,8 +121,7 @@ if(errorValues != '' && errorValues.length > 0)
         var errorHtml ="";
         for(var row = 0; row < rows.length;row++)
         {
-            var eachRow = rows[row];
-           
+            var eachRow = rows[row];           
             var columns = eachRow.split('C12L');
             errorHtml +=  "<div class='row' style='color:#FF3E5A'> Errors</div>";
             if(columns[0] == 1)///is it a new page
@@ -169,11 +167,9 @@ if(errorValues != '' && errorValues.length > 0)
             else
             {
                 $('#divErrors').remove(); 
-            }
-           
+            }           
            
             $('#divSuccess').remove();
-
             $('#pFooterForErrorWarning').show();
             $('#pFooterForSuccess').remove();
             $('#divCopyCtrls').show();
@@ -189,8 +185,7 @@ if(errorValues != '' && errorValues.length > 0)
            ///alert(eachRow);
             if(columns[0] == 1)///is it a new page
             {
-                //product
-               
+                //product               
                 if(row == 0)
                 {
                     warningHtml +=  "<div id='divWarningPage"+ row +"' class='info-hd warningPage'>Page-"+columns[1] +"</div>"; 
@@ -238,8 +233,7 @@ if(successValues != '' && successValues.length > 0 && warningValues.length == 0 
        ///alert(eachRow);
         if(columns[0] == 1)///is it a new page
         {
-            //product
-           
+            //product           
             if(row == 0)
             {
                 successHtml +=  "<div id='divSuccess" + row + "' class='info-hd successPage'>Page-"+columns[1] +"</div>"; 
@@ -286,7 +280,6 @@ $('.errorPage').live( "click", function() {
         $('#ulErrors'+balPortion).show();
         $(this).addClass('active');
       }
-
 });
 
 $('.warningPage').live( "click", function() {
@@ -301,11 +294,10 @@ $('.warningPage').live( "click", function() {
       else{
             $('#ulWarnings'+balPortion).show();
             $(this).addClass('active');
-      }
-    
+      }    
 });
 
-$('.successPage').live( "click", function() {
+$('.successPage').live("click", function() {
     var Str = $(this).attr('id');
     var toRemove = 'divSuccess';
     var balPortion = Str.replace(toRemove, '');
@@ -313,12 +305,11 @@ $('.successPage').live( "click", function() {
     {
         $(this).removeClass('active');
         $('#ulSuccess'+balPortion).hide();
-      }
+    }
       else{
             $('#ulSuccess'+balPortion).show();
             $(this).addClass('active');
-      }
-    
+      }    
 });
 
 
@@ -327,14 +318,13 @@ $('#btnWarningsCopy').live( "click", function() {
 var content = "";
 $("div[id^='divWarningPage']").each(function(index, item) 
 {
-       content += $(this).html()+'<br>';
+    content += $(this).html()+'<br>';
     var Str = $(this).attr('id');
     var toRemove = 'divWarningPage';
     var balPortion = Str.replace(toRemove, '');
     $("#ulWarnings"+balPortion + " .PdtCls").each(function() {
         content += $(this).text()+'<br>';
     });
-
 });
 
 var $temp = $("<textarea>");
@@ -343,9 +333,7 @@ var $temp = $("<textarea>");
   $temp.val(content.replace(brRegex, "\r\n")).select();
   document.execCommand("copy");
   $temp.remove();
-
-alert('Copied');
-
+  alert('Copied');
 });
    
 
@@ -358,7 +346,7 @@ $("div[id^='divErrorPage']").each(function(index, item)
     var Str = $(this).attr('id');
     var toRemove = 'divErrorPage';
     var balPortion = Str.replace(toRemove, '');
-    $("#ulErrors"+balPortion + " .PdtCls").each(function() {
+    $("#ulErrors" + balPortion + " .PdtCls").each(function() {
         content += $(this).text()+'<br>';
     });
 
@@ -453,7 +441,7 @@ $('#btnDownloadIndexFile').live( "click", function() {
                     }                    
                     else
                     {
-                        alert('Index file downloaded('+indexFilePath+')');
+                        alert('Index file downloaded(' + indexFilePath + ')');
                     }                   
                 });
             }
