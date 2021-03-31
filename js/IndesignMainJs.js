@@ -7,6 +7,7 @@ var successValues = '';
 var resultForIndex = '';
 var indexFilePath ='';
 
+
 $(document).ready(function () { 
     try{
        /// alert(' js ready');
@@ -413,26 +414,62 @@ $('#btnOk').live( "click", function() {
 });
 
 $('#btnDownloadIndexFile').live( "click", function() {
-    alert('btnDownloadIndexFile'+indexFilePath);
-    if(indexFilePath == '')
+    /////alert('btnDownloadIndexFile'+indexFilePath);
+    if(indexFilePath == '' || indexFilePath == null || indexFilePath == undefined)
     {
         alert('Need to set the index file path!')
     }
     else
     {
-    var fs = require('fs');
-    var baseUrl = process.env.APPDATA + '\\RCG\\index.csv';    
-    fs.rename(baseUrl, indexFilePath, function (err) 
-    {      
-      if (err) 
-      {
+        var fs = require('fs');  
+        if (fs.existsSync(indexFilePath)) 
+        {
+       //// alert('resultForIndex'+resultForIndex);
+            if(resultForIndex != '' && resultForIndex != null && resultForIndex != undefined)
+            {
+                var rows =   resultForIndex.split('R12W'); 
+                ////alert('rows.length'+rows.length);
+                var csvContent = "SKU,Page No \r\n";
+                for(var row = 0; row < rows.length;row++)
+                {
+                    var eachRow = rows[row];
+                    var columns = eachRow.split('C12L');           
+                    csvContent += columns[0]  + ',' + columns[1]  + "\r\n";
+                }
+                
+                fs.writeFile(indexFilePath+"\\index.csv", csvContent, function (er)
+                { 
+                    if (er)
+                    {
+                        alert('Operation failed('+er+")");
+                        $('#spanEror').text('Error from btnDownloadIndexFile -' + er);
+                    }                    
+                    else
+                    {
+                        alert('Index file downloaded('+indexFilePath+')');
+                    }                   
+                });
+            }
+        }
+        else
+        {
+            alert('Index file path does not exists(' + indexFilePath + ')');
+        }
 
-      }     
-      else
-      {
-        alert('Index file downloaded('+indexFilePath+')');
-      }
-    });
+
+        /* var fs = require('fs');
+        var baseUrl = process.env.APPDATA + '\\RCG\\index.csv';    
+        fs.rename(baseUrl, indexFilePath, function (err) 
+        {      
+        if (err) 
+        {
+
+        }     
+        else
+        {
+            alert('Index file downloaded('+indexFilePath+')');
+        }
+        }); */
 }
 });
 
@@ -654,29 +691,7 @@ function UpdateProductDetailsIntheIndesignFile()
             if(result.length > 0)
             {               
                 resultForIndex = result;
-                var rows =   resultForIndex.split('R12W'); 
-                ////alert('rows.length'+rows.length);
-                var errorHtml = "Style Code,Page No \r\n";
-                for(var row = 0; row < rows.length;row++)
-                {
-                    var eachRow = rows[row];
-                    var columns = eachRow.split('C12L');
-                   //// alert((row+1)+'. '+columns[0] + '--> '+columns[1])
-                   errorHtml += columns[0]  + ',' + columns[1]  + "\r\n";
-                }
-                var fs = require('fs');
-                var baseUrl = process.env.APPDATA + '\\RCG\\index.csv';
-                fs.writeFile(baseUrl, errorHtml, function (err)
-                { 
-                    if (err)
-                    {
-                       //// alert('Operation failed'+err);
-                    }                    
-                    else
-                    {
-                       //// alert('File created.');
-                    }                   
-                });
+               
               ///  alert(result);
                 $('#btnGotoIndexFileCreation').prop('disabled', false);
                 $('.maskedCircle').remove();
