@@ -368,7 +368,7 @@ $('#btnDownloadIndexFile').live( "click", function() {
         }
         else
         {
-            alert('Index file path does not exists(' + indexFilePath + ')');
+            ////alert('Index file path does not exists(' + indexFilePath + ')');
             var dirHome = process.env [process.platform =="win32"?"USERPROFILE":"HOME"];
             indexFilePath = require ("path"). join (dirHome,"Desktop");
         }
