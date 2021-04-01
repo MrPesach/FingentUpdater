@@ -960,3 +960,17 @@ function JsonConvert()
             $('#spanEror').text('Error JsonConvert from -' + er);
          }
 }
+
+function TestNewPdtName()
+{
+var test ='AUF1022[AUF1022-18|ln]  $[AUF1022-18|pr][AUF1022-18|wt]g';
+
+var fnAndArgs = "GetProductBNameFromIndesignText('" + test + "')";
+///alert(fnAndArgs);
+CSLibrary.evalScript(fnAndArgs, function(result) 
+{  
+    alert('result from jsx-'+test+' ->'+result);       
+    
+});
+
+}
