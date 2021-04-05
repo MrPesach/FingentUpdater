@@ -10,7 +10,7 @@ var indexFilePath ='';
 
 $(document).ready(function () { 
     try{
-       /// alert(' js ready');
+       /// swal(' js ready');
        
        LoadIndexSubPage();
 
@@ -18,7 +18,7 @@ $(document).ready(function () {
 
 
         $('#aTagProccedToScanningPage').live( "click", function() {
-            ///alert( 'alert from aTagProccedToScanningPage' );
+            ///swal( 'swal from aTagProccedToScanningPage' );
             $.get( "../html/ScanningInDesign.html", function( data ) 
             {
                         $('#divPageContentDiv').html( data );
@@ -33,18 +33,18 @@ $(document).ready(function () {
 /////////////////////////////////////Scanning Indesign Page Start/////////////////////////////////
 
 $('#btnIndesignScanCancel').live( "click", function() {
-    ///alert( 'alert from aTagProccedToScanningPage' );
+    ///swal( 'swal from aTagProccedToScanningPage' );
     ////LoadIndexSubPage();
 });
 
  
 $('#btnScanningProceed').live( "click", function() 
 {
-    ///alert( 'alert from aTagProccedToScanningPage' );
+    ///swal( 'swal from aTagProccedToScanningPage' );
     $.get( "../html/ScanningInDesignResult.html", function( data ) 
     {
                 $('#divPageContentDiv').html( data );
-                ///alert(errorValues);
+                ///swal(errorValues);
 if(errorValues != '' && errorValues.length > 0) 
 {
     try
@@ -67,7 +67,7 @@ if(errorValues != '' && errorValues.length > 0)
         $('#pFooterForSuccess').remove();
         $('#divCopyCtrls').remove();
         var rows =   errorValues.split('R12W'); 
-        ////alert('rows.length'+rows.length);
+        ////swal('rows.length'+rows.length);
         var errorHtml =  "<div class='row' style='color:#FF3E5A'> Errors</div>";
         for(var row = 0; row < rows.length;row++)
         {
@@ -100,7 +100,7 @@ if(errorValues != '' && errorValues.length > 0)
     catch(er)
     { 
         $('#spanEror').text('Error btnScanningProceed from -' + er);
-        alert('btnScanningProceed click error- ' + er);
+        swal('btnScanningProceed click error- ' + er);
     }
 }
 
@@ -129,13 +129,13 @@ if(errorValues != '' && errorValues.length > 0)
             
 
         var rows =   warningValues.split('R12W'); 
-     //// alert('rows.length-'+rows.length);
+     //// swal('rows.length-'+rows.length);
         var warningHtml ="<div class='row' style='color:#F0B65B'>Warnings</div>";
         for(var row = 0; row < rows.length;row++)
         {
             var eachRow = rows[row];
             var columns = eachRow.split('C12L');
-           ///alert(eachRow);
+           ///swal(eachRow);
             if(columns[0] == 1)///is it a new page
             {
                 //product               
@@ -162,7 +162,7 @@ if(errorValues != '' && errorValues.length > 0)
     catch(er)
     {
         $('#spanEror').text('Error from btnScanningProceed-' + er);
-        alert('btnScanningProceed click warning ' + er);
+        swal('btnScanningProceed click warning ' + er);
     }
 }
 
@@ -177,13 +177,13 @@ if(successValues != '' && successValues.length > 0 && warningValues.length == 0 
         $('#pFooterForSuccess').show();
         $('#divCopyCtrls').remove();
     var rows =   successValues.split('R12W'); 
- //// alert('rows.length-'+rows.length);
+ //// swal('rows.length-'+rows.length);
     var successHtml ="<div class='row' style='color:#1DC198'>Success</div>";
     for(var row = 0; row < rows.length;row++)
     {
         var eachRow = rows[row];
         var columns = eachRow.split('C12L');
-       ///alert(eachRow);
+       ///swal(eachRow);
         if(columns[0] == 1)///is it a new page
         {
             //product           
@@ -210,7 +210,7 @@ if(successValues != '' && successValues.length > 0 && warningValues.length == 0 
 catch(er)
 {
     $('#spanEror').text('Error from btnScanningProceed -' + er);
-    alert('btnScanningProceed click warning ' + er);
+    swal('btnScanningProceed click warning ' + er);
 }
 }
                
@@ -286,7 +286,7 @@ var $temp = $("<textarea>");
   $temp.val(content.replace(brRegex, "\r\n")).select();
   document.execCommand("copy");
   $temp.remove();
-  alert('Copied');
+  swal('Copied');
 });
    
 
@@ -312,14 +312,14 @@ var $temp = $("<textarea>");
   document.execCommand("copy");
   $temp.remove();
 
-alert('Copied');
+swal('Copied');
 });
 
 ////////////////////////////////////Scanning Indesign Page End/////////////////////////////////////////////////
 
 ////////////////////////////////////Scanning Indesign Result Start/////////////////////////////////////////////////
 $('#btnCancelScanningResult').live( "click", function() {
-    ///alert( 'alert from aTagProccedToScanningPage' );
+    ///swal( 'swal from aTagProccedToScanningPage' );
    /* $.get( "../html/ScanningInDesign.html", function( data ) 
     {
                 $('#divPageContentDiv').html( data );
@@ -334,7 +334,7 @@ $('#btnProceedScanning').live( "click", function() {
     $.get( "../html/CommunicatingWithAppAndIndesign.html", function( data ) 
     {
                 $('#divPageContentDiv').html( data );
-                /////alert('successValues'+successValues);
+                /////swal('successValues'+successValues);
                 UpdateProductDetailsIntheIndesignFile();
                
     });
@@ -355,10 +355,10 @@ $('#btnOk').live( "click", function() {
 });
 
 $('#btnDownloadIndexFile').live( "click", function() {
-    /////alert('btnDownloadIndexFile'+indexFilePath);
+    /////swal('btnDownloadIndexFile'+indexFilePath);
     if(indexFilePath == '' || indexFilePath == null || indexFilePath == undefined)
     {
-        alert('Need to set the index file path!')
+        swal('Need to set the index file path!')
     }
     else
     {
@@ -368,15 +368,15 @@ $('#btnDownloadIndexFile').live( "click", function() {
         }
         else
         {
-            ////alert('Index file path does not exists(' + indexFilePath + ')');
+            ////swal('Index file path does not exists(' + indexFilePath + ')');
             var dirHome = process.env [process.platform =="win32"?"USERPROFILE":"HOME"];
             indexFilePath = require ("path"). join (dirHome,"Desktop");
         }
-       //// alert('resultForIndex'+resultForIndex);
+       //// swal('resultForIndex'+resultForIndex);
             if(resultForIndex != '' && resultForIndex != null && resultForIndex != undefined)
             {
                 var rows =   resultForIndex.split('R12W'); 
-                ////alert('rows.length'+rows.length);
+                ////swal('rows.length'+rows.length);
                 var csvContent = "SKU,Page\r\n";
                 for(var row = 0; row < rows.length;row++)
                 {
@@ -392,12 +392,12 @@ $('#btnDownloadIndexFile').live( "click", function() {
                 { 
                     if (er)
                     {
-                        alert('Operation failed.');
+                        swal('Operation failed.');
                         $('#spanEror').text('Error from btnDownloadIndexFile -' + er);
                     }                    
                     else
                     {
-                        alert('Index file downloaded(' + indexFilePath + ')');
+                        swal('Index file downloaded(' + indexFilePath + ')');
                     }                   
                 });
             }
@@ -414,7 +414,7 @@ $('#btnDownloadIndexFile').live( "click", function() {
         }     
         else
         {
-            alert('Index file downloaded('+indexFilePath+')');
+            swal('Index file downloaded('+indexFilePath+')');
         }
         }); */
 }
@@ -427,7 +427,7 @@ $('#btnDownloadIndexFile').live( "click", function() {
 }
 catch(er){
     $('#spanEror').text('Error from ready function-' + er);
-    alert('Error from ready function-' + er);       
+    swal('Error from ready function-' + er);       
 }  
 }); 
 
@@ -447,7 +447,7 @@ function DownloadFile()
     var newPath = 'D:\\RCG\\To\\TestFile.txt'
     
     fs.rename(oldPath, newPath, function (err) {
-        alert(err);
+        swal(err);
       if (err) throw err
       console.log('Successfully renamed - AKA moved!')
     });
@@ -458,7 +458,7 @@ function Create()
     try{
         var fs = require('fs');
        var baseUrl = process.env.APPDATA + '\\RCG\\index.csv';
-       alert(baseUrl);
+       swal(baseUrl);
 
        var  JSONData=[
         {
@@ -498,11 +498,11 @@ function Create()
         { 
                                 if (err)
                                 {
-                                    alert('Operation failed'+err);
+                                    swal('Operation failed'+err);
                                 }                                
                                 else
                                 {
-                                    alert('File created.');
+                                    swal('File created.');
                                 }        
         });
     
@@ -514,7 +514,7 @@ const https = require('https');
 const url = 'C:\\Users\\rcg.user\\Desktop\\INDD Files\\3-3-2021\\Catalog 165-180.indd';
   
 https.get(url,(res) => {
-    alert('url-'+url);
+    swal('url-'+url);
     // Image will be stored at this path
     const path = `${__dirname}/files/img.indd`; 
     const filePath = fs.createWriteStream(path);
@@ -532,7 +532,7 @@ https.get(url,(res) => {
     catch(er)
     {
         $('#spanEror').text('Error from -' + er);
-            alert(er);
+            swal(er);
     }
 }
 
@@ -541,13 +541,13 @@ function GetProductDetails()
 {   
     try
     {
-        ///alert(process.env.APPDATA);
+        ///swal(process.env.APPDATA);
         var fs = require('fs');    
        var productDetails = fs.readFileSync(process.env.APPDATA + '/RCG/ProductDetails.txt',{encoding:'utf8'});
-     ////alert(productDetails);
+     ////swal(productDetails);
         if(productDetails != null && productDetails != '' && productDetails != undefined)
         {
-            ///alert(productDetails);
+            ///swal(productDetails);
             try
             {
                
@@ -558,32 +558,32 @@ function GetProductDetails()
                 var newJson = [];
                 for(var t = 0; t < productData.length;t++)
                 {
-                    alert(productData[t1].Product+'-'+productData[t1].Length+'-'+productData[t1].Weight+'-'+productData[t1].Price);
+                    swal(productData[t1].Product+'-'+productData[t1].Length+'-'+productData[t1].Weight+'-'+productData[t1].Price);
                     newJson.push(productData[t]); 
                 }
                 productData  =  JSON.stringify(newJson); */                      
 
-                    ///alert(productDetails);
+                    ///swal(productDetails);
         try
         {
             var indexFiles = productDetails.split(',');
             var index = jQuery.parseJSON(indexFiles[0]+'}');
             indexFilePath = index.IndexFilePath;
-            //alert('indexFilePath-'+indexFilePath);
+            //swal('indexFilePath-'+indexFilePath);
             var matches = productDetails.match(/\[(.*?)\]/);
             productData = jQuery.parseJSON(matches[0]); 
             var newJson = [];
             for(var t = 0; t < productData.length;t++)
             {
                 newJson.push(productData[t]); 
-               ////alert(productData[t].Product);
+               ////swal(productData[t].Product);
                
             }
             productData  =  JSON.stringify(newJson);
         }
         catch(er)
         {
-            alert('test '+er);
+            swal('test '+er);
         }
               
                
@@ -592,7 +592,7 @@ function GetProductDetails()
             catch(er)
             {
                 $('#spanEror').text('Error Invalid json format from -' + er);
-                alert('Invalid json format');
+                swal('Invalid json format');
                 LoadIndexSubPage();
                 return;
             }
@@ -600,10 +600,10 @@ function GetProductDetails()
         try
         {
             var fnAndArgs = 'GetProductDetailsFromIndesignFile(' + productData + ')';
-            ///alert(fnAndArgs);
+            ///swal(fnAndArgs);
             CSLibrary.evalScript(fnAndArgs, function(result) 
             {  
-                ///alert('GetProductDetailsFromIndesignFile in js-'+result);       
+                ///swal('GetProductDetailsFromIndesignFile in js-'+result);       
                 if(result != null && result != '' && result != undefined )
                 { 
                     var splitResults = result.split('T123T');
@@ -613,21 +613,21 @@ function GetProductDetails()
                         errorValues = splitResults[0];
                         warningValues = splitResults[1];
                         successValues = splitResults[2];
-                        ///alert(successValues);
+                        ///swal(successValues);
                         $('#btnScanningProceed').prop('disabled', false);
                         $('.maskedCircle').remove();
                         $('#divScanningProgressBar').css("width", "100%");
-                        alert('Process completed');
+                        swal('Process completed');
                         $('#btnScanningProceed').trigger('click');
                     }
                     else
                     {
-                        alert(result);
+                        swal(result);
                     }
                 }
                 else
                 {
-                    alert('There is no product details!');   
+                    swal('There is no product details!');   
                     LoadIndexSubPage();                
                 }      
             
@@ -637,20 +637,20 @@ function GetProductDetails()
                 catch(er)
                 {
                     $('#spanEror').text('Error from GetProductDetailsFromIndesignFile-' + er);
-                    ///alert('Error from GetProductDetailsFromIndesignFile-'+er);
+                    ///swal('Error from GetProductDetailsFromIndesignFile-'+er);
                 }
         }
         else
         {
-            alert('There is no product details!');
+            swal('There is no product details!');
             LoadIndexSubPage();
         }
     
-    //// alert(productData);
+    //// swal(productData);
     }
     catch(er){
         $('#spanEror').text('Error from GetProductDetails-' + er);
-        alert('Error from GetProductDetails' + er);
+        swal('Error from GetProductDetails' + er);
        }   
 }
 
@@ -658,7 +658,7 @@ function GetProductDetails()
 function UpdateProductDetailsIntheIndesignFile()
 {
     var fnAndArgs = 'UpdateProductDetailsIntheIndesignFile(' + productData + ')';
-    ///alert(fnAndArgs);
+    ///swal(fnAndArgs);
     CSLibrary.evalScript(fnAndArgs, function(result) 
     {
         try
@@ -667,21 +667,21 @@ function UpdateProductDetailsIntheIndesignFile()
             {               
                 resultForIndex = result;
                
-              ///  alert(result);
+              ///  swal(result);
                 $('#btnGotoIndexFileCreation').prop('disabled', false);
                 $('.maskedCircle').remove();
                 $('#divScanningProgressBar').css("width", "100%");
-                alert('Updated successfully.');
+                swal('Updated successfully.');
             }
             else
             {
-                alert('Result not found!');
+                swal('Result not found!');
             }
         }
         catch(er)
         {
             $('#spanEror').text('Error from -' + er);
-            ////alert('Error from UpdateProductDetailsIntheIndesignFile-'+ er);
+            ////swal('Error from UpdateProductDetailsIntheIndesignFile-'+ er);
         }
     });
 }
@@ -697,7 +697,7 @@ function MoveFileFromOneLocationToAnother()
     var newPath = 'D:\\RCG\\To\\TestFile.txt'
     
     fs.rename(oldPath, newPath, function (err) {
-        alert(err);
+        swal(err);
       if (err) throw err
       console.log('Successfully renamed - AKA moved!')
     });
@@ -740,7 +740,7 @@ else {
 function getCurrentFilenames() { 
 console.log("\nCurrent filenames:"); 
 fs.readdirSync(__dirname).forEach(file => { 
-  alert(file); 
+  swal(file); 
 }); 
 } 
 
@@ -758,10 +758,10 @@ function DownloadFile(e)
     var request = http.get("http://www.gstatic.com/webp/gallery3/1.png", function(response) {
        
     if (response.statusCode === 200) {
-       /// alert('get'+response.statusCode);   
+       /// swal('get'+response.statusCode);   
             var file = fs.createWriteStream(destinationUrl,"ancopy.png");
             response.pipe(file);
-            alert(file);
+            swal(file);
         }
         // Add timeout.
         request.setTimeout(12000, function () {
@@ -782,7 +782,7 @@ function DownloadFile(e)
             document.body.appendChild(link);
             link.click();
             link.remove();
-            alert('downloadURI');
+            swal('downloadURI');
         }
 */
 
@@ -792,7 +792,7 @@ function DownloadFile(e)
         function Download(url) {
            
             document.getElementById('my_iframe').src = url;
-            alert(document.getElementById('my_iframe').src);
+            swal(document.getElementById('my_iframe').src);
         };
 */
 
@@ -802,8 +802,8 @@ function DownloadFile(e)
     
     var download = function(uri, filename, callback){
         request.head(uri, function(err, res, body){
-            alert('content-type:', res.headers['content-type']);
-            alert('content-length:', res.headers['content-length']);
+            swal('content-type:', res.headers['content-type']);
+            swal('content-length:', res.headers['content-length']);
 
         request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
     
@@ -811,7 +811,7 @@ function DownloadFile(e)
     };   
     
     download('https://www.cryptocompare.com/media/19684/doge.png', 'icons/taskks12.png', function(){
-    alert('done');
+    swal('done');
     });
     */
 
@@ -823,7 +823,7 @@ var http = require('http');
 var fs = require('fs');
 
 function pDownload(url, dest){
-    alert('pDownload');
+    swal('pDownload');
   var file = fs.createWriteStream(dest);
   return new Promise((resolve, reject) => {
     var responseSent = false; // flag to make sure that response is sent only once.
@@ -877,7 +877,7 @@ var download = function(url, dest, cb) {
         const file = fs.createWriteStream("file.jpg");
         const request = http.get("http://i3.ytimg.com/vi/J---aiyznGQ/mqdefault.jpg", function(response) {
           response.pipe(file);
-          alert('inside get');
+          swal('inside get');
         });
 
 */
@@ -899,7 +899,7 @@ var download = function(url, dest, cb) {
             '_blank' // <- This is what makes it open in a new window.
           ); 
 
-          alert('click done');  
+          swal('click done');  
           */
           
 
@@ -908,10 +908,10 @@ var download = function(url, dest, cb) {
 
 /*
 $(document).ready(function () { 
-    ///alert('ready');
+    ///swal('ready');
     $("#link").click(function (e) { 
         e.preventDefault(); 
-          alert('link click');
+          swal('link click');
         window.location.href = "D:\\RCG\\TestFile.txt"; 
     }); 
 }); 
@@ -921,30 +921,30 @@ function Test()
 {
     var dirHome = process.env [process.platform =="win32"?"USERPROFILE":"HOME"];
     var dirDesktop = require ("path"). join (dirHome,"Desktop");
-    alert(dir_desktop);
+    swal(dir_desktop);
 }
 
 function JsonConvert()
 {
  try
          {
-  ///  alert('JsonConvert');
+  ///  swal('JsonConvert');
     var fs = require('fs');    
     var productDetails = fs.readFileSync(process.env.APPDATA + '/RCG/ProductDetails.txt',{encoding:'utf8'});
-  ///alert(productDetails);
+  ///swal(productDetails);
      if(productDetails != null && productDetails != '' && productDetails != undefined)
      {
-         ///alert(productDetails);
+         ///swal(productDetails);
         
          var indexFiles = productDetails.split(',');
          var index = jQuery.parseJSON(indexFiles[0]+'}');
-         alert(index.IndexFilePath);
+         swal(index.IndexFilePath);
 
             var matches = productDetails.match(/\[(.*?)\]/);
            var json = jQuery.parseJSON(matches[0]); ;
             for(var t = 0; t < json.length;t++)
             {
-                alert(json[t].Product);
+                swal(json[t].Product);
                
             }
 
@@ -956,7 +956,7 @@ function JsonConvert()
    }
          catch(er)
          {
-             alert(er);
+             swal(er);
             $('#spanEror').text('Error JsonConvert from -' + er);
          }
 }
@@ -966,11 +966,42 @@ function TestNewPdtName()
 var test ='AUF1022[AUF1022-18|ln]  $[AUF1022-18|pr][AUF1022-18|wt]g';
 
 var fnAndArgs = "GetProductBNameFromIndesignText('" + test + "')";
-///alert(fnAndArgs);
+///swal(fnAndArgs);
 CSLibrary.evalScript(fnAndArgs, function(result) 
 {  
-    alert('result from jsx-'+test+' ->'+result);       
+    swal('result from jsx-'+test+' ->'+result);       
     
 });
 
+}
+
+function SwalFn()
+{
+        try
+        {
+            ///swal('swal');
+        swal("Here's a message!");
+      /*  swal("Here's a message!", "It's pretty, isn't it?")
+        swal("Good job!", "You clicked the button!", "success");
+        swal({
+            title: "Are you sure?",
+            text: "Your will not be able to recover this imaginary file!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Yes, delete it!",
+            closeOnConfirm: false
+          },
+          function(){
+            swal("Deleted!", "Your imaginary file has been deleted.", "success");
+          });
+          */
+
+
+        }
+        catch(er)
+        {
+            swal(er);
+        $('#spanEror').text('Error swal from -' + er);
+        }
 }
