@@ -100,7 +100,7 @@ if(errorValues != '' && errorValues.length > 0)
     catch(er)
     { 
         $('#spanEror').text('Error btnScanningProceed from -' + er);
-        swal('btnScanningProceed click error- ' + er);
+        //// swal('btnScanningProceed click error- ' + er);
     }
 }
 
@@ -162,7 +162,7 @@ if(errorValues != '' && errorValues.length > 0)
     catch(er)
     {
         $('#spanEror').text('Error from btnScanningProceed-' + er);
-        swal('btnScanningProceed click warning ' + er);
+        ////swal('btnScanningProceed click warning ' + er);
     }
 }
 
@@ -210,7 +210,7 @@ if(successValues != '' && successValues.length > 0 && warningValues.length == 0 
 catch(er)
 {
     $('#spanEror').text('Error from btnScanningProceed -' + er);
-    swal('btnScanningProceed click warning ' + er);
+    ////swal('btnScanningProceed click warning ' + er);
 }
 }
                
@@ -406,7 +406,19 @@ $('#btnDownloadIndexFile').live( "click", function() {
                 { 
                     if (er)
                     {
-                        swal('Operation failed!');
+                        ///swal('Operation failed!');
+                        swal({
+                            title: "Operation failed!",
+                            text: "",
+                            type: "warning",
+                            showCancelButton: false,
+                            confirmButtonClass: "btn-danger",
+                            confirmButtonText: "",
+                            closeOnConfirm: true
+                          },
+                          function(){
+                            ////swal("Deleted!", "Your imaginary file has been deleted.", "success");
+                          });
                         $('#spanEror').text('Error from btnDownloadIndexFile -' + er);
                     }                    
                     else
@@ -442,7 +454,7 @@ $('#btnDownloadIndexFile').live( "click", function() {
 }
 catch(er){
     $('#spanEror').text('Error from ready function-' + er);
-    swal('Error from ready function-' + er);       
+    ////swal('Error from ready function-' + er);       
 }  
 }); 
 
@@ -549,7 +561,7 @@ https.get(url,(res) => {
     catch(er)
     {
         $('#spanEror').text('Error from -' + er);
-            swal(er);
+           //// swal(er);
     }
 }
 
@@ -600,7 +612,7 @@ function GetProductDetails()
         }
         catch(er)
         {
-            swal('test '+er);
+            ////swal('test '+er);
         }
               
                
@@ -609,7 +621,19 @@ function GetProductDetails()
             catch(er)
             {
                 $('#spanEror').text('Error Invalid json format from -' + er);
-                swal('Invalid json format');
+                ////swal('Invalid json format');
+                swal({
+                    title: "Invalid json format!",
+                    text: "",
+                    type: "warning",
+                    showCancelButton: false,
+                    confirmButtonClass: "btn-danger",
+                    confirmButtonText: "",
+                    closeOnConfirm: true
+                  },
+                  function(){
+                    ////swal("Deleted!", "Your imaginary file has been deleted.", "success");
+                  });
                 LoadIndexSubPage();
                 return;
             }
@@ -640,7 +664,19 @@ function GetProductDetails()
                     }
                     else
                     {
-                        swal(result);
+                       //// swal(result);
+                       swal({
+                        title: result,
+                        text: "",
+                        type: "warning",
+                        showCancelButton: false,
+                        confirmButtonClass: "btn-danger",
+                        confirmButtonText: "",
+                        closeOnConfirm: true
+                      },
+                      function(){
+                        ////swal("Deleted!", "Your imaginary file has been deleted.", "success");
+                      });
                     }
                 }
                 else
@@ -692,7 +728,7 @@ function GetProductDetails()
     }
     catch(er){
         $('#spanEror').text('Error from GetProductDetails-' + er);
-        swal('Error from GetProductDetails' + er);
+        ////swal('Error from GetProductDetails' + er);
        }   
 }
 
@@ -1011,7 +1047,7 @@ function JsonConvert()
    }
          catch(er)
          {
-             swal(er);
+             /////swal(er);
             $('#spanEror').text('Error JsonConvert from -' + er);
          }
 }
@@ -1056,7 +1092,7 @@ function SwalFn()
         }
         catch(er)
         {
-            swal(er);
+           //// swal(er);
         $('#spanEror').text('Error swal from -' + er);
         }
 }
