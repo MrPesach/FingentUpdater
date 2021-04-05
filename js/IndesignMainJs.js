@@ -286,7 +286,8 @@ var $temp = $("<textarea>");
   $temp.val(content.replace(brRegex, "\r\n")).select();
   document.execCommand("copy");
   $temp.remove();
-  swal('Copied');
+  ///swal('Copied');
+  swal("Data Copied.", "", "success");
 });
    
 
@@ -312,7 +313,8 @@ var $temp = $("<textarea>");
   document.execCommand("copy");
   $temp.remove();
 
-swal('Copied');
+///swal('Copied');
+swal("Data Copied.", "", "success");
 });
 
 ////////////////////////////////////Scanning Indesign Page End/////////////////////////////////////////////////
@@ -358,7 +360,19 @@ $('#btnDownloadIndexFile').live( "click", function() {
     /////swal('btnDownloadIndexFile'+indexFilePath);
     if(indexFilePath == '' || indexFilePath == null || indexFilePath == undefined)
     {
-        swal('Need to set the index file path!')
+        ////swal('Need to set the index file path!');
+        swal({
+            title: "Need to set the index file path!",
+            text: "",
+            type: "warning",
+            showCancelButton: false,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "",
+            closeOnConfirm: true
+          },
+          function(){
+            ////swal("Deleted!", "Your imaginary file has been deleted.", "success");
+          });
     }
     else
     {
@@ -392,12 +406,13 @@ $('#btnDownloadIndexFile').live( "click", function() {
                 { 
                     if (er)
                     {
-                        swal('Operation failed.');
+                        swal('Operation failed!');
                         $('#spanEror').text('Error from btnDownloadIndexFile -' + er);
                     }                    
                     else
                     {
-                        swal('Index file downloaded(' + indexFilePath + ')');
+                        swal("Index file downloaded(" + indexFilePath + ")", "", "success");
+                        ////swal('Index file downloaded(' + indexFilePath + ')');
                     }                   
                 });
             }
@@ -435,6 +450,8 @@ function LoadIndexSubPage()
 {
     $.get( "../html/indexSub.html", function( data ) 
     {
+
+
                 $('#divPageContentDiv').html( data );
     });
 }
@@ -617,7 +634,8 @@ function GetProductDetails()
                         $('#btnScanningProceed').prop('disabled', false);
                         $('.maskedCircle').remove();
                         $('#divScanningProgressBar').css("width", "100%");
-                        swal('Process completed');
+                        ///swal('Process completed');
+                        swal("Process completed.", "", "success");
                         $('#btnScanningProceed').trigger('click');
                     }
                     else
@@ -627,7 +645,19 @@ function GetProductDetails()
                 }
                 else
                 {
-                    swal('There is no product details!');   
+                    //swal('There is no product details!');   
+                    swal({
+                        title: "There is no product details!",
+                        text: "",
+                        type: "warning",
+                        showCancelButton: false,
+                        confirmButtonClass: "btn-danger",
+                        confirmButtonText: "",
+                        closeOnConfirm: true
+                      },
+                      function(){
+                        ////swal("Deleted!", "Your imaginary file has been deleted.", "success");
+                      });
                     LoadIndexSubPage();                
                 }      
             
@@ -642,7 +672,19 @@ function GetProductDetails()
         }
         else
         {
-            swal('There is no product details!');
+            //swal('There is no product details!');
+            swal({
+                title: "There is no product details!",
+                text: "",
+                type: "warning",
+                showCancelButton: false,
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "",
+                closeOnConfirm: true
+              },
+              function(){
+                ////swal("Deleted!", "Your imaginary file has been deleted.", "success");
+              });
             LoadIndexSubPage();
         }
     
@@ -671,11 +713,24 @@ function UpdateProductDetailsIntheIndesignFile()
                 $('#btnGotoIndexFileCreation').prop('disabled', false);
                 $('.maskedCircle').remove();
                 $('#divScanningProgressBar').css("width", "100%");
-                swal('Updated successfully.');
+                ////swal('Updated successfully.');
+                swal("Updated successfully.", "", "success");
             }
             else
             {
-                swal('Result not found!');
+                ////swal('Result not found!');
+                swal({
+                    title: "Result not found!",
+                    text: "",
+                    type: "warning",
+                    showCancelButton: false,
+                    confirmButtonClass: "btn-danger",
+                    confirmButtonText: "",
+                    closeOnConfirm: true
+                  },
+                  function(){
+                    ////swal("Deleted!", "Your imaginary file has been deleted.", "success");
+                  });
             }
         }
         catch(er)
