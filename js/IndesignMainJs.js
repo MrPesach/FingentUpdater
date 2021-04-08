@@ -570,10 +570,33 @@ function GetProductDetails()
 {   
     try
     {
+        alert('GetProductDetails!');
         ///swal(process.env.APPDATA);
-        var fs = require('fs');    
-       var productDetails = fs.readFileSync(process.env.APPDATA + '/RCG/ProductDetails.txt',{encoding:'utf8'});
-     ////swal(productDetails);
+        var fs = require('fs');   
+        var filePath =  process.env.APPDATA + '/RCG/Indesign/ProductDetails.txt';
+        swal(filePath);
+        if (!fs.existsSync(filePath)) 
+        {  
+            alert('Need to setup the json file!');
+        swal({
+            title: "Need to setup the json file!",
+            text: "",
+            type: "warning",
+            showCancelButton: false,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "",
+            closeOnConfirm: true
+          },
+          function(){
+            ////swal("Deleted!", "Your imaginary file has been deleted.", "success");
+          });
+
+          return;
+        }
+    
+       
+       var productDetails = fs.readFileSync(filePath,{encoding:'utf8'});
+     swal(productDetails);
         if(productDetails != null && productDetails != '' && productDetails != undefined)
         {
             ///swal(productDetails);
@@ -723,6 +746,9 @@ function GetProductDetails()
               });
             LoadIndexSubPage();
         }
+
+    
+    
     
     //// swal(productData);
     }
@@ -1021,7 +1047,7 @@ function JsonConvert()
          {
   ///  swal('JsonConvert');
     var fs = require('fs');    
-    var productDetails = fs.readFileSync(process.env.APPDATA + '/RCG/ProductDetails.txt',{encoding:'utf8'});
+    var productDetails = fs.readFileSync(process.env.APPDATA + '/RCG/Indesign/ProductDetails.txt',{encoding:'utf8'});
   ///swal(productDetails);
      if(productDetails != null && productDetails != '' && productDetails != undefined)
      {
