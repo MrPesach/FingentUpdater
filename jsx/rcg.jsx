@@ -23,14 +23,22 @@ function GetProductDetailsFromIndesignFile(productData) {
 
 		/////////////////////////////////GROUP START//////////////////////////////////////////////////////
 		//set active document.
-		var myDoc = app.activeDocument;
+		var myDoc = '';
+		try
+		{
+			myDoc = app.activeDocument;
+		}
+		catch(er)
+		{
+			return "Please open one document for scanning!";
+		}	
 		//probably the same thing....
 		var curDoc = app.documents[0];
 		//Get pages 
 		var allPages = curDoc.pages;
 		if( allPages.length == 0)
 		{
-			errorReturnValue = "There is no pages";
+			return "There is no pages in the document!";
 		}
 		var isItaNewPageForError = false;
 		var isItaNewPageForWarning = false;
@@ -449,7 +457,8 @@ if(fullPdtContentFromInDesign.indexOf('[') == -1)
 
 	}
 	catch (er) {
-		alert('Error GetProductDetailsFromIndesignFile-' + er)
+		//alert('Error GetProductDetailsFromIndesignFile-' + er)
+		return "An error occurred! " + er;
 	}
 }
 

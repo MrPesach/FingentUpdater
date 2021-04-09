@@ -570,14 +570,14 @@ function GetProductDetails()
 {   
     try
     {
-        alert('GetProductDetails!');
+       /// alert('GetProductDetails!');
         ///swal(process.env.APPDATA);
         var fs = require('fs');   
         var filePath =  process.env.APPDATA + '/RCG/Indesign/ProductDetails.txt';
-        swal(filePath);
+        ///swal(filePath);
         if (!fs.existsSync(filePath)) 
         {  
-            alert('Need to setup the json file!');
+           /// alert('Need to setup the json file!');
         swal({
             title: "Need to setup the json file!",
             text: "",
@@ -591,12 +591,13 @@ function GetProductDetails()
             ////swal("Deleted!", "Your imaginary file has been deleted.", "success");
           });
 
+          LoadIndexSubPage();
           return;
         }
     
        
        var productDetails = fs.readFileSync(filePath,{encoding:'utf8'});
-     swal(productDetails);
+     ////swal(productDetails);
         if(productDetails != null && productDetails != '' && productDetails != undefined)
         {
             ///swal(productDetails);
@@ -616,12 +617,11 @@ function GetProductDetails()
                 productData  =  JSON.stringify(newJson); */                      
 
                     ///swal(productDetails);
-        try
-        {
+       
             var indexFiles = productDetails.split(',');
             var index = jQuery.parseJSON(indexFiles[0]+'}');
             indexFilePath = index.IndexFilePath;
-            //swal('indexFilePath-'+indexFilePath);
+            ////swal('indexFilePath-'+indexFilePath);
             var matches = productDetails.match(/\[(.*?)\]/);
             productData = jQuery.parseJSON(matches[0]); 
             var newJson = [];
@@ -632,14 +632,7 @@ function GetProductDetails()
                
             }
             productData  =  JSON.stringify(newJson);
-        }
-        catch(er)
-        {
-            ////swal('test '+er);
-        }
-              
-               
-
+                          
             }
             catch(er)
             {
@@ -700,13 +693,14 @@ function GetProductDetails()
                       function(){
                         ////swal("Deleted!", "Your imaginary file has been deleted.", "success");
                       });
+                      LoadIndexSubPage();      
                     }
                 }
                 else
                 {
                     //swal('There is no product details!');   
                     swal({
-                        title: "There is no product details!",
+                        title: result,
                         text: "",
                         type: "warning",
                         showCancelButton: false,
@@ -718,9 +712,7 @@ function GetProductDetails()
                         ////swal("Deleted!", "Your imaginary file has been deleted.", "success");
                       });
                     LoadIndexSubPage();                
-                }      
-            
-               
+                }                
             }); 
         }
                 catch(er)
