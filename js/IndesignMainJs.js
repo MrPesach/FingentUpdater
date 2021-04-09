@@ -614,24 +614,25 @@ function GetProductDetails()
                     swal(productData[t1].Product+'-'+productData[t1].Length+'-'+productData[t1].Weight+'-'+productData[t1].Price);
                     newJson.push(productData[t]); 
                 }
-                productData  =  JSON.stringify(newJson); */                      
-
-                    ///swal(productDetails);
+                productData  =  JSON.stringify(newJson); */ 
+                ///swal(productDetails);
        
             var indexFiles = productDetails.split(',');
             var index = jQuery.parseJSON(indexFiles[0]+'}');
             indexFilePath = index.IndexFilePath;
-            ////swal('indexFilePath-'+indexFilePath);
+          ///  swal('indexFilePath-'+indexFilePath);
             var matches = productDetails.match(/\[(.*?)\]/);
             productData = jQuery.parseJSON(matches[0]); 
+          ///  swal('productData-'+productData.length);
             var newJson = [];
+           /// var content ='';
             for(var t = 0; t < productData.length;t++)
             {
-                newJson.push(productData[t]); 
-               ////swal(productData[t].Product);
-               
+                ///content += ', '+ productData[t].Product;
+                newJson.push(productData[t]);               
             }
             productData  =  JSON.stringify(newJson);
+          ///  swal(content);
                           
             }
             catch(er)
@@ -655,7 +656,7 @@ function GetProductDetails()
             }
 
         try
-        {
+        {           
             var fnAndArgs = 'GetProductDetailsFromIndesignFile(' + productData + ')';
             ///swal(fnAndArgs);
             CSLibrary.evalScript(fnAndArgs, function(result) 
@@ -713,7 +714,7 @@ function GetProductDetails()
                       });
                     LoadIndexSubPage();                
                 }                
-            }); 
+            });            
         }
                 catch(er)
                 {
