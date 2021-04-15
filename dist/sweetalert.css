@@ -1,3 +1,11 @@
+
+h1 { 
+  font-size: 18px;
+  color: #434445;
+  text-align: left;
+  font-weight:bold
+  }
+
 @keyframes showSweetAlert {
   0% {
     transform: scale(0.7);
@@ -231,7 +239,7 @@ body.stop-scrolling {
 }
 .sweet-alert {
   background-color: #ffffff;
-  width: 478px;
+  width: 325px;
   padding: 17px;
   border-radius: 5px;
   text-align: center;

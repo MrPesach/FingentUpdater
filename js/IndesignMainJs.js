@@ -6,6 +6,7 @@ var warningValues = '';
 var successValues = '';
 var resultForIndex = '';
 var indexFilePath ='';
+var indexFileName ='';
 
 
 $(document).ready(function () { 
@@ -44,7 +45,7 @@ $('#btnScanningProceed').live( "click", function()
     $.get( "../html/ScanningInDesignResult.html", function( data ) 
     {
                 $('#divPageContentDiv').html( data );
-                ///swal(errorValues);
+              ////  alert('errorValues'+errorValues.length );
 if(errorValues != '' && errorValues.length > 0) 
 {
     try
@@ -65,7 +66,7 @@ if(errorValues != '' && errorValues.length > 0)
         $('#divSuccess').remove();
         $('#pFooterForErrorWarning').show();
         $('#pFooterForSuccess').remove();
-        $('#divCopyCtrls').remove();
+      ///  $('#divCopyCtrls').remove();
         var rows =   errorValues.split('R12W'); 
         ////swal('rows.length'+rows.length);
         var errorHtml =  "<div class='row' style='color:#FF3E5A'> Errors</div>";
@@ -103,7 +104,7 @@ if(errorValues != '' && errorValues.length > 0)
         //// swal('btnScanningProceed click error- ' + er);
     }
 }
-
+////alert('warningValues'+warningValues.length);
     if(warningValues != '' && warningValues.length > 0) 
     {
         try
@@ -125,7 +126,7 @@ if(errorValues != '' && errorValues.length > 0)
             $('#divSuccess').remove();
             $('#pFooterForErrorWarning').show();
             $('#pFooterForSuccess').remove();
-            $('#divCopyCtrls').show();
+         ///   $('#divCopyCtrls').show();
             
 
         var rows =   warningValues.split('R12W'); 
@@ -166,6 +167,7 @@ if(errorValues != '' && errorValues.length > 0)
     }
 }
 
+////alert('successValues.length-'+successValues.length);
 if(successValues != '' && successValues.length > 0 && warningValues.length == 0 && errorValues.length == 0) 
 {
     try
@@ -401,14 +403,14 @@ $('#btnDownloadIndexFile').live( "click", function() {
                         csvContent += columns[0]  + ',' + columns[1]  + "\r\n";
                     }                    
                 }
+              ////  alert(indexFileName);
                 
-                fs.writeFile(indexFilePath+"\\index.csv", csvContent, function (er)
+                fs.writeFile(indexFilePath + "\\" + indexFileName, csvContent, function (er)
                 { 
                     if (er)
-                    {
-                        ///swal('Operation failed!');
+                    {   
                         swal({
-                            title: "Operation failed!",
+                            title: "Operation failed!"+er,
                             text: "",
                             type: "warning",
                             showCancelButton: false,
@@ -423,10 +425,25 @@ $('#btnDownloadIndexFile').live( "click", function() {
                     }                    
                     else
                     {
-                        swal("Index file downloaded(" + indexFilePath + ")", "", "success");
+                        swal("Index file downloaded (" + (indexFilePath + "\\" + indexFileName) + ")", "", "success");
                         ////swal('Index file downloaded(' + indexFilePath + ')');
                     }                   
                 });
+            }
+            else
+            {
+                swal({
+                    title: "There is no data to create the index file",
+                    text: "",
+                    type: "warning",
+                    showCancelButton: false,
+                    confirmButtonClass: "btn-danger",
+                    confirmButtonText: "",
+                    closeOnConfirm: true
+                  },
+                  function(){
+                    ////swal("Deleted!", "Your imaginary file has been deleted.", "success");
+                  });
             }
        
 
@@ -676,7 +693,7 @@ function GetProductDetails()
                         $('.maskedCircle').remove();
                         $('#divScanningProgressBar').css("width", "100%");
                         ///swal('Process completed');
-                        swal("Process completed.", "", "success");
+                        /////swal("Process completed.", "", "success");
                         $('#btnScanningProceed').trigger('click');
                     }
                     else
@@ -762,18 +779,27 @@ function UpdateProductDetailsIntheIndesignFile()
         {
             if(result.length > 0)
             {               
-                resultForIndex = result;
-               
+                if(result.indexOf('R34W') >-1)
+                {
+                    var resultSplit = result.split('R34W');
+                    if(resultSplit.length > 1)
+                    {
+                        resultForIndex = resultSplit[0];  
+                        indexFileName = resultSplit[1];  
+                    }
+                    
+                }
+                            
               ///  swal(result);
                 $('#btnGotoIndexFileCreation').prop('disabled', false);
                 $('.maskedCircle').remove();
                 $('#divScanningProgressBar').css("width", "100%");
                 ////swal('Updated successfully.');
-                swal("Updated successfully.", "", "success");
+               //// swal("Updated successfully.", "", "success");
             }
             else
             {
-                ////swal('Result not found!');
+               /*
                 swal({
                     title: "Result not found!",
                     text: "",
@@ -784,9 +810,15 @@ function UpdateProductDetailsIntheIndesignFile()
                     closeOnConfirm: true
                   },
                   function(){
-                    ////swal("Deleted!", "Your imaginary file has been deleted.", "success");
+                   
                   });
+                  */
             }
+
+            $.get( "../html/IndexFileCreation.html", function( data ) 
+            {
+                        $('#divPageContentDiv').html(data);
+            });
         }
         catch(er)
         {

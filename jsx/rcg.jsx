@@ -78,7 +78,7 @@ function GetProductDetailsFromIndesignFile(productData) {
 					for (var t2 = 0; t2 < innerGrp.textFrames.length; t2++) {					
 						var tff2 = innerGrp.textFrames[t2];
 						var fullPdtContentFromInDesign = tff2.contents;
-							if(fullPdtContentFromInDesign.indexOf('[') == -1)
+							if(fullPdtContentFromInDesign.indexOf('[') == -1 || fullPdtContentFromInDesign.indexOf(']') == -1)
 							{
 								continue;
 							}
@@ -197,7 +197,7 @@ function GetProductDetailsFromIndesignFile(productData) {
 				for (var t = 0; t < grp.textFrames.length; t++) {					
 					var tff = grp.textFrames[t];
 					var fullPdtContentFromInDesign = tff.contents;
-					if(fullPdtContentFromInDesign.indexOf('[') == -1)
+					if(fullPdtContentFromInDesign.indexOf('[') == -1 || fullPdtContentFromInDesign.indexOf(']') == -1)
 					{
 						continue;
 					}
@@ -209,7 +209,8 @@ function GetProductDetailsFromIndesignFile(productData) {
 				///	alert('fullPdtContentFromInDesign'+fullPdtContentFromInDesign+' pdtFromInDesign-'+pdtFromInDesign);
 					if (fullPdtContentFromInDesign != null && fullPdtContentFromInDesign != ''
 						&& fullPdtContentFromInDesign != undefined 
-						&& fullPdtContentFromInDesign.indexOf('[') > -1) {
+						&& fullPdtContentFromInDesign.indexOf('[') > -1
+						&& fullPdtContentFromInDesign.indexOf(']') > -1) {
 							anyDataExists = true;
 					
 						productStatus = 101;//success					
@@ -321,7 +322,7 @@ function GetProductDetailsFromIndesignFile(productData) {
 			for (var i = 0; i < tfNormal.length; i++) {
 				
 				var fullPdtContentFromInDesign = tfNormal[i].contents;
-				if(fullPdtContentFromInDesign.indexOf('[') == -1 && fullPdtContentFromInDesign.indexOf(']') == -1)
+				if(fullPdtContentFromInDesign.indexOf('[') == -1 || fullPdtContentFromInDesign.indexOf(']') == -1)
 				{
 					continue;
 				}
@@ -341,7 +342,8 @@ function GetProductDetailsFromIndesignFile(productData) {
 				if (fullPdtContentFromInDesign != null 
 					&& fullPdtContentFromInDesign != ''
 					&& fullPdtContentFromInDesign != undefined 
-					&& fullPdtContentFromInDesign.indexOf('[') > -1) {
+					&& fullPdtContentFromInDesign.indexOf('[') > -1
+					&& fullPdtContentFromInDesign.indexOf(']') > -1) {
 						anyDataExists = true;
 					productStatus = 101;
 					/// 101 -> Product In Success,
@@ -552,7 +554,18 @@ function UpdateProductDetailsIntheIndesignFile(productData) {
 		var allPages = curDoc.pages;
 		var pageName = '';
 		////alert('Total pages-'+allPages.length);
+		var indexFileName ="Index ";
 		for (var p = 0; p < allPages.length; p++) {
+			currentPage = allPages[p];
+			pageName = currentPage.name;
+			if(p == 0)
+			{
+				indexFileName += pageName;
+			}
+			if(p == allPages.length-1)
+			{
+				indexFileName +='-'+ pageName;
+			}
 			/*
 			if(p > 0)
 			{
@@ -560,8 +573,7 @@ function UpdateProductDetailsIntheIndesignFile(productData) {
 			}
 			*/
 			////alert('page name '+ allPages[p].name);
-			currentPage = allPages[p];
-			pageName = currentPage.name;
+			
 			var pg = app.activeDocument.pages[0];
 			///alert('pg.name-'+pageName);
 			var groups = currentPage.groups;
@@ -578,7 +590,7 @@ function UpdateProductDetailsIntheIndesignFile(productData) {
 					for (var t2 = 0; t2 < innerGrp.textFrames.length; t2++) 
 					{	
 						var fullPdtContentFromInDesign = innerGrp.textFrames[t2].contents;
-						if(fullPdtContentFromInDesign.indexOf('[') == -1)
+						if(fullPdtContentFromInDesign.indexOf('[') == -1 || fullPdtContentFromInDesign.indexOf(']') == -1)
 						{
 							continue;
 						}
@@ -634,7 +646,7 @@ function UpdateProductDetailsIntheIndesignFile(productData) {
 				productFirstPart='';
 				for (var t = 0; t < grp.textFrames.length; t++) {
 					var fullPdtContentFromInDesign = grp.textFrames[t].contents;
-					if(fullPdtContentFromInDesign.indexOf('[') == -1 && fullPdtContentFromInDesign.indexOf(']') == -1)
+					if(fullPdtContentFromInDesign.indexOf('[') == -1 || fullPdtContentFromInDesign.indexOf(']') == -1)
 					{
 						continue;
 					}
@@ -697,7 +709,7 @@ function UpdateProductDetailsIntheIndesignFile(productData) {
 			for (var i = 0; i < tfNormal.length; i++) {
 
 				var fullPdtContentFromInDesign = tfNormal[i].contents;
-				if(fullPdtContentFromInDesign.indexOf('[') == -1 )
+				if(fullPdtContentFromInDesign.indexOf('[') == -1 || fullPdtContentFromInDesign.indexOf(']') == -1 )
 				{
 					continue;
 				}
@@ -759,7 +771,8 @@ function UpdateProductDetailsIntheIndesignFile(productData) {
 
 		}//page loop close
 
-		return stringReturnValue;
+		indexFileName = indexFileName +'.csv';
+		return stringReturnValue + "R34W"  +indexFileName;
 	}
 	catch (er) {
 		alert('Error UpdateProductDetailsIntheIndesignFile-' + er)
@@ -781,7 +794,8 @@ if(fullPdtContentFromInDesign.indexOf('BRC2765') == -1)
 	if (fullPdtContentFromInDesign != null && fullPdtContentFromInDesign != ''
 		&& fullPdtContentFromInDesign != undefined
 		&& fullPdtContentFromInDesign.indexOf(pdtFromAppData) > -1
-		&& fullPdtContentFromInDesign.indexOf('[') > -1) 
+		&& fullPdtContentFromInDesign.indexOf('[') > -1
+		&& fullPdtContentFromInDesign.indexOf(']') > -1) 
 		{
 
 			////pdtFromInDesign = GetProductNameFromIndesignText(fullPdtContentFromInDesign);
