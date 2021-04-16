@@ -32,16 +32,18 @@
                     <Menu>RCG Product Updater</Menu>
                     <Geometry>
                         <Size>
-                            <Height>580</Height>
-                            <Width>1020</Width>
+                            <Height>500</Height>
+                           <!--  <Width>1020</Width>-->
+                           <Width>700</Width>
                         </Size>
                         <MaxSize>
-                            <Height>800</Height>
-                            <Width>1200</Width>
+                            <Height>500</Height>
+                          <!--   <Width>1200</Width>-->
+                            <Width>800</Width>
                         </MaxSize>
                         <MinSize>
                             <Height>400</Height>
-                            <Width>600</Width>
+                            <Width>700</Width>
                         </MinSize>
                     </Geometry>
                 </UI>

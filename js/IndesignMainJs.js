@@ -694,8 +694,11 @@ function GetProductDetails()
                         $('.maskedCircle').remove();
                         $('#divScanningProgressBar').css("width", "100%");
                         ///swal('Process completed');
-                        /////swal("Process completed.", "", "success");
-                        $('#btnScanningProceed').trigger('click');
+                        /////swal("Process completed.", "", "success");                       
+                                                
+                            setTimeout(() => {
+                                $('#btnScanningProceed').trigger('click');  
+                            }, 650);
                     }
                     else
                     {
