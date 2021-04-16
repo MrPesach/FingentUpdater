@@ -674,6 +674,7 @@ function GetProductDetails()
 
         try
         {           
+            ///swal(productData);
             var fnAndArgs = 'GetProductDetailsFromIndesignFile(' + productData + ')';
             ///swal(fnAndArgs);
             CSLibrary.evalScript(fnAndArgs, function(result) 
