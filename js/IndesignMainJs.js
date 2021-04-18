@@ -821,7 +821,10 @@ function UpdateProductDetailsIntheIndesignFile()
 
             $.get( "../html/IndexFileCreation.html", function( data ) 
             {
-                        $('#divPageContentDiv').html(data);
+                setTimeout(() => {
+                    $('#divPageContentDiv').html(data);  
+                }, 650);
+                        
             });
         }
         catch(er)
