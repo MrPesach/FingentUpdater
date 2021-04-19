@@ -587,11 +587,11 @@ function GetProductDetails()
 {   
     try
     {
-       /// alert('GetProductDetails!');
+      /// alert('GetProductDetails!');
         ///swal(process.env.APPDATA);
         var fs = require('fs');   
         var filePath =  process.env.APPDATA + '/RCG/Indesign/ProductDetails.txt';
-        ///swal(filePath);
+           ///swal(filePath);
         if (!fs.existsSync(filePath)) 
         {  
            /// alert('Need to setup the json file!');
@@ -614,26 +614,28 @@ function GetProductDetails()
     
        
        var productDetails = fs.readFileSync(filePath,{encoding:'utf8'});
-     ////swal(productDetails);
+    /// alert(productDetails);
         if(productDetails != null && productDetails != '' && productDetails != undefined)
         {
-            ///swal(productDetails);
+          /////  swal(productDetails);
             try
             {
                
-              /*
-                var data = jQuery.parseJSON(productDetails);
-                productData = data.Products;
-                indexFilePath = data.IndexFilePath;
-                var newJson = [];
-                for(var t = 0; t < productData.length;t++)
-                {
-                    swal(productData[t1].Product+'-'+productData[t1].Length+'-'+productData[t1].Weight+'-'+productData[t1].Price);
-                    newJson.push(productData[t]); 
-                }
-                productData  =  JSON.stringify(newJson); */ 
-                ///swal(productDetails);
-       
+    var pdt = jQuery.parseJSON(productDetails);
+    ////alert(pdt.Products);
+    productData  =  pdt.Products;
+    indexFilePath = pdt.IndexFilePath;
+    var newJson = [];
+           /// var content ='';
+            for(var t = 0; t < productData.length;t++)
+            {
+                ///content += ', '+ productData[t].Product;
+                newJson.push(productData[t]);               
+            }
+            productData  =  JSON.stringify(newJson);
+            indexFilePath = pdt.IndexFilePath;
+           /// swal('indexFilePath-'+indexFilePath);
+/*
             var indexFiles = productDetails.split(',');
             var index = jQuery.parseJSON(indexFiles[0]+'}');
             indexFilePath = index.IndexFilePath;
@@ -650,6 +652,7 @@ function GetProductDetails()
             }
             productData  =  JSON.stringify(newJson);
           ///  swal(content);
+*/
                           
             }
             catch(er)
@@ -1079,11 +1082,13 @@ function JsonConvert()
          {
   ///  swal('JsonConvert');
     var fs = require('fs');    
+   
     var productDetails = fs.readFileSync(process.env.APPDATA + '/RCG/Indesign/ProductDetails.txt',{encoding:'utf8'});
-  ///swal(productDetails);
+    
+ ///swal(productDetails);
      if(productDetails != null && productDetails != '' && productDetails != undefined)
      {
-         ///swal(productDetails);
+         swal(productDetails);
         
          var indexFiles = productDetails.split(',');
          var index = jQuery.parseJSON(indexFiles[0]+'}');

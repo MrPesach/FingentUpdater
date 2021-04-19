@@ -1,11 +1,3 @@
-
-h1 { 
-  font-size: 16px;
-  color: #434445;
-  text-align: left;
-  font-weight:bold
-  }
-
 @keyframes showSweetAlert {
   0% {
     transform: scale(0.7);
@@ -59,6 +51,12 @@ h1 {
   100% {
     top: 70%;
   }
+}
+h1,h2{
+font-weight: bold;
+font-size: 18px;
+color: #434445;
+margin-bottom: 15px;
 }
 .showSweetAlert {
   animation: showSweetAlert 0.3s;
@@ -239,7 +237,7 @@ body.stop-scrolling {
 }
 .sweet-alert {
   background-color: #ffffff;
-  width: 325px;
+  width: 478px;
   padding: 17px;
   border-radius: 5px;
   text-align: center;
@@ -300,12 +298,13 @@ body.stop-scrolling {
   height: 80px;
   border: 4px solid gray;
   border-radius: 50%;
-  margin: 20px auto;
+  margin:0px auto;
   position: relative;
   box-sizing: content-box;
+  transform: scale(.5);
 }
 .sweet-alert .sa-icon.sa-error {
-  border-color: #d43f3a;
+  border-color: #FF3E5A;
 }
 .sweet-alert .sa-icon.sa-error .sa-x-mark {
   position: relative;
@@ -315,7 +314,7 @@ body.stop-scrolling {
   position: absolute;
   height: 5px;
   width: 47px;
-  background-color: #d9534f;
+  background-color: #FF3E5A;
   display: block;
   top: 37px;
   border-radius: 2px;
@@ -352,7 +351,7 @@ body.stop-scrolling {
   background-color: #f0ad4e;
 }
 .sweet-alert .sa-icon.sa-info {
-  border-color: #46b8da;
+  border-color: #105EEB;
 }
 .sweet-alert .sa-icon.sa-info::before {
   content: "";
@@ -363,7 +362,7 @@ body.stop-scrolling {
   bottom: 17px;
   border-radius: 2px;
   margin-left: -2px;
-  background-color: #5bc0de;
+  background-color: #105EEB;
 }
 .sweet-alert .sa-icon.sa-info::after {
   content: "";
@@ -373,7 +372,7 @@ body.stop-scrolling {
   border-radius: 50%;
   margin-left: -3px;
   top: 19px;
-  background-color: #5bc0de;
+  background-color: #105EEB;
 }
 .sweet-alert .sa-icon.sa-success {
   border-color: #4cae4c;
@@ -403,9 +402,9 @@ body.stop-scrolling {
   transform-origin: 0px 60px;
 }
 .sweet-alert .sa-icon.sa-success .sa-placeholder {
-  width: 40px;
-  height: 40px;
-  border: 4px solid rgba(92, 184, 92, 0.2);
+  width: 80px;
+  height: 80px;
+  border: 4px solid #1dc19865;
   border-radius: 50%;
   box-sizing: content-box;
   position: absolute;
@@ -425,7 +424,7 @@ body.stop-scrolling {
 }
 .sweet-alert .sa-icon.sa-success .sa-line {
   height: 5px;
-  background-color: #5cb85c;
+  background-color: #1DC198;
   display: block;
   border-radius: 2px;
   position: absolute;
