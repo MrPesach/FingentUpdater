@@ -156,8 +156,6 @@ function GetProductDetailsFromIndesignFile(productData)
 				}
 				///alert('fullPdtContentFromInDesign '+fullPdtContentFromInDesign+'NORMAL'+'pdtFromInDesign-'+pdtFromInDesign);
 				/*	*/
-				
-				
 				////alert('Normal fullPdtContentFromInDesign '+fullPdtContentFromInDesign+'pageName-'+pageName);
 					anyDataExists = true;
 					productStatus = 101;
@@ -203,7 +201,7 @@ function GetProductDetailsFromIndesignFile(productData)
 									}
 									isItaNewPageForError = false;
 									///alert('continue ');
-									continue;
+									break;
 								}
 
 								if(CheckAnyWarningInProduct(fullPdtContentFromInDesign, lengthFromAppData, weightFromAppData, pdtFromAppData, weightFromAppData, rateFromAppData ))
@@ -228,7 +226,7 @@ function GetProductDetailsFromIndesignFile(productData)
 										warningReturnValue += "R12W" + (isItaNewPageForWarning == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L0C12L1C12LI";
 									}
 									isItaNewPageForWarning = false;
-						continue;
+									break;
 								}
 
 									productStatus = 101;	
@@ -319,8 +317,8 @@ function GetContentFromGroup(grp, productData, pageName)
 					}
 					///alert('fullPdtContentFromInDesign from group-'+fullPdtContentFromInDesign)					
 					
-					/*
-					if(fullPdtContentFromInDesign.indexOf('RC6979-07') == -1)
+					/* 
+					if(fullPdtContentFromInDesign.indexOf('RC6980-07') == -1)
 					{
 						continue;
 					}
@@ -359,18 +357,19 @@ function GetContentFromGroup(grp, productData, pageName)
 
 
 														if (errorReturnValue.length == 0) {
-															errorReturnValue += (isItaNewPageForError == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + productErrorPortion + "C12L1C12L0C12LI";
+															errorReturnValue += (isItaNewPageForError == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + productErrorPortion + "C12L1C12L0C12LG";
 														}
 														else {
-															errorReturnValue += "R12W" + (isItaNewPageForError == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + productErrorPortion + "C12L1C12L0C12LI";
+															errorReturnValue += "R12W" + (isItaNewPageForError == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + productErrorPortion + "C12L1C12L0C12LG";
 														}
 														isItaNewPageForError = false;
 
-											continue;
+														break;
 										}
 
-										if(CheckAnyWarningInProduct(fullPdtContentFromInDesign, lengthFromAppData, weightFromAppData, pdtFromAppData, weightFromAppData, rateFromAppData ))
+								if(CheckAnyWarningInProduct(fullPdtContentFromInDesign, lengthFromAppData, weightFromAppData, pdtFromAppData, weightFromAppData, rateFromAppData ))
 								{
+									////alert('CheckAnyWarningInProduct');
 									productStatus = 104;///Warning with skip
 									///alert('fullPdtContentFromInDesign-' + fullPdtContentFromInDesign + 'productStatus-'+productStatus)
 					
@@ -384,14 +383,14 @@ function GetContentFromGroup(grp, productData, pageName)
 											'IsItaNewPage': isItaNewPageForWarning
 										});
 									if (warningReturnValue.length == 0) {
-										warningReturnValue += (isItaNewPageForWarning == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L0C12L1C12LI";
+										warningReturnValue += (isItaNewPageForWarning == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L0C12L1C12LG";
 									}
 									else 
 									{
-										warningReturnValue += "R12W" + (isItaNewPageForWarning == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L0C12L1C12LI";
+										warningReturnValue += "R12W" + (isItaNewPageForWarning == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L0C12L1C12LG";
 									}
 									isItaNewPageForWarning = false;
-						continue;
+									break;
 								}
 
 									productStatus = 101;									
@@ -582,11 +581,11 @@ function CheckAnyWarningInProduct(fullPdtContentFromInDesign, lengthFromAppData,
 		var subMatch = '';
 		if (matches) {
 			subMatch = '[' + matches[1] + ']';
-			//alert('subMatch in warning-' + subMatch);
+			///alert('subMatch in warning-' + subMatch);
 		}
 		else
 		{
-		///	alert('No match in warning -' + item);
+			///alert('No match in warning -' + item);
 			productErrorPortion = item;
 			return true;
 		}		
@@ -604,7 +603,7 @@ function CheckAnyWarningInProduct(fullPdtContentFromInDesign, lengthFromAppData,
 		}
 		else if(subMatch.indexOf('wt') > -1 && (weightFromAppData == '' || weightFromAppData == null || weightFromAppData == undefined ))
 		{
-			///alert('wt missing');
+			////alert('wt missing');
 			productErrorPortion = subMatch;
 			return true;
 		}
