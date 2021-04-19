@@ -695,8 +695,7 @@ function UpdateProductDetailsIntheIndesignFile(productData)
 				indexFileName +='-'+ pageName;
 			}
 
-////			alert(pageName);
-			
+////			alert(pageName);			
 		/*	if(allPages[p].name != '213')
 			{
 					continue;
@@ -877,6 +876,13 @@ function UpdateContentToGroup(grp, productData, pageName)
 			continue;
 		}
 		
+
+		/*if(fullPdtContentFromInDesign.indexOf('RC6980-07') == -1 )
+		{
+				continue;
+		}
+		*/
+		
 		pdtFromInDesign = GetProductNameFromIndesignText(fullPdtContentFromInDesign);		
 		if(pdtFromInDesign == '' || pdtFromInDesign == null || pdtFromInDesign == undefined)
 		{
@@ -899,7 +905,8 @@ function UpdateContentToGroup(grp, productData, pageName)
 						var rateFromAppData = productData[g].Price;
 						var lengthFromAppData = productData[g].Length;
 						newTextForIndesign = GenerateNewCaptionForProduct(fullPdtContentFromInDesign, pdtFromAppData, weightFromAppData, rateFromAppData, lengthFromAppData,"I")
-						///alert('newTextForIndesign'+newTextForIndesign);
+						////alert('newTextForIndesign'+newTextForIndesign);					
+					
 						if (newTextForIndesign != '' && newTextForIndesign.length > 0) {
 							tf.contents = newTextForIndesign;
 							if(stringReturnValue.indexOf(productFirstPart) == -1)
@@ -909,7 +916,7 @@ function UpdateContentToGroup(grp, productData, pageName)
 							}
 							break;
 							// found if close
-						}
+						}						
 					}
 				}
 				catch (er) {
@@ -922,6 +929,7 @@ function UpdateContentToGroup(grp, productData, pageName)
 			//	alert('errorReturnValue' + errorReturnValue);
 	///	alert('warningReturnValue' + warningReturnValue);
 	///	alert('successReturnValue-' + successReturnValue);
+	
 			}catch(er)
 			{
 				alert('UpdateContentToGroup aneesh -'+er);
@@ -938,6 +946,12 @@ if(fullPdtContentFromInDesign.indexOf('RC6979-18') == -1)
 {
 	return "";
 }
+
+
+if(fullPdtContentFromInDesign.indexOf('RC6980-07') == -1 )
+		{
+			return "";
+		}
 */
  ////alert('fullPdtContentFromInDesign-'+fullPdtContentFromInDesign+' | pdtFromAppData-'+pdtFromAppData+' | from-'+from);
  var pdtFromInDesign = '';
@@ -951,7 +965,20 @@ if(fullPdtContentFromInDesign.indexOf('RC6979-18') == -1)
 			var indesignProducts = fullPdtContentFromInDesign.split('[');
 			////alert(fullPdtContentFromInDesign + ' - ' + from + ' | indesignProducts.length- '+ indesignProducts.length);
 		for (var inc = 0; inc < indesignProducts.length; inc++) {
-			var item = indesignProducts[inc];
+			var item = '[' + indesignProducts[inc];
+			////alert(inc + ' --> ' + item);
+			if(inc ==0)
+			{
+				///newTextForIndesign += item;
+				continue;
+			}			
+
+			if(item.indexOf('|') == -1)
+			{			
+				///alert(subMatch + '| missing in error' );
+				continue;
+			}
+
 			 ///alert(	item);
 			//// First Item
 			if (item.indexOf('[') == -1 && item.indexOf(']') == -1 && item.indexOf('$') == -1 && inc == 0) {
@@ -959,12 +986,31 @@ if(fullPdtContentFromInDesign.indexOf('RC6979-18') == -1)
 			}
 			else if (item.indexOf(']') > -1 && item.indexOf('ln') > -1) 
 			{
-				if(lengthFromAppData != '' && lengthFromAppData != null && lengthFromAppData != undefined)
+				var matches = item.match(/\[(.*?)\]/);
+				var subMatch = '';
+				if (matches) {
+					subMatch =  matches[1];
+					///alert('subMatch in error-' + subMatch);
+				}
+				var lengths = '';
+				if(subMatch != '' && subMatch != null && subMatch != undefined)
 				{
+					lengths =	subMatch.split('|ln');					
+				}
+
+				if(lengthFromAppData != '' && lengthFromAppData != null && lengthFromAppData != undefined)
+				{	
+					if(lengths.length > 0)
+					{
+						newTextForIndesign += ' ' + lengths[0];
+					}
 					newTextForIndesign +=  ' ' + lengthFromAppData;					
 				}
 				else
-				{
+				{	if(lengths.length > 0)
+					{
+						newTextForIndesign += lengths[0];
+					}
 					newTextForIndesign += item;
 				}				
 			}			
@@ -986,7 +1032,7 @@ if(fullPdtContentFromInDesign.indexOf('RC6979-18') == -1)
 				{
 					if(rateFromAppData != '' && rateFromAppData != null && rateFromAppData != undefined)
 					{
-						newTextForIndesign +=  ' $' + rateFromAppData + ' ' + priceSplits[1];
+						newTextForIndesign +=  rateFromAppData + ' ' + priceSplits[1];
 					}
 					else
 					{
@@ -997,7 +1043,7 @@ if(fullPdtContentFromInDesign.indexOf('RC6979-18') == -1)
 				{
 					if(rateFromAppData != '' && rateFromAppData != null && rateFromAppData != undefined)
 					{
-						newTextForIndesign +=  ' $' + rateFromAppData;
+						newTextForIndesign +=  rateFromAppData;
 					}
 					else
 					{
