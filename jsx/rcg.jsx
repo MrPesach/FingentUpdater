@@ -1171,8 +1171,7 @@ function UpdateContentToGroup(grp, productData, pageName)
 		productFirstPart = '';
 		pdtFromInDesign = '';
 		var tf = grp.textFrames[i];
-		var fullPdtContentFromInDesign = tf.contents;
-		
+		var fullPdtContentFromInDesign = tf.contents;		
 		if(fullPdtContentFromInDesign == ''
 		|| fullPdtContentFromInDesign == undefined
 		|| fullPdtContentFromInDesign == null
@@ -1189,23 +1188,23 @@ function UpdateContentToGroup(grp, productData, pageName)
 	/*	*/
 		
 		///$[FOX080-18|pr]
-var dollarIndex = fullPdtContentFromInDesign.indexOf('$');
-var squareIndex = fullPdtContentFromInDesign.indexOf('[');
-if(dollarIndex == 0 && squareIndex == 1)
-{
-	pdtFromInDesign=GetProductNameFromIndesignTextForTableFormat(fullPdtContentFromInDesign);
-}
-else
-{
-	pdtFromInDesign=GetProductNameFromIndesignText(fullPdtContentFromInDesign);
-}	
+		var dollarIndex = fullPdtContentFromInDesign.indexOf('$');
+		var squareIndex = fullPdtContentFromInDesign.indexOf('[');
+		if(dollarIndex == 0 && squareIndex == 1)
+		{
+			pdtFromInDesign=GetProductNameFromIndesignTextForTableFormat(fullPdtContentFromInDesign);
+		}
+		else
+		{
+			pdtFromInDesign=GetProductNameFromIndesignText(fullPdtContentFromInDesign);
+		}	
 		if(pdtFromInDesign == '' || pdtFromInDesign == null || pdtFromInDesign == undefined)
 		{
 			continue;
 		}		
 		
 		///alert('pdtFromInDesign-'+pdtFromInDesign);
-	///	productFirstPart = GetProductFirstPart(fullPdtContentFromInDesign);
+		productFirstPart = GetProductFirstPart(fullPdtContentFromInDesign);
 		///alert('productFirstPart-'+productFirstPart);
 
 			for (var g = 0; g < productData.length; g++) {
@@ -1282,7 +1281,7 @@ if(fullPdtContentFromInDesign.indexOf('RC6980-07') == -1 )
 			////alert(fullPdtContentFromInDesign + ' - ' + from + ' | indesignProducts.length- '+ indesignProducts.length);
 		for (var inc = 0; inc < indesignProducts.length; inc++) {
 			var item = '[' + indesignProducts[inc];
-			////alert(inc + ' --> ' + item);
+			///alert(inc + ' --> ' + item);
 			if(inc ==0)
 			{
 				///newTextForIndesign += item;
@@ -1348,18 +1347,18 @@ if(fullPdtContentFromInDesign.indexOf('RC6980-07') == -1 )
 				{
 					if(rateFromAppData != '' && rateFromAppData != null && rateFromAppData != undefined)
 					{
-						newTextForIndesign +=  rateFromAppData + ' ' + priceSplits[1];
+						newTextForIndesign +=  ' $' + rateFromAppData + ' ' + priceSplits[1];
 					}
 					else
 					{
-						newTextForIndesign += '$'+ item;
+						newTextForIndesign += item;
 					}
 				}
 				else
 				{
 					if(rateFromAppData != '' && rateFromAppData != null && rateFromAppData != undefined)
 					{
-						newTextForIndesign +=  rateFromAppData;
+						newTextForIndesign +=  ' $' + rateFromAppData;
 					}
 					else
 					{

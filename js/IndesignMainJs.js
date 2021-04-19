@@ -1088,12 +1088,10 @@ function JsonConvert()
  ///swal(productDetails);
      if(productDetails != null && productDetails != '' && productDetails != undefined)
      {
-         swal(productDetails);
-        
+         ///swal(productDetails);        
          var indexFiles = productDetails.split(',');
          var index = jQuery.parseJSON(indexFiles[0]+'}');
-         swal(index.IndexFilePath);
-
+         ////swal(index.IndexFilePath);
             var matches = productDetails.match(/\[(.*?)\]/);
            var json = jQuery.parseJSON(matches[0]); ;
             for(var t = 0; t < json.length;t++)
