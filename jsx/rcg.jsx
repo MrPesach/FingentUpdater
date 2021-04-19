@@ -1290,6 +1290,7 @@ if(fullPdtContentFromInDesign.indexOf('RC6980-07') == -1 )
 
 			if(item.indexOf('|') == -1)
 			{			
+				newTextForIndesign += item;
 				///alert(subMatch + '| missing in error' );
 				continue;
 			}
