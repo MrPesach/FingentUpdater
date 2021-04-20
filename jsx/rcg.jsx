@@ -181,7 +181,8 @@ function GetProductDetailsFromIndesignFile(productData)
 									///alert('continue ');
 									break;
 								}
-
+								
+								/////GetAllWarningsFromTheIndesignProduct(fullPdtContentFromInDesign, lengthFromAppData, weightFromAppData, pdtFromAppData, weightFromAppData, rateFromAppData )
 								if(CheckAnyWarningInProduct(fullPdtContentFromInDesign, lengthFromAppData, weightFromAppData, pdtFromAppData, weightFromAppData, rateFromAppData ))
 								{
 									///alert('CheckAnyWarningInProduct calling frm page normal');
@@ -592,6 +593,125 @@ function CheckAnyWarningInProduct(fullPdtContentFromInDesign, lengthFromAppData,
 	}
 
 	return false;
+}
+
+function GetAllWarningsFromTheIndesignProduct(fullPdtContentFromInDesign, lengthFromAppData, weightFromAppData, pdtFromAppData, weightFromAppData, rateFromAppData )
+{
+
+var status = false;
+ /*
+ if (warningReturnValue.length == 0) {
+							warningReturnValue += (isItaNewPageForWarning == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L0C12L1C12LI";
+						}
+						else 
+						{
+							warningReturnValue += "R12W" + (isItaNewPageForWarning == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L0C12L1C12LI";
+						}
+ 
+ */
+ ///alert('CheckAnyWarningInProduct');
+	if(fullPdtContentFromInDesign.indexOf('RC6979-07') == -1 )
+	{
+		///return;
+	}	
+		
+	productErrorPortion = fullPdtContentFromInDesign;
+	if(fullPdtContentFromInDesign == ''
+	  || fullPdtContentFromInDesign == null
+	  || fullPdtContentFromInDesign == undefined) 
+	{
+		return true;								
+	}
+
+	/*if(fullPdtContentFromInDesign.indexOf(']g') == -1
+	  || fullPdtContentFromInDesign.indexOf('$[') == -1) 
+	{
+		return true;								
+	}
+*/
+	var spaceSplits = fullPdtContentFromInDesign.split(' ');
+	////alert( spaceSplits.length);
+	var sku = '';
+	for (var inc = 0; inc < spaceSplits.length; inc++) {
+		var item = spaceSplits[inc];
+		///alert(item);
+		if(item == '' || item == null || item == undefined)
+		{
+			continue;
+		}
+
+		if(item.indexOf('ln') > -1 || item.indexOf('wt') > -1 || item.indexOf('pr') > -1)
+		{
+		sku = '';
+		var matches = item.match(/\[(.*?)\]/);
+		var subMatch = '';
+		if (matches) {
+			subMatch = '[' + matches[1] + ']';
+			///alert('subMatch in warning-' + subMatch);
+		}
+		else
+		{
+			///alert('No match in warning -' + item);
+			sku = item.split('[');
+			if(sku.length > 1)
+			{
+				productErrorPortion = '[' + sku[1];
+			}
+			else
+			{
+				productErrorPortion = item;
+			}			
+			//alert(productErrorPortion);
+			if (warningReturnValue.length == 0) {
+				warningReturnValue += (isItaNewPageForWarning == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + productErrorPortion + "C12L0C12L1C12LI";
+			}
+			else 
+			{
+				warningReturnValue += "R12W" + (isItaNewPageForWarning == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + productErrorPortion + "C12L0C12L1C12LI";
+			}
+		}		
+			
+		if(subMatch == '' || subMatch == null || subMatch == undefined)
+		{
+			continue;
+		}		
+
+		if(subMatch.indexOf('ln') > -1 && (lengthFromAppData == '' || lengthFromAppData == null || lengthFromAppData == undefined ))
+		{
+			///alert('ln missing'+subMatch);
+			productErrorPortion = subMatch;
+			if (warningReturnValue.length == 0) {
+				warningReturnValue += (isItaNewPageForWarning == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + productErrorPortion + "C12L0C12L1C12LI";
+			}
+			else 
+			{
+				warningReturnValue += "R12W" + (isItaNewPageForWarning == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + productErrorPortion + "C12L0C12L1C12LI";
+			}
+		}
+		else if(subMatch.indexOf('wt') > -1 && (weightFromAppData == '' || weightFromAppData == null || weightFromAppData == undefined ))
+		{
+			///alert('wt missing-'+subMatch);
+			productErrorPortion = subMatch;
+			if (warningReturnValue.length == 0) {
+				warningReturnValue += (isItaNewPageForWarning == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + productErrorPortion + "C12L0C12L1C12LI";
+			}
+			else 
+			{
+				warningReturnValue += "R12W" + (isItaNewPageForWarning == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + productErrorPortion + "C12L0C12L1C12LI";
+			}
+		}
+	}
+		/*else if(subMatch.indexOf('pr') > -1 && (rateFromAppData == '' || rateFromAppData == null || rateFromAppData == undefined ))
+		{
+			///alert('pr missing in warning');
+			productErrorPortion = subMatch;
+			return true;
+		}
+		*/
+	
+	}
+
+	
 }
 
 function GetProductFromError(fullPdtContentFromInDesign)
