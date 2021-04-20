@@ -277,11 +277,11 @@ function GetContentFromGroup(grp, productData, pageName)
 						continue;
 					}
 					///alert('fullPdtContentFromInDesign from group-'+fullPdtContentFromInDesign)					
-					if(fullPdtContentFromInDesign.indexOf('RC6979-07') == -1)
+					/*	if(fullPdtContentFromInDesign.indexOf('RC6979-07') == -1)
 					{
 						///continue;
 					}
-			/*	*/
+			*/
 				///alert('fullPdtContentFromInDesign group '+fullPdtContentFromInDesign);
 					/* 
 					if(fullPdtContentFromInDesign.indexOf('RC6980-07') == -1)
@@ -508,13 +508,13 @@ function CheckAnyErrorInProduct(fullPdtContentFromInDesign, lengthFromAppData, w
 
 function CheckAnyWarningInProduct(fullPdtContentFromInDesign, lengthFromAppData, weightFromAppData, pdtFromAppData, rateFromAppData )
 {
- /* */
+ /* 
  ///alert('CheckAnyWarningInProduct');
 	if(fullPdtContentFromInDesign.indexOf('RC6979-07') == -1 )
 	{
 		///return;
 	}	
-		
+	*/	
 	productErrorPortion = fullPdtContentFromInDesign;
 	if(fullPdtContentFromInDesign == ''
 	  || fullPdtContentFromInDesign == null
@@ -611,11 +611,12 @@ var status = false;
  
  */
  ///alert('CheckAnyWarningInProduct');
+ /*
 	if(fullPdtContentFromInDesign.indexOf('RC6979-07') == -1 )
 	{
 		///return;
 	}	
-		
+		/*
 	productErrorPortion = fullPdtContentFromInDesign;
 	if(fullPdtContentFromInDesign == ''
 	  || fullPdtContentFromInDesign == null
@@ -1440,12 +1441,12 @@ if(fullPdtContentFromInDesign.indexOf('ER11384') == -1)
 	return "";
 }
 
-*/
+
 		if(fullPdtContentFromInDesign.indexOf('ER11383') == -1 )
 		{
 			return "";
 		}
-
+*/
  		////alert('fullPdtContentFromInDesign-'+fullPdtContentFromInDesign+' | pdtFromAppData-'+pdtFromAppData+' | from-'+from);
  		var pdtFromInDesign = '';
 	if (fullPdtContentFromInDesign != null && fullPdtContentFromInDesign != ''
@@ -1474,11 +1475,11 @@ if(fullPdtContentFromInDesign.indexOf('ER11384') == -1)
 		}
 		else if(fullPdtContentFromInDesign.indexOf('ln') > -1)			
 			{
-				alert('Old code');
+				///alert('Old code');
 				for (var inc = 0; inc < indesignProducts.length; inc++) 
 				{
 					var item = '[' + indesignProducts[inc];								
-					alert(inc + ' --> ' + item);
+					///alert(inc + ' --> ' + item);
 						if(inc ==0)
 						{
 							///newTextForIndesign += item;
@@ -1499,6 +1500,8 @@ if(fullPdtContentFromInDesign.indexOf('ER11384') == -1)
 						}
 						else if (item.indexOf(']') > -1 && item.indexOf('ln') > -1) 
 						{
+							if(lengthFromAppData != '' && lengthFromAppData != null && lengthFromAppData != undefined)
+							{
 							
 							var matches = item.match(/\[(.*?)\]/);
 							var subMatch = '';
@@ -1528,8 +1531,13 @@ if(fullPdtContentFromInDesign.indexOf('ER11384') == -1)
 								newTextForIndesign += lengths[0];
 								}
 								newTextForIndesign += item;
-							}	
-							alert('After ln '+newTextForIndesign)			
+							}
+						}
+						else
+						{
+							newTextForIndesign += item;
+						}	
+							///alert('After ln '+newTextForIndesign)			
 						}			
 						else if (item.indexOf(']g') > -1 && item.indexOf('wt') > -1)//Weight
 						{
@@ -1544,11 +1552,15 @@ if(fullPdtContentFromInDesign.indexOf('ER11384') == -1)
 						}			
 						else if (item.indexOf('pr]') > -1)////Price
 						{
+							
 							var priceSplits = item.split(']');
 							if(priceSplits.length > 1)
 							{
+								///alert('In old price item-'+item+' priceSplits[0]'+priceSplits[0]+' priceSplits[1]-'+priceSplits[1]+'rateFromAppData-'+rateFromAppData);
+
 								if(rateFromAppData != '' && rateFromAppData != null && rateFromAppData != undefined)
 								{
+									newTextForIndesign= newTextForIndesign.replace('$','');
 									newTextForIndesign +=  ' $' + rateFromAppData + ' ' + priceSplits[1];
 								}
 								else
@@ -1560,6 +1572,7 @@ if(fullPdtContentFromInDesign.indexOf('ER11384') == -1)
 							{
 								if(rateFromAppData != '' && rateFromAppData != null && rateFromAppData != undefined)
 								{
+									newTextForIndesign= newTextForIndesign.replace('$','');
 									newTextForIndesign +=  ' $' + rateFromAppData;
 								}
 								else
@@ -1568,7 +1581,7 @@ if(fullPdtContentFromInDesign.indexOf('ER11384') == -1)
 								}								
 							}
 							
-							alert('After pr'+newTextForIndesign);
+							///alert('After pr'+newTextForIndesign);
 						}			
 						else {
 							///newTextForIndesign += item;
@@ -1576,16 +1589,16 @@ if(fullPdtContentFromInDesign.indexOf('ER11384') == -1)
 						}
 				
 
-					alert('item-'+item +' - newTextForIndesign-'+newTextForIndesign);
+					/////('item-'+item +' - newTextForIndesign-'+newTextForIndesign);
 					//if else close
 				}// for loop end
-alert('Ret newTextForIndesign- '+ newTextForIndesign);
-				return 'hi';
+///alert('Ret newTextForIndesign- '+ newTextForIndesign);
+				return newTextForIndesign;
 			}
 			/// Length mising and weight found
 			else  if(fullPdtContentFromInDesign.indexOf('ln') == -1 && fullPdtContentFromInDesign.indexOf('wt') > -1) // length missing
 			{
-				alert('New code');
+				///alert('New code');
 				for (var inc = 0; inc < indesignProducts.length; inc++) 
 				{
 					var item = '[' + indesignProducts[inc];
@@ -1642,6 +1655,7 @@ alert('Ret newTextForIndesign- '+ newTextForIndesign);
 							{
 								if(rateFromAppData != '' && rateFromAppData != null && rateFromAppData != undefined)
 								{
+									newTextForIndesign = newTextForIndesign.replace('$','');
 									newTextForIndesign +=  ' $' + rateFromAppData + ' ' + priceSplits[1];
 								}
 								else
@@ -1653,6 +1667,7 @@ alert('Ret newTextForIndesign- '+ newTextForIndesign);
 							{
 								if(rateFromAppData != '' && rateFromAppData != null && rateFromAppData != undefined)
 								{
+									newTextForIndesign = newTextForIndesign.replace('$','');
 									newTextForIndesign +=  ' $' + rateFromAppData;
 								}
 								else
@@ -1669,7 +1684,7 @@ alert('Ret newTextForIndesign- '+ newTextForIndesign);
 					////alert('item-'+item +' - newTextForIndesign-'+newTextForIndesign);
 					//if else close
 				}// for loop end
-			alert('Old newTextForIndesign '+newTextForIndesign);
+			///alert('Old newTextForIndesign '+newTextForIndesign);
 				return newTextForIndesign;
 			}
 		
