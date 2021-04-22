@@ -1157,3 +1157,16 @@ function SwalFn()
         $('#spanEror').text('Error swal from -' + er);
         }
 }
+
+function StringFound()
+{
+    var strng;  
+    strng = "RC11866[RC11866-07|ln [RC11866-07|wtg $[RC11866-07|pr";  
+    var searchWord = 'C11866-074';
+    var position = strng.search(searchWord);
+
+
+    alert(strng+ " | Desired String is present at position : " + position);  
+
+
+}
