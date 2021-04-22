@@ -114,11 +114,9 @@ function GetContentFromIndesign(tfNormal, productData, pageName)
 		////var tfNormal = currentPage.textFrames.everyItem().getElements();			
 		///alert('Normal-'+ tfNormal.length);
 		for (var i = 0; i < tfNormal.length; i++) {
-			/*if(i > 10)
-			{
-				continue;
-			} */
 			var fullPdtContentFromInDesign = tfNormal[i].contents;
+			
+			
 			////alert('Normal-'+fullPdtContentFromInDesign+' | [-> '+fullPdtContentFromInDesign.indexOf('[')+' | ] -> ' + fullPdtContentFromInDesign.indexOf(']') );
 			if(fullPdtContentFromInDesign == '' || fullPdtContentFromInDesign == null 
 			|| fullPdtContentFromInDesign == undefined )
@@ -131,14 +129,17 @@ function GetContentFromIndesign(tfNormal, productData, pageName)
 				continue;
 			}				
 			
-			/*				
-			if(fullPdtContentFromInDesign.indexOf('RW020-18') == -1)
+		/*					
+			if(fullPdtContentFromInDesign.indexOf('RC11219-18') == -1)
 			{
 				continue;
 			}
-			*/	
-			
-			////alert('fullPdtContentFromInDesign page '+fullPdtContentFromInDesign);
+				
+			if(fullPdtContentFromInDesign.indexOf('ER11385') > -1)
+			{
+				alert('Found - '+fullPdtContentFromInDesign);
+			}*/
+			//alert('fullPdtContentFromInDesign page '+fullPdtContentFromInDesign);
 			
 			///$[FOX080-18|pr]
 			var dollarIndex = fullPdtContentFromInDesign.indexOf('$');
@@ -210,8 +211,9 @@ function GetContentFromIndesign(tfNormal, productData, pageName)
 			}
 			else
 			{
-			//	alert('GetProductNameFromIndesignText normal called');				
+				////lert('GetProductNameFromIndesignText normal called');				
 				pdtFromInDesign = GetProductNameFromIndesignText(fullPdtContentFromInDesign);
+				///alert('pdtFromInDesign-'+pdtFromInDesign);
 			}
 
 			///alert('Before format - '+fullPdtContentFromInDesign+' | pdtFromInDesign-'+pdtFromInDesign);				
@@ -268,7 +270,7 @@ function GetContentFromIndesign(tfNormal, productData, pageName)
 						} // found if close
 						else {
 							productStatus = 102;	/// 102 -> Product In Warning,
-							productErrorPortion = pdtFromInDesign+'- Product missing';
+							productErrorPortion = pdtFromInDesign+' - Product missing';
 							///alert('in warning');
 						}
 
@@ -391,7 +393,72 @@ function CheckAnyErrorInProduct(fullPdtContentFromInDesign, lengthFromAppData, w
 		}	
 		
 
+		var lengthPortion = '';
+	var weightPortion = '';
+	var pricePortion = '';
+	var content ='';
+	var hasLeftFound = false;
+	var hasRightFound = false;
+	///alert('start scanning '+fullPdtContentFromInDesign);
+	for (var inc = 0; inc < fullPdtContentFromInDesign.length; inc++) 
+	{		
+		///alert(fullPdtContentFromInDesign[inc]);
 
+		if(fullPdtContentFromInDesign[inc] == '[')
+		{
+			///alert('[ found content-'+ content);
+			hasLeftFound = true;
+			content='';
+			continue;
+		}
+		
+		if(fullPdtContentFromInDesign[inc] == ']')
+		{
+			///alert('] found content-'+ content);
+			hasRightFound = true;
+			hasLeftFound = false; 
+		}
+
+		if(hasRightFound)
+		{
+			if(content.indexOf('ln') > -1){
+				lengthPortion = content;
+			}
+			else if(content.indexOf('wt') > -1){
+				weightPortion = content;				
+			}
+			else if(content.indexOf('pr') > -1){
+				pricePortion = content;
+			}
+
+			hasLeftFound = false;
+			hasRightFound = false; 
+			content='';
+		}
+
+		if(hasLeftFound)
+		{
+			content += fullPdtContentFromInDesign[inc];
+		}
+	}
+
+	///alert('lengthPortion-'+lengthPortion+' |weightPortion- '+weightPortion+' |pricePortion- '+pricePortion+'lengthFromAppData-'+lengthFromAppData+' |weightFromAppData-'+weightFromAppData+' | rateFromAppData-'+rateFromAppData);
+	if(lengthPortion.length > 0 && lengthPortion.indexOf('|') == -1)
+	{	
+		return true;
+	}
+	if(weightPortion.length > 0 && weightPortion.indexOf('|') == -1)
+	{
+		///alert('weightPortion-'+weightPortion+' | weightFromAppData-'+weightFromAppData);
+		///alert('ln missing'+subMatch);		
+		return true;
+	}
+	if(pricePortion.length > 0 && pricePortion.indexOf('|') == -1)
+	{
+		///alert('pricePortion-'+pricePortion+' | rateFromAppData-'+rateFromAppData);
+		///alert('wt missing-'+subMatch);		
+		return true;
+	}
 
 	/*if(fullPdtContentFromInDesign.indexOf(']g') == -1
 	  || fullPdtContentFromInDesign.indexOf('$[') == -1) 
@@ -538,21 +605,21 @@ function CheckAnyWarningInProduct(fullPdtContentFromInDesign, lengthFromAppData,
 	if(lengthPortion.length > 0 &&  (lengthFromAppData == '' || lengthFromAppData == null || lengthFromAppData == undefined ))
 	{		
 		///alert('lengthPortion-'+lengthPortion+' | lengthFromAppData-'+lengthFromAppData);
-		productErrorPortion = '[' +  lengthPortion + ']-Length missing';
+		productErrorPortion = '[' +  lengthPortion + '] - Length missing';
 		return true;
 	}
 	else if(weightPortion.length > 0 && (weightFromAppData == '' || weightFromAppData == null || weightFromAppData == undefined ))
 		{
 			///alert('weightPortion-'+weightPortion+' | weightFromAppData-'+weightFromAppData);
 			///alert('ln missing'+subMatch);
-			productErrorPortion = '[' + weightPortion + ']-Weight missing';
+			productErrorPortion = '[' + weightPortion + '] - Weight missing';
 			return true;
 		}
 		else if(pricePortion.length > 0 && (rateFromAppData == '' || rateFromAppData == null || rateFromAppData == undefined ))
 		{
 			///alert('pricePortion-'+pricePortion+' | rateFromAppData-'+rateFromAppData);
 			///alert('wt missing-'+subMatch);
-			productErrorPortion = '[' + pricePortion + ']-Price Missing';
+			productErrorPortion = '[' + pricePortion + '] - Price Missing';
 			return true;
 		}
 
@@ -952,7 +1019,7 @@ function GetProductNameFromIndesignText(fullPdtContentFromInDesign)
 		var subMatch = '';
 		if (matches) {
 			subMatch =  matches[1];
-			////alert('subMatch in error-' + subMatch);
+			///alert('subMatch in error-' + subMatch);
 			if(subMatch.indexOf('ln') > -1 && subMatch.indexOf('|ln') > -1)
 			{
 				var splitItem = subMatch.split('|ln') ;
@@ -987,6 +1054,21 @@ function GetProductNameFromIndesignText(fullPdtContentFromInDesign)
 			else if(subMatch.indexOf('wt') > -1)
 			{
 				var splitItem = subMatch.split('wt') ;
+				if(splitItem.length > 1)
+				{
+					if( splitItem[0].indexOf('|'))
+					{
+						var item = splitItem[0].split('|');
+						if(item.length > 1)
+						{
+							inDesignText = item[0];
+						}						
+					}
+				}
+			}
+			else if(subMatch.indexOf('pr') > -1)
+			{
+				var splitItem = subMatch.split('pr') ;
 				if(splitItem.length > 1)
 				{
 					if( splitItem[0].indexOf('|'))
