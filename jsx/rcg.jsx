@@ -928,8 +928,7 @@ function GetProductNameFromIndesignText(fullPdtContentFromInDesign)
 			{
 				var splitItem = subMatch.split('|ln') ;
 				if(splitItem.length > 1)
-				{
-					
+				{					
 					inDesignText = splitItem[0];
 				///	alert('LN1 inDesignText'+inDesignText);
 				}
@@ -950,6 +949,7 @@ function GetProductNameFromIndesignText(fullPdtContentFromInDesign)
 					}
 				}
 			}
+
 			if(subMatch.indexOf('wt') > -1 && subMatch.indexOf('|wt') > -1)
 			{
 				var splitItem = subMatch.split('|wt') ;
@@ -994,6 +994,7 @@ function GetProductNameFromIndesignText(fullPdtContentFromInDesign)
 		}		
 	}
 
+	////alert('second part');
 	if(inDesignText == '')
 	{
 		////alert('In second part');
