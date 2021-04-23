@@ -126,10 +126,12 @@ function GetContentFromIndesign(tfNormal, productData, pageName, mode)
 			{
 				continue;
 			}
-			if(fullPdtContentFromInDesign.indexOf('RC11866-07') == -1 )
+/* 
+			if(fullPdtContentFromInDesign.indexOf('ER11383') == -1 )
 			{
-				////continue;
+				continue;
 			}
+*/
 			var leftIndex = fullPdtContentFromInDesign.indexOf('[');
 			var rightIndex = fullPdtContentFromInDesign.indexOf(']');
 
@@ -146,15 +148,13 @@ function GetContentFromIndesign(tfNormal, productData, pageName, mode)
 			{
 				alert('Found - '+fullPdtContentFromInDesign);
 			}*/
-			//alert('fullPdtContentFromInDesign page '+fullPdtContentFromInDesign);
-			
+			///alert('fullPdtContentFromInDesign page '+fullPdtContentFromInDesign);			
 			///$[FOX080-18|pr]
 			var dollarIndex = fullPdtContentFromInDesign.indexOf('$');
 			var squareIndex = fullPdtContentFromInDesign.indexOf('[');
 			///alert('dollarIndex-' + dollarIndex + 'squareIndex' + squareIndex);
 			if(dollarIndex == 0 && squareIndex == 1)
-			{
-				
+			{	
 				var matches = fullPdtContentFromInDesign.match(/\[(.*?)\]/);
 				///alert('matches.length-'+matches.length);
 				if(matches != null && matches.length > 0)
@@ -218,12 +218,12 @@ function GetContentFromIndesign(tfNormal, productData, pageName, mode)
 			}
 			else
 			{
-				////lert('GetProductNameFromIndesignText normal called');				
+				///alert('Normal format called');				
 				pdtFromInDesign = GetProductNameFromIndesignText(fullPdtContentFromInDesign);
 				///alert('pdtFromInDesign-'+pdtFromInDesign);
 			}
 
-			///alert('Before format - '+fullPdtContentFromInDesign+' | pdtFromInDesign-'+pdtFromInDesign);				
+			////alert('Before format - '+fullPdtContentFromInDesign+' | pdtFromInDesign-'+pdtFromInDesign);				
 			if(pdtFromInDesign == '')
 			{
 				///alert(fullPdtContentFromInDesign+' is Empty')
@@ -247,8 +247,7 @@ function GetContentFromIndesign(tfNormal, productData, pageName, mode)
 						var lengthFromAppData = productData[g].Length;
 					///alert('pdtFromAppData->'+pdtFromAppData+' |pdtFromInDesign- '+pdtFromInDesign);
 						var weightFromAppData = productData[g].Weight;
-						var rateFromAppData = productData[g].Price;
-						
+						var rateFromAppData = productData[g].Price;						
 					////	alert('pdtFromInDesign-'+pdtFromInDesign+' | pdtFromAppData ->'+pdtFromAppData);
 					if (pdtFromInDesign == pdtFromAppData) 
 						{
@@ -867,7 +866,7 @@ function GetProductNameFromIndesignText(fullPdtContentFromInDesign)
 	////alert( spaceSplits.length);
 	for (var inc = 0; inc < spaceSplits.length; inc++) {
 		var item = spaceSplits[inc];
-	///	alert(item);
+		///alert('Each item-'+item);
 		if(item == '' || item == null || item == undefined)
 		{
 			continue;
@@ -878,13 +877,15 @@ function GetProductNameFromIndesignText(fullPdtContentFromInDesign)
 		var subMatch = '';
 		if (matches) {
 			subMatch =  matches[1];
-			///alert('subMatch in error-' + subMatch);
+			///alert('matches fount in -' + subMatch);
 			if(subMatch.indexOf('ln') > -1 && subMatch.indexOf('|ln') > -1)
 			{
 				var splitItem = subMatch.split('|ln') ;
 				if(splitItem.length > 1)
 				{
+					
 					inDesignText = splitItem[0];
+				///	alert('LN1 inDesignText'+inDesignText);
 				}
 			}
 			else if(subMatch.indexOf('ln') > -1)
@@ -898,6 +899,7 @@ function GetProductNameFromIndesignText(fullPdtContentFromInDesign)
 						if(item.length > 1)
 						{
 							inDesignText = item[0];
+							///alert('LN2 inDesignText'+inDesignText);
 						}						
 					}
 				}
@@ -908,6 +910,7 @@ function GetProductNameFromIndesignText(fullPdtContentFromInDesign)
 				if(splitItem.length > 1)
 				{
 					inDesignText = splitItem[0];
+					///alert('wt1 inDesignText'+inDesignText);
 				}
 			}
 			else if(subMatch.indexOf('wt') > -1)
@@ -921,6 +924,7 @@ function GetProductNameFromIndesignText(fullPdtContentFromInDesign)
 						if(item.length > 1)
 						{
 							inDesignText = item[0];
+							///alert('wt2 inDesignText'+inDesignText);
 						}						
 					}
 				}
@@ -936,6 +940,7 @@ function GetProductNameFromIndesignText(fullPdtContentFromInDesign)
 						if(item.length > 1)
 						{
 							inDesignText = item[0];
+							///alert('pr inDesignText'+inDesignText);
 						}						
 					}
 				}
@@ -943,6 +948,66 @@ function GetProductNameFromIndesignText(fullPdtContentFromInDesign)
 		}		
 	}
 
+	if(inDesignText == '')
+	{
+		////alert('In second part');
+		///RC11866[RC11866-07|ln [RC11866-07|wtg $[RC11866-07|pr
+		for (var inc = 0; inc < spaceSplits.length; inc++) {
+			var item = spaceSplits[inc];
+			///alert('Each item-'+item);
+			if(item.indexOf('wt') > -1)
+			{
+				if(item.indexOf('|wt') > -1)
+				{
+					var weights =	item.split('|wt') ;
+					if(weights.length > 0)
+					{
+						inDesignText = ReplaceCharacterFromString(weights[0], '[');
+						////alert('weights1 inDesignText-'+inDesignText);
+						break;
+					}
+				}
+				else if(item.indexOf('wt') > -1)
+				{
+					var weights =	item.split('wt') ;
+					if(weights.length > 0)
+					{
+						inDesignText = ReplaceCharacterFromString(weights[0], '[');
+						////alert('weights2 inDesignText-'+inDesignText);
+						break;
+					}
+				}
+			}
+			else if(item.indexOf('pr') > -1)
+			{
+				//$[RC11866-07|pr
+				if(item.indexOf('|pr') > -1)
+				{
+					var prices = item.split('|pr') ;
+					if(prices.length > 0)
+					{
+						inDesignText = ReplaceCharacterFromString(prices[0], '[');
+						inDesignText = ReplaceCharacterFromString(inDesignText, ']');
+						inDesignText = ReplaceCharacterFromString(inDesignText, '$');
+						////alert('prices1 inDesignText-'+inDesignText);
+						break;
+					}
+				}
+				else if(item.indexOf('pr') > -1)
+				{
+					var prices =	item.split('pr') ;
+					if(prices.length > 0)
+					{
+						inDesignText = ReplaceCharacterFromString(prices[0], '[');
+						inDesignText = ReplaceCharacterFromString(inDesignText, ']');
+						inDesignText = ReplaceCharacterFromString(inDesignText, '$');
+						////alert('prices2 inDesignText-'+inDesignText);
+						break;
+					}
+				}
+			}
+		}
+	}
 
 	
 	}
@@ -953,6 +1018,25 @@ function GetProductNameFromIndesignText(fullPdtContentFromInDesign)
 	return inDesignText;
 }
 /////////////////////////////////////////////////////////////////////////////////////////
+
+function ReplaceCharacterFromString(strText, replaceChar)
+{
+	var newString ='';
+	if(strText == '')
+	{
+		return newString;	
+	}
+
+	for (var inc = 0; inc < strText.length; inc++) 
+	{		
+		if(strText[inc] != replaceChar)
+		{
+			newString += strText[inc];
+		}
+	}
+
+	return newString;
+}
 
 function GetProductNameFromIndesignTextForTableFormat(fullPdtContentFromInDesign)
 {
@@ -1113,7 +1197,6 @@ function UpdateProductDetailsIntheIndesignFile(productData)
 							}					
 						}				
 				}	
-			
 		}
 
 		indexFileName += '.csv';

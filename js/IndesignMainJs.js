@@ -86,12 +86,12 @@ if(errorValues != '' && errorValues.length > 0)
                     errorHtml +=  "</ul> <div id='divErrorPage"+ row +"' class='info-hd errorPage'>Page-"+columns[1] +"</div>";
                  }
                 errorHtml +=  "<ul style='display:none;' class='info-list error-list' id='ulErrors"+ row +"'>";
-                errorHtml +=  "<li><img src='../img/error.png' class='tick'> <span class='PdtCls' title="+  columns[5] +">"+ columns[2] + "</span></li>";
+                errorHtml +=  "<li><img src='../img/error.png' class='tick'> <span class='PdtCls'>"+ columns[2] + "</span></li>";
             }
             else
             {  
                 //product
-                errorHtml +=  "<li><img src='../img/error.png' class='tick'> <span class='PdtCls' title="+  columns[5] +">"+ columns[2] +"</span> </li>";
+                errorHtml +=  "<li><img src='../img/error.png' class='tick'> <span class='PdtCls'>"+ columns[2] +"</span> </li>";
             }
         }
 
@@ -149,12 +149,12 @@ if(errorValues != '' && errorValues.length > 0)
                     warningHtml +=  "</ul><div id='divWarningPage"+ row +"' class='info-hd warningPage'>Page-"+columns[1] +"</div>";
                 }
                 warningHtml +=  " <ul style='display:none;' class='info-list error-list warring-list' id='ulWarnings"+ row +"'>";
-                warningHtml +=  "<li><img src='../img/warring.png' class='tick'> <span class='PdtCls' title="+  columns[5] +"> "+ columns[2] + "</span></li>";
+                warningHtml +=  "<li><img src='../img/warring.png' class='tick'> <span class='PdtCls'> "+ columns[2] + "</span></li>";
             }
             else
             {  
                 //product
-                warningHtml +=  "<li><img src='../img/warring.png' class='tick'> <span class='PdtCls' title="+  columns[5] +"> "+ columns[2]  + "</span> </li>";
+                warningHtml +=  "<li><img src='../img/warring.png' class='tick'> <span class='PdtCls'> "+ columns[2]  + "</span> </li>";
             }
         }
         warningHtml +=  " </ul>";
@@ -198,12 +198,12 @@ if(successValues != '' && successValues.length > 0 && warningValues.length == 0 
                 successHtml +=  "</ul><div id='divSuccess" + row + "' class='info-hd successPage'>Page-"+columns[1] +"</div>";
             }
             successHtml +=  " <ul style='display:none;' class='info-list' id='ulSuccess" + row +"'>";
-            successHtml +=  "<li><img src='../img/tick.png' class='tick'> <span class='PdtCls' title="+  columns[5] +"> "+ columns[2] + " </span> </li>";
+            successHtml +=  "<li><img src='../img/tick.png' class='tick'> <span class='PdtCls'> "+ columns[2] + " </span> </li>";
         }
         else
         {  
             //product
-            successHtml +=  "<li><img src='../img/tick.png' class='tick'> <span class='PdtCls' title="+  columns[5] +"> "+ columns[2] +" </span></li>";
+            successHtml +=  "<li><img src='../img/tick.png' class='tick'> <span class='PdtCls'> "+ columns[2] +" </span></li>";
         }
     }
     successHtml +=  " </ul>";
