@@ -115,6 +115,7 @@ function GetContentFromIndesign(tfNormal, productData, pageName, mode)
 		///alert('Normal-'+ tfNormal.length);
 		for (var i = 0; i < tfNormal.length; i++) {
 			var fullPdtContentFromInDesign = tfNormal[i].contents;
+			fullPdtContentFromInDesign = Trim(fullPdtContentFromInDesign);
 		/*	if(fullPdtContentFromInDesign.indexOf('RC11866-07') > -1 )
 		{
 			///alert(fullPdtContentFromInDesign);
@@ -128,7 +129,7 @@ function GetContentFromIndesign(tfNormal, productData, pageName, mode)
 			}
 
 			/* 
-			if(fullPdtContentFromInDesign.indexOf('ER11379') == -1 )
+			if(fullPdtContentFromInDesign.indexOf('ER12181') == -1 )
 			{
 				continue;
 			}
@@ -225,7 +226,7 @@ function GetContentFromIndesign(tfNormal, productData, pageName, mode)
 			{
 				///alert('Normal format called');				
 				pdtFromInDesign = GetProductNameFromIndesignText(fullPdtContentFromInDesign);
-				///alert('pdtFromInDesign-'+pdtFromInDesign);
+				/// alert('pdtFromInDesign-'+pdtFromInDesign);
 			}
 
 			////alert('Before format - '+fullPdtContentFromInDesign+' | pdtFromInDesign-'+pdtFromInDesign);				
@@ -365,8 +366,8 @@ function GetProductNameFromInvalidSKU(fullPdtContentFromInDesign)
 
 function CheckAnyErrorInProduct(fullPdtContentFromInDesign, lengthFromAppData, weightFromAppData, pdtFromAppData, rateFromAppData )
 {
-	/*
-	alert('CheckAnyErrorInProduct');
+
+/*	alert('CheckAnyErrorInProduct');
 
 	if(fullPdtContentFromInDesign.indexOf('RW020-18') == -1 )
 	{
@@ -396,7 +397,7 @@ function CheckAnyErrorInProduct(fullPdtContentFromInDesign, lengthFromAppData, w
 		}
 	}
 
-	///alert('countOfLeftSqure-'+countOfLeftSqure+' | countOfRightSqure-'+countOfRightSqure)
+	/// alert('countOfLeftSqure-'+countOfLeftSqure+' | countOfRightSqure-'+countOfRightSqure)
 		if(countOfLeftSqure != countOfRightSqure)
 		{			
 				return true;			
@@ -903,6 +904,7 @@ function GetProductNameFromIndesignText(fullPdtContentFromInDesign)
 	var inDesignText = '';
 	try
 	{		
+		//// alert('Capture sku');
 		9846
 		/// FOX080  0.8mm [FOX080-18|ln] [FOX080-18|wt]g (0.09 gr/inch)
 		/// RC6980[RC6980-07|ln] [RC6980-07|wt]g  $[RC6980-07|pr]
@@ -999,7 +1001,30 @@ function GetProductNameFromIndesignText(fullPdtContentFromInDesign)
 		for (var inc = 0; inc < spaceSplits.length; inc++) {
 			var item = spaceSplits[inc];
 			///alert('Each item-'+item);
-			if(item.indexOf('wt') > -1)
+			if(item.indexOf('wt') > -1 && item.indexOf('[') > -1)
+			{
+				inDesignText = '';
+				var start = false;
+				for (var inc = 0; inc < item.length; inc++) 
+				{		
+					if(item[inc] == '[')
+					{
+						start = true;
+						continue;										
+					}
+					else  if(item[inc] == '|' || (item[inc] == 'w' && item[(inc+1)] == 't'))
+					{
+						start = false;
+						break;
+					}
+
+					if(start)
+					{
+						inDesignText += item[inc];
+					}
+				}
+			}
+			else if(item.indexOf('wt') > -1)
 			{
 				if(item.indexOf('|wt') > -1)
 				{
@@ -1266,6 +1291,7 @@ function UpdateSKUDetailsToIndesign(tfNormal, productData, pageName)
 	for (var i = 0; i < tfNormal.length; i++) {
 		///alert('Text frame normal-'+i);
 		var fullPdtContentFromInDesign = tfNormal[i].contents;
+		fullPdtContentFromInDesign = Trim(fullPdtContentFromInDesign);
 		if(fullPdtContentFromInDesign == '' || fullPdtContentFromInDesign == null || fullPdtContentFromInDesign == undefined)
 		{
 			continue;
@@ -1404,7 +1430,7 @@ function UpdateSKUDetailsToIndesign(tfNormal, productData, pageName)
 			////	alert('pdtFromInDesign-'+pdtFromInDesign+' | pdtFromAppData ->'+pdtFromAppData);
 			if (pdtFromInDesign == pdtFromAppData) 
 				{
-					///alert('Product found '+pdtFromInDesign);
+					////alert('Product found '+pdtFromInDesign);
 					/// Product found in indesign								
 					if(CheckAnyErrorInProduct(fullPdtContentFromInDesign, lengthFromAppData, weightFromAppData, pdtFromAppData,  rateFromAppData ))
 					{
@@ -1735,3 +1761,32 @@ if(fullPdtContentFromInDesign.indexOf('ER11384') == -1)
 	}
 	return newTextForIndesign;
 }//function close
+
+function Trim(strText)
+{
+	var newString ='';
+	if(strText == '')
+	{
+		return newString;	
+	}
+
+	for (var inc = 0; inc < strText.length; inc++) 
+	{		
+		if(inc == 0  && strText[inc] == '')
+		{
+			alert('Start space');
+			continue;
+		}
+
+		if(inc == (strText.length - 1)  && strText[inc] == '')
+		{
+			alert('End space');
+			continue;
+		}
+		
+		newString += strText[inc];
+		
+	}
+
+	return newString;
+}
