@@ -126,19 +126,24 @@ function GetContentFromIndesign(tfNormal, productData, pageName, mode)
 			{
 				continue;
 			}
-/* 
-			if(fullPdtContentFromInDesign.indexOf('ER11383') == -1 )
+
+			/* 
+			if(fullPdtContentFromInDesign.indexOf('ER11379') == -1 )
 			{
 				continue;
 			}
-*/
+			*/
+
 			var leftIndex = fullPdtContentFromInDesign.indexOf('[');
 			var rightIndex = fullPdtContentFromInDesign.indexOf(']');
+			var lengthIndex = fullPdtContentFromInDesign.indexOf('|ln');
+			var weightIndex = fullPdtContentFromInDesign.indexOf('|wt');
+			var priceIndex = fullPdtContentFromInDesign.indexOf('|pr');
 
-			if(leftIndex == rightIndex && leftIndex == -1)
+			if(leftIndex == rightIndex && leftIndex == -1 && lengthIndex == -1 && weightIndex == -1 && priceIndex == -1)
 			{
-				///alert(fullPdtContentFromInDesign+' Continue'+'leftIndex-'+leftIndex+'rightIndex= '+rightIndex);
 				continue;
+				///alert(fullPdtContentFromInDesign+' Continue'+'leftIndex-'+leftIndex+'rightIndex= '+rightIndex);			
 			}				
 			
 		/*					
@@ -279,7 +284,6 @@ function GetContentFromIndesign(tfNormal, productData, pageName, mode)
 							productErrorPortion = pdtFromInDesign+' - Product missing from product manager';
 							///alert('in warning');
 						}
-
 						///alert('fullPdtContentFromInDesign-'+fullPdtContentFromInDesign+' | pdtFromAppData-'+pdtFromAppData+' | newTextForIndesign-'+newTextForIndesign);
 					}
 					catch (er) {
@@ -399,7 +403,7 @@ function CheckAnyErrorInProduct(fullPdtContentFromInDesign, lengthFromAppData, w
 		}	
 		
 
-		var lengthPortion = '';
+	var lengthPortion = '';
 	var weightPortion = '';
 	var pricePortion = '';
 	var content ='';
@@ -483,13 +487,53 @@ function CheckAnyErrorInProduct(fullPdtContentFromInDesign, lengthFromAppData, w
 	{
 		return true;
 	}
-	return false;
+
+	/////////////////////////////////////////////////////////////////////////	
+	var spaceSplits = fullPdtContentFromInDesign.split(' ');
+	////alert( spaceSplits.length);
+	var identifierCount = 0;
+	var leftRightSqureBracketCnt = 0;
+	for (var inc = 0; inc < spaceSplits.length; inc++) 
+	{
+		var item = spaceSplits[inc];
+		////alert(item);
+		if(item == '' || item == null || item == undefined)
+		{
+			continue;
+		}
+	
+		if(item.indexOf('|ln') > -1)
+		{
+			identifierCount++;	
+		}
+		else if(item.indexOf('|wt') > -1)
+		{
+			identifierCount++;
+		}
+		else if(item.indexOf('|pr') > -1)
+		{
+			identifierCount++;
+		}
+
+		if(item.indexOf('[') > -1)
+		{
+			leftRightSqureBracketCnt++;
+		}
+		
+		if(item.indexOf(']') > -1)
+		{
+			leftRightSqureBracketCnt++;
+		}
+	}
+
+	//// Error
+	if((identifierCount * 2) !=  leftRightSqureBracketCnt)
+	{
+		return true;
+	}
 }
-//////////////////////////////////////
-
 
 //////////////////////////////////////
-
 function CheckAnyWarningInProduct(fullPdtContentFromInDesign, lengthFromAppData, weightFromAppData, pdtFromAppData, rateFromAppData )
 {
  /* 
