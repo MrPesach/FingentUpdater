@@ -1451,6 +1451,11 @@ function UpdateSKUDetailsToIndesign(tfNormal, productData, pageName)
 			productStatus = 103;									
 			/// 103 -> Product In Error,									
 			///alert('Error in update '+pdtFromInDesign);
+			if(stringReturnValue.indexOf(productFirstPart) == -1)
+			{
+								stringReturnValue += "R12W" + productFirstPart + 'C12L' + pageName;
+								////alert('I-> '+stringReturnValue);
+			}
 			continue;
 		}
 		else
@@ -1478,8 +1483,7 @@ function UpdateSKUDetailsToIndesign(tfNormal, productData, pageName)
 					if(CheckAnyWarningInProduct(fullPdtContentFromInDesign, lengthFromAppData, weightFromAppData, pdtFromAppData, rateFromAppData ))
 					{
 						///alert('Warning in update '+pdtFromInDesign);;
-						productStatus = 102;///Warning with skip													
-						
+						productStatus = 102;///Warning with skip	
 					}
 
 					
@@ -1512,6 +1516,11 @@ function UpdateSKUDetailsToIndesign(tfNormal, productData, pageName)
 				else {
 					productStatus = 102;	/// 102 -> Product In Warning,
 					productErrorPortion = pdtFromInDesign;
+					if(stringReturnValue.indexOf(productFirstPart) == -1)
+							{
+								stringReturnValue += "R12W" + productFirstPart + 'C12L' + pageName;
+								////alert('I-> '+stringReturnValue);
+							}
 					///alert('in warning');
 				}
 
