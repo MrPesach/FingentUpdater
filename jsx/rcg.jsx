@@ -131,12 +131,12 @@ function GetContentFromIndesign(tfNormal, productData, pageName, mode)
 	/*	if(pageName != '11')
 		{
 			continue;
-		}
+		}*/
 		if(fullPdtContentFromInDesign.indexOf('WBOX024-18') == -1 )
 		{
 			continue;
 		}
-		*/
+		
 				
 		//blockOtherSKU- Get
 			var leftIndex = fullPdtContentFromInDesign.indexOf('[');
@@ -1323,11 +1323,11 @@ function UpdateSKUDetailsToIndesign(tfNormal, productData, pageName)
 				///alert(fullPdtContentFromInDesign+' Continue'+'leftIndex-'+leftIndex+'rightIndex= '+rightIndex);			
 			}	
 		/*
-
 		if(pageName != '11')
 		{
 			continue;
 		}
+
 		if(fullPdtContentFromInDesign.indexOf('WBOX024-18') == -1 )
 		{
 			continue;

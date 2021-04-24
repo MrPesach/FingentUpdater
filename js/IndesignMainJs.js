@@ -1170,3 +1170,39 @@ function StringFound()
 
 
 }
+
+function GetValueBetweenSqureBrackets()
+{
+    try
+    {
+    ///alert('GetValueBetweenSqureBrackets');
+    var text = "WBOX024  0.4mm [WBOX024-18|ln] [WBOX024-18|wt]g (0.03 gr/inch)";
+    var regex = /\[([^\][]*)]/g;
+    var results=[], m;
+    while ( m = regex.exec(text) ) {
+    results.push(m[1]);
+    }
+
+    for (var inc = 0; inc < results.length; inc++) 
+	{
+        if(results[inc].indexOf('|ln') > -1)
+        {
+            text =  text.replace(results[inc], "New length");
+        }
+        else if(results[inc].indexOf('|wt') > -1)
+        {
+            text =  text.replace(results[inc], "New weight");
+        }
+    }
+        alert(text);
+    }
+    catch(er)
+    {
+        alert(er);
+    }
+
+
+        var str = "Visit Microsoft!";
+        var res = str.replace("Microsoft", "W3Schools");
+        alert(str + ' - ' + res);
+}
