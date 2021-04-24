@@ -1430,12 +1430,12 @@ function UpdateSKUDetailsToIndesign(tfNormal, productData, pageName)
 		}
 	
 		///alert('productFirstPart-'+productFirstPart);
-		/**/
+		/*
 		if(fullPdtContentFromInDesign.indexOf('RC6979-07') == -1)
 		{
 			continue;
 		}
-		
+		*/
 
 		////alert('Normal fullPdtContentFromInDesign '+fullPdtContentFromInDesign+'pageName-'+pageName);
 		anyDataExists = true;
@@ -1954,13 +1954,13 @@ function Trim(strText)
 	{		
 		if(inc == 0  && strText[inc] == '')
 		{
-			alert('Start space');
+			///alert('Start space');
 			continue;
 		}
 
 		if(inc == (strText.length - 1)  && strText[inc] == '')
 		{
-			alert('End space');
+			///alert('End space');
 			continue;
 		}
 		
