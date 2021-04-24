@@ -132,12 +132,13 @@ function GetContentFromIndesign(tfNormal, productData, pageName, mode)
 		{
 			continue;
 		}
-		if(fullPdtContentFromInDesign.indexOf('LFCAB20-18') == -1 )
+		if(fullPdtContentFromInDesign.indexOf('WBOX024-18') == -1 )
 		{
 			continue;
 		}
 		*/
-
+				
+		//blockOtherSKU- Get
 			var leftIndex = fullPdtContentFromInDesign.indexOf('[');
 			var rightIndex = fullPdtContentFromInDesign.indexOf(']');
 			var lengthIndex = fullPdtContentFromInDesign.indexOf('|ln');
@@ -1233,7 +1234,6 @@ function UpdateProductDetailsIntheIndesignFile(productData)
 			{
 				indexFileName +='-'+ pageName;
 			}
-
 ////			alert(pageName);			
 		/*	if(allPages[p].name != 21)
 			{
@@ -1328,16 +1328,13 @@ function UpdateSKUDetailsToIndesign(tfNormal, productData, pageName)
 		{
 			continue;
 		}
-		if(fullPdtContentFromInDesign.indexOf('LFCAB20-18') == -1 )
+		if(fullPdtContentFromInDesign.indexOf('WBOX024-18') == -1 )
 		{
 			continue;
 		}
 		*/
-
-		///$[FOX080-18|pr]
-		
-		///$[FOX080-18|pr]
-		var dollarIndex = fullPdtContentFromInDesign.indexOf('$');
+		/// blockOtherSKU-Update///
+			var dollarIndex = fullPdtContentFromInDesign.indexOf('$');
 			var squareIndex = fullPdtContentFromInDesign.indexOf('[');
 			///alert('dollarIndex-' + dollarIndex + 'squareIndex' + squareIndex);
 			if(dollarIndex == 0 && squareIndex == 1)
@@ -1405,9 +1402,9 @@ function UpdateSKUDetailsToIndesign(tfNormal, productData, pageName)
 			}
 			else
 			{
-				//alert('Normal format called');				
+				////alert('Normal format called');				
 				pdtFromInDesign = GetProductNameFromIndesignText(fullPdtContentFromInDesign);
-				/// alert('pdtFromInDesign-'+pdtFromInDesign);
+				 ////alert('pdtFromInDesign-'+pdtFromInDesign);
 			}
 			
 			///alert('Before format - '+fullPdtContentFromInDesign+' | pdtFromInDesign-'+pdtFromInDesign+' Length - '+pdtFromInDesign.length);				
@@ -1453,8 +1450,8 @@ function UpdateSKUDetailsToIndesign(tfNormal, productData, pageName)
 			///alert('Error in update '+pdtFromInDesign);
 			if(stringReturnValue.indexOf(productFirstPart) == -1)
 			{
-								stringReturnValue += "R12W" + productFirstPart + 'C12L' + pageName;
-								////alert('I-> '+stringReturnValue);
+				stringReturnValue += "R12W" + productFirstPart + 'C12L' + pageName;
+				////alert('I-> '+stringReturnValue);
 			}
 			continue;
 		}
@@ -1489,8 +1486,8 @@ function UpdateSKUDetailsToIndesign(tfNormal, productData, pageName)
 					
 					if(productStatus == 101)
 					{
-						////alert('Called GenerateNewCaptionForProduct');
-						newTextForIndesign = GenerateNewCaptionForProduct(fullPdtContentFromInDesign, pdtFromAppData, weightFromAppData, rateFromAppData, lengthFromAppData,"I")
+						///alert('Called GenerateNewCaptionForSuccessProduct');
+						newTextForIndesign = GenerateNewCaptionForSuccessProduct(fullPdtContentFromInDesign, pdtFromAppData, weightFromAppData, rateFromAppData, lengthFromAppData,"I")
 					}
 					else if(productStatus == 102)
 					{
@@ -1551,13 +1548,17 @@ function GenerateNewCaptionForWarnedProduct(fullPdtContentFromInDesign, pdtFromA
 	try
 	{
 	
+		/* Old Logic
 		var lengthPortion = '';
 	var weightPortion = '';
 	var pricePortion = '';
 	var content ='';
 	var hasLeftFound = false;
 	var hasRightFound = false;
-	
+	////var str = "Visit Microsoft!";
+	////var res = str.replace("Microsoft", "W3Schools");
+	////alert(str + ' - ' + res);
+
 	///alert('start scanning '+fullPdtContentFromInDesign);
 	for (var inc = 0; inc < fullPdtContentFromInDesign.length; inc++) 
 	{		
@@ -1615,15 +1616,14 @@ function GenerateNewCaptionForWarnedProduct(fullPdtContentFromInDesign, pdtFromA
 		totalSectionsInPdt++;
 	}
 	
-/*alert('totalSectionsInPdt-'+totalSectionsInPdt+' ,lengthPortion-'+lengthPortion+' , weightPortion- '+weightPortion+' , pricePortion-' +pricePortion);	
-alert('lengthFromAppData'+lengthFromAppData+',weightFromAppData-'+weightFromAppData+',rateFromAppData-'+rateFromAppData);
-alert('length cond-'+(lengthPortion.Length > 0 && lengthFromAppData != '' && lengthPortion.indexOf('|') > -1))		;
-*/
-//alert('lengthPortion.Length-'+lengthPortion.Length );
+////alert('totalSectionsInPdt-'+totalSectionsInPdt+' ,lengthPortion-'+lengthPortion+' , weightPortion- '+weightPortion+' , pricePortion-' +pricePortion);	
+////alert('lengthFromAppData'+lengthFromAppData+',weightFromAppData-'+weightFromAppData+',rateFromAppData-'+rateFromAppData);
+////alert('length cond-'+(lengthPortion.Length > 0 && lengthFromAppData != '' && lengthPortion.indexOf('|') > -1))		;
+////alert('lengthPortion.Length-'+lengthPortion.Length );
 			if(lengthPortion != null && lengthFromAppData != '' && (lengthPortion.indexOf('|') > -1))
 			{				
 					newTextForIndesign += productFirstPart + ' '+ lengthFromAppData;	
-					////alert('newTextForIndesign from length portion='+newTextForIndesign)		;	
+					alert('newTextForIndesign from lengthPortion -'+newTextForIndesign)		;	
 			}
 			else
 			{
@@ -1641,7 +1641,7 @@ alert('length cond-'+(lengthPortion.Length > 0 && lengthFromAppData != '' && len
 					newTextForIndesign += ' '+ weightFromAppData + 'g';
 				}
 
-				////alert('newTextForIndesign from length portion=' + newTextForIndesign)		;	
+				alert('newTextForIndesign from weightPortion -' + newTextForIndesign)		;	
 			}
 			else{
 				newTextForIndesign += ' '+ '[' + weightPortion + ']';
@@ -1657,11 +1657,47 @@ alert('length cond-'+(lengthPortion.Length > 0 && lengthFromAppData != '' && len
 				{
 					newTextForIndesign += ' $'+ rateFromAppData ;
 				}
+				alert('newTextForIndesign from pricePortion -' + newTextForIndesign)		;	
 			}	
 			else
 			{
-				newTextForIndesign += ' ' + '[' + pricePortion + ']';
+				if(pricePortion.length > 0)
+				{
+					newTextForIndesign += ' ' + '[' + pricePortion + ']';
+				}	
 			}
+
+			*/
+
+/// New logic
+
+///var text = "WBOX024  0.4mm [WBOX024-18|ln] [WBOX024-18|wt]g (0.03 gr/inch)";
+    var regex = /\[([^\][]*)]/g;
+    var results=[], m;
+    while ( m = regex.exec(fullPdtContentFromInDesign) ) 
+	{
+	    results.push(m[1]);
+    }
+
+	newTextForIndesign = fullPdtContentFromInDesign;
+    for (var inc = 0; inc < results.length; inc++) 
+	{
+		var item = '['+ results[inc] + ']';
+        if(item.indexOf('|ln') > -1 && lengthFromAppData != '')
+        {
+            newTextForIndesign =  newTextForIndesign.replace(item, lengthFromAppData);
+        }
+        else if(item.indexOf('|wt') > -1 && weightFromAppData != '')
+        {
+            newTextForIndesign =  newTextForIndesign.replace(item, weightFromAppData);
+        }
+		else if(item.indexOf('|pr') > -1 && rateFromAppData != '')
+        {
+            newTextForIndesign =  newTextForIndesign.replace(item, rateFromAppData);
+        }
+		////alert(newTextForIndesign);
+    } 
+
 	////////////
 	}
 	catch(er)
@@ -1671,6 +1707,43 @@ alert('length cond-'+(lengthPortion.Length > 0 && lengthFromAppData != '' && len
 	///alert('newTextForIndesign-'+newTextForIndesign);
 	return newTextForIndesign;
 }
+
+function GenerateNewCaptionForSuccessProduct(fullPdtContentFromInDesign, pdtFromAppData, weightFromAppData, rateFromAppData, lengthFromAppData,from) {
+	var newTextForIndesign = '';
+	try
+	{
+		var regex = /\[([^\][]*)]/g;
+		var results=[], m;
+		while ( m = regex.exec(fullPdtContentFromInDesign) ) 
+		{
+			results.push(m[1]);
+		}
+	
+		newTextForIndesign = fullPdtContentFromInDesign;
+		for (var inc = 0; inc < results.length; inc++) 
+		{
+			var item = '['+ results[inc] + ']';
+			if(item.indexOf('|ln') > -1 && lengthFromAppData != '')
+			{
+				newTextForIndesign =  newTextForIndesign.replace(item, lengthFromAppData);
+			}
+			else if(item.indexOf('|wt') > -1 && weightFromAppData != '')
+			{
+				newTextForIndesign =  newTextForIndesign.replace(item, weightFromAppData);
+			}
+			else if(item.indexOf('|pr') > -1 && rateFromAppData != '')
+			{
+				newTextForIndesign =  newTextForIndesign.replace(item, rateFromAppData);
+			}
+			////alert(newTextForIndesign);
+		} 
+	}
+	catch(er)
+	{
+		alert('GenerateNewCaptionForSuccessProduct-' + er);
+	}
+	return newTextForIndesign;
+}//function close
 
 
 function GenerateNewCaptionForProduct(fullPdtContentFromInDesign, pdtFromAppData, weightFromAppData, rateFromAppData, lengthFromAppData,from) {
