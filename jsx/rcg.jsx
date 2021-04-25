@@ -131,11 +131,11 @@ function GetContentFromIndesign(tfNormal, productData, pageName, mode)
 	/*	if(pageName != '11')
 		{
 			continue;
-		}*/
-		if(fullPdtContentFromInDesign.indexOf('WBOX024-18') == -1 )
+		}
+		if(fullPdtContentFromInDesign.indexOf('WBOX024') == -1 )
 		{
 			continue;
-		}
+		}*/
 		
 				
 		//blockOtherSKU- Get
@@ -224,19 +224,19 @@ function GetContentFromIndesign(tfNormal, productData, pageName, mode)
 					}
 											
 				}
-				//alert('GetProductNameFromIndesignTextForTableFormat normal called');
+				////alert('GetProductNameFromIndesignTextForTableFormat normal called');
 				////pdtFromInDesign=GetProductNameFromIndesignTextForTableFormat(fullPdtContentFromInDesign);
 			}
 			else
 			{
-				//alert('Normal format called');				
+				////alert('Normal format called');				
 				pdtFromInDesign = GetProductNameFromIndesignText(fullPdtContentFromInDesign);
 				/// alert('pdtFromInDesign-'+pdtFromInDesign);
 			}
 			
-			///alert('Before format - '+fullPdtContentFromInDesign+' | pdtFromInDesign-'+pdtFromInDesign+' Length - '+pdtFromInDesign.length);				
+			////alert('Before format - '+fullPdtContentFromInDesign+' | pdtFromInDesign-'+pdtFromInDesign+' Length - '+pdtFromInDesign.length);				
 			pdtFromInDesign = Trim(pdtFromInDesign);
-			///alert('after trim format - '+fullPdtContentFromInDesign+' | pdtFromInDesign-'+pdtFromInDesign+' Length - '+pdtFromInDesign.length);				
+			////alert('after trim format - '+fullPdtContentFromInDesign+' | pdtFromInDesign-'+pdtFromInDesign+' Length - '+pdtFromInDesign.length);				
 			if(pdtFromInDesign == '')
 			{
 				///alert(fullPdtContentFromInDesign+' is Empty')
@@ -300,7 +300,7 @@ function GetContentFromIndesign(tfNormal, productData, pageName, mode)
 						///alert('fullPdtContentFromInDesign-'+fullPdtContentFromInDesign+' | pdtFromAppData-'+pdtFromAppData+' | newTextForIndesign-'+newTextForIndesign);
 					}
 					catch (er) {
-						alert('Normal section-' + er);							
+						///alert('Normal section-' + er);							
 					}
 
 				}///productData loop
@@ -351,7 +351,7 @@ function GetContentFromIndesign(tfNormal, productData, pageName, mode)
 	}
 	catch(er)
 	{
-		alert('GetContentFromPage'+er);
+		////alert('GetContentFromPage'+er);
 	}
 }
 
@@ -1096,7 +1096,7 @@ function GetProductNameFromIndesignText(fullPdtContentFromInDesign)
 	}
 	catch(er)
 	{
-		alert('Errro from GetProductNameFromIndesignText-' + er);
+	////	alert('Errro from GetProductNameFromIndesignText-' + er);
 	}
 	return inDesignText;
 }
@@ -1144,7 +1144,7 @@ function GetProductNameFromIndesignTextForTableFormat(fullPdtContentFromInDesign
 	}
 	catch(er)
 	{
-		alert('Errro from GetProductNameFromIndesignText-' + er);
+		////('Errro from GetProductNameFromIndesignText-' + er);
 	}
 	return '';
 }
@@ -1161,13 +1161,21 @@ function GetProductFirstPart(fullPdtContentFromInDesign)
 			var splits = fullPdtContentFromInDesign.split('[');
 			if(splits.length > 0)
 			{
-				return splits[0].replace(/^\s+|\s+$/g, '');
+				var firstPart = splits[0].replace(/^\s+|\s+$/g, '');
+				if(firstPart.indexOf(' ') > -1)
+				{
+					return firstPart.split(' ')[0];
+				}
+				else
+				{
+					return firstPart;
+				}				
 			}		
 		}
 	}
 	catch(er)
 	{
-		alert('GetProductFirstPart-'+er);
+		///alert('GetProductFirstPart-'+er);
 	}
 
 	return '';
@@ -1327,12 +1335,12 @@ function UpdateSKUDetailsToIndesign(tfNormal, productData, pageName)
 		{
 			continue;
 		}
-
-		if(fullPdtContentFromInDesign.indexOf('WBOX024-18') == -1 )
+	
+		if(fullPdtContentFromInDesign.indexOf('WBOX024') == -1 )
 		{
 			continue;
 		}
-		*/
+	*/
 		/// blockOtherSKU-Update///
 			var dollarIndex = fullPdtContentFromInDesign.indexOf('$');
 			var squareIndex = fullPdtContentFromInDesign.indexOf('[');
@@ -1418,8 +1426,23 @@ function UpdateSKUDetailsToIndesign(tfNormal, productData, pageName)
 			///alert('pdtFromInDesign-'+pdtFromInDesign);
 		if(dollarIndex == 0 && squareIndex == 1 && fullPdtContentFromInDesign.indexOf('pr'))
 		{
-			productFirstPart = pdtFromInDesign;			
-			///$[OCB063-18|pr]
+			if(pdtFromInDesign != '' && pdtFromInDesign.indexOf('-') > 0)
+			{
+				///$[OCB063-18|pr]
+				var skuSplits = pdtFromInDesign.split('-');
+				if(skuSplits.length > 0)
+				{
+					productFirstPart = skuSplits[0];
+				}
+				else
+				{
+					productFirstPart = pdtFromInDesign;	
+				}
+			}
+			else
+			{
+				productFirstPart = pdtFromInDesign;	
+			}	
 		}
 		else
 		{
@@ -1524,7 +1547,7 @@ function UpdateSKUDetailsToIndesign(tfNormal, productData, pageName)
 				///alert('fullPdtContentFromInDesign-'+fullPdtContentFromInDesign+' | pdtFromAppData-'+pdtFromAppData+' | newTextForIndesign-'+newTextForIndesign);
 			}
 			catch (er) {
-				alert('Normal section-' + er);							
+				////alert('Normal section-' + er);							
 			}
 
 		}///productData loop
@@ -1539,7 +1562,7 @@ function UpdateSKUDetailsToIndesign(tfNormal, productData, pageName)
 		}
 		catch(er)
 		{
-			alert('UpdateContentToPage'+er);
+			////alert('UpdateContentToPage'+er);
 		}
 }
 
@@ -1702,7 +1725,7 @@ function GenerateNewCaptionForWarnedProduct(fullPdtContentFromInDesign, pdtFromA
 	}
 	catch(er)
 	{
-		alert(er);
+		////alert(er);
 	}
 	///alert('newTextForIndesign-'+newTextForIndesign);
 	return newTextForIndesign;
@@ -1740,7 +1763,7 @@ function GenerateNewCaptionForSuccessProduct(fullPdtContentFromInDesign, pdtFrom
 	}
 	catch(er)
 	{
-		alert('GenerateNewCaptionForSuccessProduct-' + er);
+		////alert('GenerateNewCaptionForSuccessProduct-' + er);
 	}
 	return newTextForIndesign;
 }//function close
@@ -2010,7 +2033,7 @@ if(fullPdtContentFromInDesign.indexOf('ER11384') == -1)
 	}
 	catch(er)
 	{
-		alert('GenerateNewCaptionForProduct-' + er);
+		////alert('GenerateNewCaptionForProduct-' + er);
 	}
 	return newTextForIndesign;
 }//function close
@@ -2060,7 +2083,7 @@ function TrimInMiddle(strText)
 			newString += strText[inc];
 		}
 		else {		
-				alert('strText-'+strText+'->'+strText[inc]);
+				///alert('strText-'+strText+'->'+strText[inc]);
 			
 		}
 	}
