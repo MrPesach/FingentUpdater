@@ -794,15 +794,35 @@ function UpdateProductDetailsIntheIndesignFile()
                         resultForIndex = resultSplit[0];  
                         indexFileName = resultSplit[1];  
                     }
+
+                    $('#btnGotoIndexFileCreation').prop('disabled', false);
+                    $('.maskedCircle').remove();
+                    $('#divScanningProgressBar').css("width", "100%");
+                    $.get( "../html/IndexFileCreation.html", function( data ) 
+                    {
+                        setTimeout(() => {
+                            $('#divPageContentDiv').html(data);  
+                        }, 650);
+                           
+                    });                   
                     
                 }
-                            
-              ///  swal(result);
-                $('#btnGotoIndexFileCreation').prop('disabled', false);
-                $('.maskedCircle').remove();
-                $('#divScanningProgressBar').css("width", "100%");
-                ////swal('Updated successfully.');
-               //// swal("Updated successfully.", "", "success");
+                else{
+                    swal({
+                        title: result,
+                        text: "",
+                        type: "warning",
+                        showCancelButton: false,
+                        confirmButtonClass: "btn-danger",
+                        confirmButtonText: "",
+                        closeOnConfirm: true
+                      },
+                      function(){
+                        GotoHomePage(); 
+                      });
+
+                     
+                }
             }
             else
             {
@@ -820,15 +840,7 @@ function UpdateProductDetailsIntheIndesignFile()
                    
                   });
                   */
-            }
-
-            $.get( "../html/IndexFileCreation.html", function( data ) 
-            {
-                setTimeout(() => {
-                    $('#divPageContentDiv').html(data);  
-                }, 650);
-                        
-            });
+            }            
         }
         catch(er)
         {

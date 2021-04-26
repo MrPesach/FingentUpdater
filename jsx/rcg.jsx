@@ -9,6 +9,7 @@ var stringReturnValue = '';
 var productErrorPortion = '';
 var ErrorToolTip = '';
 var WarningToolTip = '';
+var fileName = '';
 /// 101 -> Product In Success,
 /// 102 -> Product In Warning,
 /// 103 -> Product In Error,
@@ -27,6 +28,8 @@ function GetProductDetailsFromIndesignFile(productData)
 	try
 	{
 		myDoc = app.activeDocument;
+		fileName= app.activeDocument.name.split("_")[0]; 
+		////alert(fileName);
 	}
 	catch(er)
 	{
@@ -1298,6 +1301,12 @@ function UpdateProductDetailsIntheIndesignFile(productData)
 	try
 	{
 		myDoc = app.activeDocument;
+		var _fileName= app.activeDocument.name.split("_")[0]; 
+		////alert(_fileName);
+		if(fileName != _fileName)
+		{
+			return "Currently referrenced file is entirly different!";
+		}
 	}
 	catch(er)
 	{
