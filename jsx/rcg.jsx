@@ -1,5 +1,4 @@
 
-var globalSuccessValues = '';
 var successReturnValue = '';
 var errorReturnValue = '';
 var warningReturnValue = '';
@@ -1293,20 +1292,7 @@ function UpdateProductDetailsIntheIndesignFile(productData)
 			return errorReturnValue;
 		}
 		///alert('productData-'+productData.length);
-		/*
-		var result = GetProductDetailsFromIndesignFile(productData);
-		if(result != null && result != '' && result != undefined )
-		{ 
-			alert('result'+result);
-			var splitResults = result.split('T123T');
-			////$('#spanEror').text('splitResults.length-'+splitResults.length);
-			if(splitResults.length == 3)
-			{     
-				globalSuccessValues = splitResults[2];
-				////alert('globalSuccessValues-'+globalSuccessValues);
-			}
-		}
-		*/
+		
 
 	var myDoc = '';
 	try
@@ -2236,4 +2222,18 @@ function TrimInMiddle(strText)
 	}
 
 	return newString;
+}
+
+function ResetAllValues()
+{	
+	 successReturnValue = '';
+	 errorReturnValue = '';
+	 warningReturnValue = '';
+	 isItaNewPageForError = false;
+	 isItaNewPageForWarning = false;
+	 isItaNewPageForSucess = false;
+	 stringReturnValue = '';
+	 productErrorPortion = '';
+	 ErrorToolTip = '';
+	 WarningToolTip = '';
 }

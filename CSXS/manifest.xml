@@ -34,16 +34,16 @@
                         <Size>
                             <Height>500</Height>
                            <!--  <Width>1020</Width>-->
-                           <Width>700</Width>
+                           <Width>600</Width>
                         </Size>
                         <MaxSize>
                             <Height>500</Height>
                           <!--   <Width>1200</Width>-->
-                            <Width>800</Width>
+                            <Width>600</Width>
                         </MaxSize>
                         <MinSize>
-                            <Height>400</Height>
-                            <Width>700</Width>
+                            <Height>500</Height>
+                            <Width>600</Width>
                         </MinSize>
                     </Geometry>
                 </UI>

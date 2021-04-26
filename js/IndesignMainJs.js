@@ -922,152 +922,27 @@ function DownloadFile(e)
    
     });
 }
-        /*
-        downloadURI(url,"tinyhouse");
-        function downloadURI(uri, name) 
-        {
-            var link = document.createElement("a");
-            // If you don't know the name or want to use
-            // the webserver default set name = ''
-            link.setAttribute('download', name);
-            link.href = uri;
-            document.body.appendChild(link);
-            link.click();
-            link.remove();
-            swal('downloadURI');
-        }
-*/
+     function GotoHomePage()
+     {
 
-        /*
-        Download('https://www.cryptocompare.com/media/19684/doge.png');
-        
-        function Download(url) {
-           
-            document.getElementById('my_iframe').src = url;
-            swal(document.getElementById('my_iframe').src);
-        };
-*/
 
-        /*
-        var fs = require('fs'),
-        request = require('request');
-    
-    var download = function(uri, filename, callback){
-        request.head(uri, function(err, res, body){
-            swal('content-type:', res.headers['content-type']);
-            swal('content-length:', res.headers['content-length']);
+    var fnAndArgs = 'ResetAllValues()';
+    ///swal(fnAndArgs);
+    CSLibrary.evalScript(fnAndArgs, function(result) 
+    {
 
-        request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
-    
-        }); 
-    };   
-    
-    download('https://www.cryptocompare.com/media/19684/doge.png', 'icons/taskks12.png', function(){
-    swal('done');
     });
-    */
 
-
-    
-
-/*
-var http = require('http');
-var fs = require('fs');
-
-function pDownload(url, dest){
-    swal('pDownload');
-  var file = fs.createWriteStream(dest);
-  return new Promise((resolve, reject) => {
-    var responseSent = false; // flag to make sure that response is sent only once.
-    http.get(url, response => {
-      response.pipe(file);
-      file.on('finish', () =>{
-        file.close(() => {
-          if(responseSent)  return;
-          responseSent = true;
-          resolve();
-        });
-      });
-    }).on('error', err => {
-        if(responseSent)  return;
-        responseSent = true;
-        reject(err);
-    });
-  });
-}
-
-//example
-pDownload(url, fileLocation)
-  .then( ()=> console.log('downloaded file no issues...'))
-  .catch( e => console.error('error while downloading', e));
-
-*/
-
-/*
-var http = require('http');
-var fs = require('fs');
-
-var download = function(url, dest, cb) {
-  var file = fs.createWriteStream(dest);
-  var request = http.get(url, function(response) {
-    response.pipe(file);
-    file.on('finish', function() {
-      file.close(cb);  // close() is async, call cb after close completes.
-    });
-  }).on('error', function(err) { // Handle errors
-    fs.unlink(dest); // Delete the file async. (But we don't check the result)
-    if (cb) cb(err.message);
-  });
-};
-      
-*/
-
-
-/*const http = require('http'); // or 'https' for https:// URLs
-        const fs = require('fs');
-        
-        const file = fs.createWriteStream("file.jpg");
-        const request = http.get("http://i3.ytimg.com/vi/J---aiyznGQ/mqdefault.jpg", function(response) {
-          response.pipe(file);
-          swal('inside get');
-        });
-
-*/
-
-
-
-        /*
-        app.get('/download', function(req, res){
-            const file = `${__dirname}/upload-folder/dramaticpenguin.MOV`;
-            res.download(file); // Set disposition and send it.
-          });
-*/
-        
-       //// e.preventDefault();
-      //  window.location.href = "D:\\RCG\\TestFile.txt";   
-     /*
-      window.open(
-            'D:\\RCG\\TestFile.txt',
-            '_blank' // <- This is what makes it open in a new window.
-          ); 
-
-          swal('click done');  
-          */
-          
-
-
-    
-
-/*
-$(document).ready(function () { 
-    ///swal('ready');
-    $("#link").click(function (e) { 
-        e.preventDefault(); 
-          swal('link click');
-        window.location.href = "D:\\RCG\\TestFile.txt"; 
-    }); 
-}); 
-*/
+        $('#divPageContentDiv').html('');
+        LoadIndexSubPage();        
+        wholeProductFromInDesign = '';
+        errorValues = '';
+        warningValues = '';
+        successValues = '';
+        resultForIndex = '';
+        indexFilePath ='';
+        indexFileName ='';
+     }
 
 function Test()
 {
@@ -1206,3 +1081,4 @@ function GetValueBetweenSqureBrackets()
         var res = str.replace("Microsoft", "W3Schools");
         alert(str + ' - ' + res);
 }
+
