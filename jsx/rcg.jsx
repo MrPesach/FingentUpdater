@@ -1305,7 +1305,7 @@ function UpdateProductDetailsIntheIndesignFile(productData)
 		////alert(_fileName);
 		if(fileName != _fileName)
 		{
-			return "Currently referrenced file is different!";
+			return "Currently referenced file is different!";
 		}
 	}
 	catch(er)
