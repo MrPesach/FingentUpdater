@@ -587,6 +587,7 @@ function GetProductDetails()
 {   
     try
     {
+        var   strData ='';
       /// alert('GetProductDetails!');
         ///swal(process.env.APPDATA);
         var fs = require('fs');   
@@ -630,7 +631,14 @@ function GetProductDetails()
             for(var t = 0; t < productData.length;t++)
             {
                 ///content += ', '+ productData[t].Product;
-                newJson.push(productData[t]);               
+                newJson.push(productData[t]);  
+                if(strData.length > 0)
+                {
+                     strData += ',' + productData[t].Product;
+                }
+                else{
+                    strData += productData[t].Product;
+                }
             }
             productData  =  JSON.stringify(newJson);
             indexFilePath = pdt.IndexFilePath;
@@ -677,7 +685,11 @@ function GetProductDetails()
 
         try
         {           
+           //// var strData  =  JSON.stringify(newJson);
             ///swal(productData);
+
+       
+       ///         alert(strData)
             var fnAndArgs = 'GetProductDetailsFromIndesignFile(' + productData + ')';
             ///swal(fnAndArgs);
             CSLibrary.evalScript(fnAndArgs, function(result) 
@@ -1094,3 +1106,48 @@ function GetValueBetweenSqureBrackets()
         alert(str + ' - ' + res);
 }
 
+function ArrayFilter()
+{
+    //var arr = ["testnews", "foo", "bar", "news-[0-999999999999999]*","news","foonews"];
+    
+var url = "foo";
+
+var matches = arr.filter(function(pattern) {
+  return new RegExp(pattern).test(url);
+});
+
+for(var inc =0; inc < matches.length; inc++)
+{
+    alert('inc-'+inc+' content- '+matches[inc]);
+}
+
+
+}
+
+
+function jsonFilter()
+{
+
+    var officers = [
+        { id: 20, name: 'Captain Piett' },
+        { id: 24, name: 'General Veers' },
+        { id: 56, name: 'Admiral Ozzel' },
+        { id: 88, name: 'Commander Jerjerrod' }
+      ];
+
+      var officersIds = officers.filter(function (officer) {
+        return officer.id != 20;
+      });
+      for(var inc =0; inc < officersIds.length; inc++)
+      {
+          alert('inc-'+inc+' content- '+officersIds[inc].name);
+      }
+    
+}
+
+function getPropFromJSON(prop, JSONString){
+    // Obviously this regex will only match Keys that have
+    // String Values.
+    var exp = new RegExp("\""+prop+"\"\:[^\,\}]*");
+    return JSONString.match(exp)[0].replace("\""+prop+"\":","");    
+}
