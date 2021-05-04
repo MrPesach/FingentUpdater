@@ -1,6 +1,6 @@
 var CSLibrary = new CSInterface();
 var allProductData;
-var wholeProductFromInDesign = '';
+var wholeProductFromInDesign = [];
 var errorValues = '';
 var warningValues = '';
 var successValues = '';
@@ -165,12 +165,33 @@ if(errorValues != '' && errorValues.length > 0)
                 //product
                 warningHtml +=  "<li><img src='../img/warring.png' class='tick'> <span class='PdtCls'> "+ columns[2]  + "</span> </li>";
             }
+          /*  if(row < 5)
+            {
+                alert('row'+row+' value-'+eachRow+'COL[3]'+columns[3]);9847
+            }
+*/
+
+
+   
+    var jsonData = JSON.parse(allProductData);    
+    var data =   $.grep(jsonData, function(item, index)
+    {   
+        return item.Product == columns[3];
+    });
+
+
+    if(data != null && data.length > 0)
+    {        
+        wholeProductFromInDesign.push(data[0]);
+    }
+       
         }
         warningHtml +=  " </ul>";
         $('#divWarnings').html(warningHtml);
     }
     catch(er)
     {
+
         $('#spanEror').text('Error from btnScanningProceed-' + er);
         ////swal('btnScanningProceed click warning ' + er);
     }
@@ -217,6 +238,24 @@ if(successValues != '' && successValues.length > 0 && warningValues.length == 0 
     }
     successHtml +=  " </ul>";
     $('#divSuccess').html(successHtml);
+
+    if(successValues != '' && successValues.length > 0) 
+    {       
+        for(var row = 0; row < rows.length;row++)
+        {
+            var eachRow = rows[row];
+            var columns = eachRow.split('C12L');
+            var jsonData = JSON.parse(allProductData);    
+            var data =   $.grep(jsonData, function(item, index)
+            {   
+                return item.Product == columns[3];
+            });
+            if(data != null && data.length > 0)
+            {
+                wholeProductFromInDesign.push(data[0]);
+            }
+        }
+    }
 }
 catch(er)
 {
@@ -224,6 +263,9 @@ catch(er)
     ////swal('btnScanningProceed click warning ' + er);
 }
 }
+
+
+
                
     });
 
@@ -799,7 +841,9 @@ function GetProductDetails()
 ////////////// JSX CALLS  //////////////
 function UpdateProductDetailsIntheIndesignFile()
 {
-    var fnAndArgs = 'UpdateProductDetailsIntheIndesignFile(' + productData + ')';
+   //// alert('wholeProductFromInDesign-'+wholeProductFromInDesign.length);
+   var data = JSON.stringify(wholeProductFromInDesign);
+    var fnAndArgs = 'UpdateProductDetailsIntheIndesignFile(' + data + ')';
     ///swal(fnAndArgs);
     CSLibrary.evalScript(fnAndArgs, function(result) 
     {
@@ -1271,10 +1315,10 @@ function FindingSuccessErrorWarnings(result)
                 {
                     ////alert(pdtFromInDesign + 'Product In Success');					
                     if (successReturnValue.length == 0) {
-                        successReturnValue += (isItaNewPageForSucess == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L0C12L1C12LI";
+                        successReturnValue += (isItaNewPageForSucess == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L"+pdtFromInDesign;
                     }
                     else {
-                        successReturnValue += "R12W" + (isItaNewPageForSucess == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L0C12L1C12LI";
+                        successReturnValue += "R12W" + (isItaNewPageForSucess == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L"+pdtFromInDesign;
                     }
                     isItaNewPageForSucess = false;
                     ////alert('successReturnValue-'+successReturnValue);
@@ -1284,11 +1328,11 @@ function FindingSuccessErrorWarnings(result)
                     ////alert(fullPdtContentFromInDesign + ' Product In Warning');						
                     ///var pdt = GetProductFromWarning(fullPdtContentFromInDesign);
                     if (warningReturnValue.length == 0) {
-                        warningReturnValue += (isItaNewPageForWarning == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + productErrorPortion + "C12L0C12L1C12LI";
+                        warningReturnValue += (isItaNewPageForWarning == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + productErrorPortion + "C12L"+pdtFromInDesign;
                     }
                     else 
                     {
-                        warningReturnValue += "R12W" + (isItaNewPageForWarning == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + productErrorPortion + "C12L0C12L1C12LI";
+                        warningReturnValue += "R12W" + (isItaNewPageForWarning == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + productErrorPortion + "C12L"+pdtFromInDesign;
                     }
                     isItaNewPageForWarning = false;
                 }					 
@@ -1297,10 +1341,10 @@ function FindingSuccessErrorWarnings(result)
                         //var pdt =	GetProductFromError(fullPdtContentFromInDesign);
                         pdt = fullPdtContentFromInDesign;
                         if (errorReturnValue.length == 0) {
-                            errorReturnValue += (isItaNewPageForError == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdt + "C12L1C12L0C12L";
+                            errorReturnValue += (isItaNewPageForError == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdt + "C12L"+pdtFromInDesign;
                         }
                         else {
-                            errorReturnValue += "R12W" + (isItaNewPageForError == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdt + "C12L1C12L0C12L";
+                            errorReturnValue += "R12W" + (isItaNewPageForError == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdt + "C12L"+pdtFromInDesign;
                         }
                         isItaNewPageForError = false;
                 }
@@ -1961,7 +2005,7 @@ function DownloadFile(e)
 
         $('#divPageContentDiv').html('');
         LoadIndexSubPage();        
-        wholeProductFromInDesign = '';
+        wholeProductFromInDesign = [];
         errorValues = '';
         warningValues = '';
         successValues = '';

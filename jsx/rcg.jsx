@@ -340,10 +340,10 @@ function GetContentFromIndesign(tfNormal, productData, pageName, mode)
 				{
 					////alert(pdtFromInDesign + 'Product In Success');					
 					if (successReturnValue.length == 0) {
-						successReturnValue += (isItaNewPageForSucess == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L0C12L1C12LI";
+						successReturnValue += (isItaNewPageForSucess == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + 'C12L' + pdtFromInDesign ;
 					}
 					else {
-						successReturnValue += "R12W" + (isItaNewPageForSucess == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L0C12L1C12LI";
+						successReturnValue += "R12W" + (isItaNewPageForSucess == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + 'C12L' + pdtFromInDesign ;
 					}
 					isItaNewPageForSucess = false;
 					////alert('successReturnValue-'+successReturnValue);
@@ -353,11 +353,11 @@ function GetContentFromIndesign(tfNormal, productData, pageName, mode)
 					////alert(fullPdtContentFromInDesign + ' Product In Warning');						
 					///var pdt = GetProductFromWarning(fullPdtContentFromInDesign);
 					if (warningReturnValue.length == 0) {
-						warningReturnValue += (isItaNewPageForWarning == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + productErrorPortion + "C12L0C12L1C12LI";
+						warningReturnValue += (isItaNewPageForWarning == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + productErrorPortion + "C12L" + pdtFromInDesign;
 					}
 					else 
 					{
-						warningReturnValue += "R12W" + (isItaNewPageForWarning == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + productErrorPortion + "C12L0C12L1C12LI";
+						warningReturnValue += "R12W" + (isItaNewPageForWarning == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + productErrorPortion + "C12L" + pdtFromInDesign;
 					}
 					isItaNewPageForWarning = false;
 				}					 
@@ -366,10 +366,10 @@ function GetContentFromIndesign(tfNormal, productData, pageName, mode)
 						//var pdt =	GetProductFromError(fullPdtContentFromInDesign);
 						pdt = fullPdtContentFromInDesign;
 						if (errorReturnValue.length == 0) {
-							errorReturnValue += (isItaNewPageForError == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdt + "C12L1C12L0C12L"+ErrorToolTip
+							errorReturnValue += (isItaNewPageForError == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdt + "C12L"+pdtFromInDesign;
 						}
 						else {
-							errorReturnValue += "R12W" + (isItaNewPageForError == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdt + "C12L1C12L0C12L"+ErrorToolTip
+							errorReturnValue += "R12W" + (isItaNewPageForError == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdt + "C12L"+pdtFromInDesign;
 						}
 						isItaNewPageForError = false;
 				}
@@ -706,11 +706,11 @@ var status = false;
 			}			
 			//alert(productErrorPortion);
 			if (warningReturnValue.length == 0) {
-				warningReturnValue += (isItaNewPageForWarning == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + productErrorPortion + "C12L0C12L1C12LI";
+				warningReturnValue += (isItaNewPageForWarning == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + productErrorPortion + "C12L"+pdtFromAppData;
 			}
 			else 
 			{
-				warningReturnValue += "R12W" + (isItaNewPageForWarning == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + productErrorPortion + "C12L0C12L1C12LI";
+				warningReturnValue += "R12W" + (isItaNewPageForWarning == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + productErrorPortion + "C12L"+pdtFromAppData;
 			}
 		}		
 			
@@ -724,11 +724,11 @@ var status = false;
 			///alert('ln missing'+subMatch);
 			productErrorPortion = subMatch;
 			if (warningReturnValue.length == 0) {
-				warningReturnValue += (isItaNewPageForWarning == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + productErrorPortion + "C12L0C12L1C12LI";
+				warningReturnValue += (isItaNewPageForWarning == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + productErrorPortion + "C12L"+pdtFromAppData;
 			}
 			else 
 			{
-				warningReturnValue += "R12W" + (isItaNewPageForWarning == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + productErrorPortion + "C12L0C12L1C12LI";
+				warningReturnValue += "R12W" + (isItaNewPageForWarning == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + productErrorPortion + "C12L"+pdtFromAppData;
 			}
 		}
 		else if(subMatch.indexOf('wt') > -1 && (weightFromAppData == '' || weightFromAppData == null || weightFromAppData == undefined ))
@@ -736,11 +736,11 @@ var status = false;
 			///alert('wt missing-'+subMatch);
 			productErrorPortion = subMatch;
 			if (warningReturnValue.length == 0) {
-				warningReturnValue += (isItaNewPageForWarning == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + productErrorPortion + "C12L0C12L1C12LI";
+				warningReturnValue += (isItaNewPageForWarning == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + productErrorPortion + "C12L"+pdtFromAppData;
 			}
 			else 
 			{
-				warningReturnValue += "R12W" + (isItaNewPageForWarning == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + productErrorPortion + "C12L0C12L1C12LI";
+				warningReturnValue += "R12W" + (isItaNewPageForWarning == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + productErrorPortion + "C12L"+pdtFromAppData;
 			}
 		}
 	}
@@ -1314,9 +1314,10 @@ function UpdateProductDetailsIntheIndesignFile(productData)
 {
 	try
 	{
+		///alert('productData-'+productData);
 		strProducts='';
 		for(var t = 0; t < productData.length;t++)
-		{
+		{			
 			if(strProducts.length > 0)
 			{
 				strProducts += ',' + productData[t].Product;
@@ -1468,10 +1469,11 @@ function UpdateSKUDetailsToIndesign(tfNormal, productData, pageName)
 			continue;
 		}
 	
-		if(fullPdtContentFromInDesign.indexOf('RC11911') == -1 )
+		if(fullPdtContentFromInDesign.indexOf('WBOX024-18') == -1 )
 		{
 			continue;
 		}
+	alert('fullPdtContentFromInDesign-'+fullPdtContentFromInDesign);
 	*/
 		/// blockOtherSKU-Update///
 			var dollarIndex = fullPdtContentFromInDesign.indexOf('$');
@@ -1555,7 +1557,7 @@ function UpdateSKUDetailsToIndesign(tfNormal, productData, pageName)
 				///alert(fullPdtContentFromInDesign+' is Empty')
 				continue;
 			}	
-			///alert('pdtFromInDesign-'+pdtFromInDesign);
+			/////alert('pdtFromInDesign-'+pdtFromInDesign);
 		if(dollarIndex == 0 && squareIndex == 1 && fullPdtContentFromInDesign.indexOf('pr'))
 		{
 			if(pdtFromInDesign != '' && pdtFromInDesign.indexOf('-') > 0)
@@ -1581,14 +1583,14 @@ function UpdateSKUDetailsToIndesign(tfNormal, productData, pageName)
 			productFirstPart = GetProductFirstPart(fullPdtContentFromInDesign);
 		}
 	
-		///alert('productFirstPart-'+productFirstPart);
-		/*
+		/*alert('productFirstPart-'+productFirstPart);
+		
 		if(fullPdtContentFromInDesign.indexOf('RC6979-07') == -1)
 		{
 			continue;
 		}
-		*/
-
+		
+alert('strProducts-'+strProducts);*/
 		////alert('Normal fullPdtContentFromInDesign '+fullPdtContentFromInDesign+'pageName-'+pageName);
 		anyDataExists = true;
 		productStatus = 101;
@@ -2414,11 +2416,11 @@ function GetContentFromIndesignNewMethod(tfNormal, pageName, mode)
 		{
 			continue;
 		}
-		if(fullPdtContentFromInDesign.indexOf('RC11911') == -1 )
+		if(fullPdtContentFromInDesign.indexOf('PKSC025-18') == -1 )
 		{
 			continue;
-		}*/
-		
+		}
+		*/
 				
 		//blockOtherSKU- Get
 			var leftIndex = fullPdtContentFromInDesign.indexOf('[');
