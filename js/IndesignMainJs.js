@@ -1801,6 +1801,12 @@ function GotoHomePage() {
     resultForIndex = '';
     indexFilePath = '';
     indexFileName = '';
+    successReturnValue = '';
+    errorReturnValue = '';
+    warningReturnValue = '';
+    isItaNewPageForError = false;
+    isItaNewPageForWarning = false;
+    isItaNewPageForSucess = false;
 }
 
 function Test() {

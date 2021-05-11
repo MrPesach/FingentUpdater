@@ -1983,6 +1983,10 @@ function ResetAllValues() {
 	productErrorPortion = '';
 	ErrorToolTip = '';
 	WarningToolTip = '';
+	fileName = '';
+	strProducts = '';
+	returnProducts = '';
+	isItANewPage = false;
 }
 
 
