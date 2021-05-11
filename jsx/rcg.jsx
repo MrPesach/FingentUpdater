@@ -2096,7 +2096,7 @@ function GetContentFromIndesignNewMethod(tfNormal, pageName, mode) {
 				{
 					continue;
 				}
-				if(fullPdtContentFromInDesign.indexOf('PKSC025-18') == -1 )
+				if(fullPdtContentFromInDesign.indexOf('RC6980-18') == -1 )
 				{
 					continue;
 				}

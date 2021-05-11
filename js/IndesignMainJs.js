@@ -51,7 +51,7 @@ $(document).ready(function () {
             ///swal( 'swal from aTagProccedToScanningPage' );
             $.get("../html/ScanningInDesignResult.html", function (data) {
                 $('#divPageContentDiv').html(data);
-                ////  alert('errorValues'+errorValues.length );
+                 //// alert('errorValues'+errorValues.length );
                 if (errorValues != '' && errorValues.length > 0) {
                     try {
                         $('#btnErrorCopy').show();
@@ -101,7 +101,7 @@ $(document).ready(function () {
                         //// swal('btnScanningProceed click error- ' + er);
                     }
                 }
-                ////alert('warningValues'+warningValues.length);
+              ////  alert('warningValues'+warningValues.length);
                 if (warningValues != '' && warningValues.length > 0) {
                     try {
 
@@ -153,8 +153,8 @@ $(document).ready(function () {
 
 
 
-                            var jsonData = JSON.parse(allProductData);
-                            var data = $.grep(jsonData, function (item, index) {
+                           /// var jsonData = JSON.parse(allProductData);
+                            var data = $.grep(allProductData, function (item, index) {
                                 return item.Product == columns[3];
                             });
 
@@ -908,12 +908,13 @@ function GetProductDetailsNewMethod() {
                 var fnAndArgs = 'GetProductDetailsFromIndesignFileNewMethod()';
                 ///swal(fnAndArgs);
                 CSLibrary.evalScript(fnAndArgs, function (result) {
-                    ////alert(result);       
-                    if (result != null && result != '' && result != undefined && (result.indexOf('C12L') > -1 || result.indexOf('R12W') > -1) ) {
+                    ///alert(result);       
+                    if (result != null && result != '' && result != undefined && (result.indexOf('C12L') > -1 || result.indexOf('R12W') > -1)) {
                         //// alert('result length-'+result.length);
                         var newResult = FindingSuccessErrorWarnings(result);
+                       /// alert('newResult-'+newResult);
                         ListingAllSuccessErrorWarnings(newResult);
-                        ///alert('newResult-'+newResult.length);
+                        
 
                     }
                     else {
@@ -966,19 +967,27 @@ function GetProductDetailsNewMethod() {
 }
 
 function FindingSuccessErrorWarnings(result) {
+    ///alert('result-'+result);
     var rows = result.split('R12W');
+    ///alert('Rows length-'+rows.length);
     var fullPdtContentFromInDesign = '';
     var pageName = '';
     var isItANewPage = false;
     ////alert('rows.length'+rows.length);
     var pdtFromInDesign = '';
+    allProductData = jQuery.parseJSON(allProductData);
     for (var row = 0; row < rows.length; row++) {
         try {
+          ///  debugger;
             ////alert('row-'+row);
-
             ///var per = rows.length/row
-            $('#divScanningProgressBar').css("width", row + "%");
+           /* if(row > 1)
+            {
+                continue;
+            }
+            */
 
+            $('#divScanningProgressBar').css("width", row + "%");
             pdtFromInDesign = '';
             fullPdtContentFromInDesign = '';
             pageName = '';
@@ -1001,14 +1010,8 @@ function FindingSuccessErrorWarnings(result) {
             {
                 fullPdtContentFromInDesign = columns[2];
             }
-
-
-            ////  alert('fullPdtContentFromInDesign-'+fullPdtContentFromInDesign+' pageName-'+pageName+'isItANewPage-'+isItANewPage);
-
-
-
-
-            /*	if(pageName != '11')
+          /*  alert('pdt-' + fullPdtContentFromInDesign + ' | pageName-' + pageName + ' | isItANewPage-' + isItANewPage);
+           	if(pageName != '11')
                     {
                         continue;
                     }
@@ -1016,7 +1019,10 @@ function FindingSuccessErrorWarnings(result) {
                     {
                         continue;
                     }*/
-
+                if(fullPdtContentFromInDesign == '' || fullPdtContentFromInDesign == null)
+                {
+                    continue;
+                }
 
             //blockOtherSKU- Get
             var leftIndex = fullPdtContentFromInDesign.indexOf('[');
@@ -1024,17 +1030,14 @@ function FindingSuccessErrorWarnings(result) {
             var lengthIndex = fullPdtContentFromInDesign.indexOf('|ln');
             var weightIndex = fullPdtContentFromInDesign.indexOf('|wt');
             var priceIndex = fullPdtContentFromInDesign.indexOf('|pr');
-
-            if (leftIndex == rightIndex && leftIndex == -1)
-            ///&& lengthIndex == -1 && weightIndex == -1 && priceIndex == -1)
+ ///&& lengthIndex == -1 && weightIndex == -1 && priceIndex == -1)
+            if (leftIndex == rightIndex && leftIndex == -1)           
             {
                 continue;
                 ///alert(fullPdtContentFromInDesign+' Continue'+'leftIndex-'+leftIndex+'rightIndex= '+rightIndex);			
             }
 
-            /*					
-                
-                    
+            /*		
                 if(fullPdtContentFromInDesign.indexOf('ER11385') > -1)
                 {
                     alert('Found - '+fullPdtContentFromInDesign);
@@ -1095,7 +1098,7 @@ function FindingSuccessErrorWarnings(result) {
                 ////pdtFromInDesign=GetProductNameFromIndesignTextForTableFormat(fullPdtContentFromInDesign);
             }
             else {
-                ////alert('Normal format called');				
+                ///alert('Normal format called');				
                 pdtFromInDesign = GetProductNameFromIndesignText(fullPdtContentFromInDesign);
                 /// alert('pdtFromInDesign-'+pdtFromInDesign);
             }
@@ -1112,7 +1115,6 @@ function FindingSuccessErrorWarnings(result) {
             /*	*/
 
             //// alert('Normal fullPdtContentFromInDesign '+fullPdtContentFromInDesign+'pageName-'+pageName);
-
             productStatus = 101;
             /// 101 -> Product In Success,
             /// 102 -> Product In Warning,
@@ -1124,19 +1126,16 @@ function FindingSuccessErrorWarnings(result) {
                 /// 103 -> Product In Error,									
                 //// alert('Error occurred ');								
             }
-
             else {
-
-
-                var productData = $.grep(allProductData, function (item, index) {
+                ///alert('allProductData-'+allProductData);
+              
+               var productData = $.grep(allProductData, function (item, index) {                
                     return item.Product == pdtFromInDesign;
-                });
+                });               
 
-
-                ////  alert('productData-'+productData.length);
-
-
-                if (productData != null && productData.length == 0) {
+                ///alert('productData-'+productData);
+                ///debugger;
+                if ((productData != null && productData.length == 0) || (productData == null || productData == undefined)) {
                     productStatus = 102;	/// 102 -> Product In Warning,
                     productErrorPortion = pdtFromInDesign + ' - Product missing';
                 }
@@ -1228,7 +1227,7 @@ function FindingSuccessErrorWarnings(result) {
 
         }
         catch (er) {
-            alert('Errror from row ' + row + ' errr-' + er);
+            alert('Errror from FindingSuccessErrorWarnings ' + row + ' errr-' + er);
 
         }
     }//row closing
@@ -1237,12 +1236,15 @@ function FindingSuccessErrorWarnings(result) {
     return newResult;
 }
 
-function ListingAllSuccessErrorWarnings(newResult) {
+function ListingAllSuccessErrorWarnings(newResult) {    
     var splitResults = newResult.split('T123T');
     if (splitResults.length == 3) {
         errorValues = splitResults[0];
         warningValues = splitResults[1];
         successValues = splitResults[2];
+       //// alert('errorValues'+errorValues);
+     //// alert('warningValues'+warningValues);
+       //// alert('successValues'+successValues);
         ///swal(successValues);
         $('#btnScanningProceed').prop('disabled', false);
         $('.maskedCircle').remove();
