@@ -824,7 +824,7 @@ function UpdateProductDetailsIntheIndesignFile() {
             }
         }
         catch (er) {
-            $('#spanEror').text('Error from -' + er);
+            $('#spanEror').text('Error from UpdateProductDetailsIntheIndesignFile-' + er);
             ////swal('Error from UpdateProductDetailsIntheIndesignFile-'+ er);
         }
     });
@@ -908,8 +908,8 @@ function GetProductDetailsNewMethod() {
                 var fnAndArgs = 'GetProductDetailsFromIndesignFileNewMethod()';
                 ///swal(fnAndArgs);
                 CSLibrary.evalScript(fnAndArgs, function (result) {
-                    ///swal('GetProductDetailsFromIndesignFile in js-'+result);       
-                    if (result != null && result != '' && result != undefined) {
+                    ////alert(result);       
+                    if (result != null && result != '' && result != undefined && (result.indexOf('C12L') > -1 || result.indexOf('R12W') > -1) ) {
                         //// alert('result length-'+result.length);
                         var newResult = FindingSuccessErrorWarnings(result);
                         ListingAllSuccessErrorWarnings(newResult);

@@ -20,7 +20,7 @@ var isItANewPage = false;
 /// 102 -> Product In Warning,
 /// 103 -> Product In Error,
 /// 104 -> warning with skip,
-
+/// Not using this method
 function GetProductDetailsFromIndesignFile(productData) {
 	try {
 		//alert('GetProductDetailsFromIndesignFile');
