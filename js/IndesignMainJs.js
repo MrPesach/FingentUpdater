@@ -488,10 +488,195 @@ $(document).ready(function () {
     }
 });
 
+function ScanningProcess()
+{
+
+            ///swal( 'swal from aTagProccedToScanningPage' );
+            $.get("../html/ScanningInDesignResult.html", function (data) {
+                $('#divPageContentDiv').html(data);
+                //// alert('errorValues'+errorValues.length );
+                if (errorValues != '' && errorValues.length > 0) {
+                    try {
+                        $('#btnErrorCopy').show();
+                        $('#divErrors').show();
+                        if (warningValues != '' && warningValues.length > 0) {
+                            $('#btnWarningsCopy').show();
+                            $('#divWarnings').show();
+                        }
+                        else {
+                            $('#btnWarningsCopy').hide();
+                            $('#divWarnings').remove();
+                        }
+
+                        $('#divSuccess').remove();
+                        $('#pFooterForErrorWarning').show();
+                        $('#pFooterForSuccess').remove();
+                        ///  $('#divCopyCtrls').remove();
+                        var rows = errorValues.split('R12W');
+                        ////swal('rows.length'+rows.length);
+                        var errorHtml = "<div class='row' style='color:#FF3E5A'> Errors</div>";
+                        for (var row = 0; row < rows.length; row++) {
+                            var eachRow = rows[row];
+                            var columns = eachRow.split('C12L');
+                            if (columns[0] == 1)///is it a new page
+                            {
+                                //product
+                                if (row == 0) {
+                                    errorHtml += "<div id='divErrorPage" + row + "' class='info-hd errorPage'>Page-" + columns[1] + "</div>";
+                                }
+                                else {
+                                    errorHtml += "</ul> <div id='divErrorPage" + row + "' class='info-hd errorPage'>Page-" + columns[1] + "</div>";
+                                }
+                                errorHtml += "<ul style='display:none;' class='info-list error-list' id='ulErrors" + row + "'>";
+                                errorHtml += "<li><img src='../img/error.png' class='tick'> <span class='PdtCls'>" + columns[2] + "</span></li>";
+                            }
+                            else {
+                                //product
+                                errorHtml += "<li><img src='../img/error.png' class='tick'> <span class='PdtCls'>" + columns[2] + "</span> </li>";
+                            }
+                        }
+
+                        errorHtml += " </ul>";
+                        $('#divErrors').html(errorHtml);
+                    }
+                    catch (er) {
+                        $('#spanEror').text('Error btnScanningProceed from -' + er);
+                        //// swal('btnScanningProceed click error- ' + er);
+                    }
+                }
+                ////  alert('warningValues'+warningValues.length);
+                if (warningValues != '' && warningValues.length > 0) {
+                    try {
+
+                        $('#btnWarningsCopy').show();
+                        $('#divWarnings').show();
+                        if (errorValues != '' && errorValues.length > 0) {
+                            $('#btnErrorCopy').show();
+                            $('#divErrors').show();
+                        }
+                        else {
+                            $('#btnErrorCopy').hide();
+                            $('#divErrors').remove();
+                        }
+
+                        $('#divSuccess').remove();
+                        $('#pFooterForErrorWarning').show();
+                        $('#pFooterForSuccess').remove();
+                        ///   $('#divCopyCtrls').show();
+
+
+                        var rows = warningValues.split('R12W');
+                        //// swal('rows.length-'+rows.length);
+                        var warningHtml = "<div class='row' style='color:#F0B65B'>Warnings</div>";
+                        for (var row = 0; row < rows.length; row++) {
+                            var eachRow = rows[row];
+                            var columns = eachRow.split('C12L');
+                            ///swal(eachRow);
+                            if (columns[0] == 1)///is it a new page
+                            {
+                                //product               
+                                if (row == 0) {
+                                    warningHtml += "<div id='divWarningPage" + row + "' class='info-hd warningPage'>Page-" + columns[1] + "</div>";
+                                }
+                                else {
+                                    warningHtml += "</ul><div id='divWarningPage" + row + "' class='info-hd warningPage'>Page-" + columns[1] + "</div>";
+                                }
+                                warningHtml += " <ul style='display:none;' class='info-list error-list warring-list' id='ulWarnings" + row + "'>";
+                                warningHtml += "<li><img src='../img/warring.png' class='tick'> <span class='PdtCls'> " + columns[2] + "</span></li>";
+                            }
+                            else {
+                                //product
+                                warningHtml += "<li><img src='../img/warring.png' class='tick'> <span class='PdtCls'> " + columns[2] + "</span> </li>";
+                            }
+                            /*  if(row < 5)
+                              {
+                                  alert('row'+row+' value-'+eachRow+'COL[3]'+columns[3]);9847
+                              }
+                  */
+
+
+
+                            /// var jsonData = JSON.parse(allProductData);
+                            var data = $.grep(allProductData, function (item, index) {
+                                return item.Product == columns[3];
+                            });
+
+
+                            if (data != null && data.length > 0) {
+                                wholeProductFromInDesign.push(data[0]);
+                            }
+
+                        }
+                        warningHtml += " </ul>";
+                        $('#divWarnings').html(warningHtml);
+                    }
+                    catch (er) {
+                        $('#spanEror').text('Error from btnScanningProceed-' + er);
+                        ////swal('btnScanningProceed click warning ' + er);
+                    }
+                }
+                ////alert('successValues.length-'+successValues.length);
+                if (successValues != '' && successValues.length > 0) {
+                    try {
+                        var rows = successValues.split('R12W');
+                        if (warningValues.length == 0 && errorValues.length == 0) {
+                            $('#divErrors').remove();
+                            $('#divWarnings').remove();
+                            $('#divSuccess').show();
+                            $('#pFooterForErrorWarning').remove();
+                            $('#pFooterForSuccess').show();
+                            $('#divCopyCtrls').remove();
+
+                            //// swal('rows.length-'+rows.length);
+                            var successHtml = "<div class='row' style='color:#1DC198'>Success</div>";
+                            for (var row = 0; row < rows.length; row++) {
+                                var eachRow = rows[row];
+                                var columns = eachRow.split('C12L');
+                                ///swal(eachRow);
+                                if (columns[0] == 1)///is it a new page
+                                {
+                                    //product           
+                                    if (row == 0) {
+                                        successHtml += "<div id='divSuccess" + row + "' class='info-hd successPage'>Page-" + columns[1] + "</div>";
+                                    }
+                                    else {
+                                        successHtml += "</ul><div id='divSuccess" + row + "' class='info-hd successPage'>Page-" + columns[1] + "</div>";
+                                    }
+                                    successHtml += " <ul style='display:none;' class='info-list' id='ulSuccess" + row + "'>";
+                                    successHtml += "<li><img src='../img/tick.png' class='tick'> <span class='PdtCls'> " + columns[2] + " </span> </li>";
+                                }
+                                else {
+                                    //product
+                                    successHtml += "<li><img src='../img/tick.png' class='tick'> <span class='PdtCls'> " + columns[2] + " </span></li>";
+                                }
+                            }
+                            successHtml += " </ul>";
+                            $('#divSuccess').html(successHtml);
+                        }
+
+                        for (var row = 0; row < rows.length; row++) {
+                            var eachRow = rows[row];
+                            var columns = eachRow.split('C12L');
+                            //var jsonData = JSON.parse(allProductData);
+                            var data = $.grep(allProductData, function (item, index) {
+                                return item.Product == columns[3];
+                            });
+                            if (data != null && data.length > 0) {
+                                wholeProductFromInDesign.push(data[0]);
+                            }
+                        }
+
+                    }
+                    catch (er) {
+                        $('#spanEror').text('Error from btnScanningProceed -' + er);
+                        ////swal('btnScanningProceed click warning ' + er);
+                    }
+                }
+            });
+}
+
 function LoadIndexSubPage() {
     $.get("../html/indexSub.html", function (data) {
-
-
         $('#divPageContentDiv').html(data);
     });
 }
@@ -697,14 +882,15 @@ function GetProductDetails() {
                             warningValues = splitResults[1];
                             successValues = splitResults[2];
                             ///swal(successValues);
-                            $('#btnScanningProceed').prop('disabled', false);
+                           /// $('#btnScanningProceed').prop('disabled', false);
                             $('.maskedCircle').remove();
                             $('#divScanningProgressBar').css("width", "100%");
                             ///swal('Process completed');
                             /////swal("Process completed.", "", "success");                       
 
                             setTimeout(() => {
-                                $('#btnScanningProceed').trigger('click');
+                               /// $('#btnScanningProceed').trigger('click');
+                               ScanningProcess();
                             }, 650);
                         }
                         else {
@@ -1269,14 +1455,15 @@ function ListingAllSuccessErrorWarnings(newResult) {
         //// alert('warningValues'+warningValues);
         //// alert('successValues'+successValues);
         ///swal(successValues);
-        $('#btnScanningProceed').prop('disabled', false);
+       /// $('#btnScanningProceed').prop('disabled', false);
         $('.maskedCircle').remove();
         $('#divScanningProgressBar').css("width", "100%");
         ///swal('Process completed');
         /////swal("Process completed.", "", "success");                       
 
         setTimeout(() => {
-            $('#btnScanningProceed').trigger('click');
+           /// $('#btnScanningProceed').trigger('click');
+           ScanningProcess();
         }, 650);
     }
     else {
