@@ -850,7 +850,7 @@ function UpdateProductDetailsIntheIndesignFile() {
 
 function GetProductDetailsNewMethod() {
     try {
-        
+
         var strData = '';
         /// alert('GetProductDetails!');
         ///swal(process.env.APPDATA);
@@ -882,7 +882,6 @@ function GetProductDetailsNewMethod() {
         if (allProductData != null && allProductData != '' && allProductData != undefined) {
             /////  swal(productDetails);
             try {
-
                 var pdt = jQuery.parseJSON(allProductData);
                 ////alert(pdt.Products);
                 allProductData = pdt.Products;
@@ -896,8 +895,6 @@ function GetProductDetailsNewMethod() {
                 }
                 allProductData = JSON.stringify(newJson);
                 indexFilePath = pdt.IndexFilePath;
-
-
             }
             catch (er) {
                 $('#spanEror').text('Error Invalid json format from -' + er);
@@ -928,8 +925,6 @@ function GetProductDetailsNewMethod() {
                         var newResult = FindingSuccessErrorWarnings(result);
                         /// alert('newResult-'+newResult);
                         ListingAllSuccessErrorWarnings(newResult);
-
-
                     }
                     else {
                         //swal('There is no product details!');   
@@ -992,7 +987,7 @@ function FindingSuccessErrorWarnings(result) {
     allProductData = jQuery.parseJSON(allProductData);
     for (var row = 0; row < rows.length; row++) {
         try {
-            ///  debugger;
+            ///  
             ////alert('row-'+row);
             ///var per = rows.length/row
             /* if(row > 1)
@@ -1029,10 +1024,9 @@ function FindingSuccessErrorWarnings(result) {
                       {
                           continue;
                       }
-                      if(fullPdtContentFromInDesign.indexOf('RC11911') == -1 )
-                      {
-                          continue;
-                      }*/
+            if (fullPdtContentFromInDesign.indexOf('WDB018-07') == -1) {
+                continue;
+            }*/
             if (fullPdtContentFromInDesign == '' || fullPdtContentFromInDesign == null) {
                 continue;
             }
@@ -1109,6 +1103,12 @@ function FindingSuccessErrorWarnings(result) {
                 ////alert('GetProductNameFromIndesignTextForTableFormat normal called');
                 ////pdtFromInDesign=GetProductNameFromIndesignTextForTableFormat(fullPdtContentFromInDesign);
             }
+            else if (lengthIndex > 1 || weightIndex > 1 || priceIndex > 1) {
+                ///alert('Normal format called');				
+                pdtFromInDesign = GetProductNameFromIndesignTextWithMultipleSkus(fullPdtContentFromInDesign);
+                //   pdtFromInDesign = 
+                /// alert('pdtFromInDesign-'+pdtFromInDesign);
+            }
             else {
                 ///alert('Normal format called');				
                 pdtFromInDesign = GetProductNameFromIndesignText(fullPdtContentFromInDesign);
@@ -1139,67 +1139,79 @@ function FindingSuccessErrorWarnings(result) {
                 //// alert('Error occurred ');								
             }
             else {
+                /// Warnings 
                 ///alert('allProductData-'+allProductData);
+                var allSkus = pdtFromInDesign.split('𝄞');
+                for (var inc = 0; inc < allSkus.length; inc++) {
+                    pdtFromInDesign = allSkus[inc];
+                    var productData = $.grep(allProductData, function (item, index) {
+                        return item.Product == pdtFromInDesign;
+                    });
 
-                var productData = $.grep(allProductData, function (item, index) {
-                    return item.Product == pdtFromInDesign;
-                });
+                    ///alert('productData-'+productData);
+                    ///
+                    if ((productData != null && productData.length == 0) || (productData == null || productData == undefined)) {
+                        productStatus = 102;	/// 102 -> Product In Warning,
+                        if (allSkus.length == 1) {
+                            productErrorPortion = pdtFromInDesign + ' - Product missing';
+                        }
+                        else {
+                            productErrorPortion = fullPdtContentFromInDesign + ' - Product missing';
+                            break;
+                        }
+                    }
+                    else {
 
-                ///alert('productData-'+productData);
-                ///debugger;
-                if ((productData != null && productData.length == 0) || (productData == null || productData == undefined)) {
-                    productStatus = 102;	/// 102 -> Product In Warning,
-                    productErrorPortion = pdtFromInDesign + ' - Product missing';
-                }
-                else {
-
-                    for (var g = 0; g < productData.length; g++) {
-                        try {
-                            newTextForIndesign = '';
-                            var pdtFromAppData = productData[g].Product;
-                            var lengthFromAppData = productData[g].Length;
-                            ///alert('pdtFromAppData->'+pdtFromAppData+' |pdtFromInDesign- '+pdtFromInDesign);
-                            var weightFromAppData = productData[g].Weight;
-                            var rateFromAppData = productData[g].Price;
-                            //alert('pdtFromInDesign-'+pdtFromInDesign+' | pdtFromAppData ->'+pdtFromAppData);
-                            //pdtFromInDesign = Trim(pdtFromInDesign);
-                            pdtFromInDesign = TrimInMiddle(pdtFromInDesign);
-
-                            //alert('pdtFromInDesign-'+pdtFromInDesign+',pdtFromInDesign len-'+pdtFromInDesign.length+',pdtFromAppData ->'+pdtFromAppData+',pdtFromAppData len ->'+pdtFromAppData.length);
-                            if (pdtFromInDesign == pdtFromAppData) {
-                                ///alert('Product found '+pdtFromInDesign+' | fullPdtContentFromInDesign-'+fullPdtContentFromInDesign);
-                                /// Product found in indesign	
-
-                                /////GetAllWarningsFromTheIndesignProduct(fullPdtContentFromInDesign, lengthFromAppData, weightFromAppData, pdtFromAppData, rateFromAppData )
-                                if (CheckAnyWarningInProduct(fullPdtContentFromInDesign, lengthFromAppData, weightFromAppData, pdtFromAppData, rateFromAppData)) {
-                                    ///alert('CheckAnyWarningInProduct calling frm page normal');
-                                    productStatus = 102;///Warning with skip
-                                    ///alert('fullPdtContentFromInDesign-' + fullPdtContentFromInDesign + 'productStatus-'+productStatus);					
-                                    //alert(fullPdtContentFromInDesign + ' Product In Warning');									
+                        for (var g = 0; g < productData.length; g++) {
+                            try {
+                                newTextForIndesign = '';
+                                var pdtFromAppData = productData[g].Product;
+                                var lengthFromAppData = productData[g].Length;
+                                ///alert('pdtFromAppData->'+pdtFromAppData+' |pdtFromInDesign- '+pdtFromInDesign);
+                                var weightFromAppData = productData[g].Weight;
+                                var rateFromAppData = productData[g].Price;
+                                //alert('pdtFromInDesign-'+pdtFromInDesign+' | pdtFromAppData ->'+pdtFromAppData);
+                                //pdtFromInDesign = Trim(pdtFromInDesign);
+                                pdtFromInDesign = TrimInMiddle(pdtFromInDesign);
+                                //alert('pdtFromInDesign-'+pdtFromInDesign+',pdtFromInDesign len-'+pdtFromInDesign.length+',pdtFromAppData ->'+pdtFromAppData+',pdtFromAppData len ->'+pdtFromAppData.length);
+                                if (pdtFromInDesign == pdtFromAppData) {
+                                    ///alert('Product found '+pdtFromInDesign+' | fullPdtContentFromInDesign-'+fullPdtContentFromInDesign);
+                                    /// Product found in indesign	
+                                    /////GetAllWarningsFromTheIndesignProduct(fullPdtContentFromInDesign, lengthFromAppData, weightFromAppData, pdtFromAppData, rateFromAppData )
+                                    if (CheckAnyWarningInProduct(fullPdtContentFromInDesign, lengthFromAppData, weightFromAppData, pdtFromAppData, rateFromAppData)) {
+                                        ///alert('CheckAnyWarningInProduct calling frm page normal');
+                                        productStatus = 102;///Warning with skip
+                                        ///alert('fullPdtContentFromInDesign-' + fullPdtContentFromInDesign + 'productStatus-'+productStatus);					
+                                        //alert(fullPdtContentFromInDesign + ' Product In Warning');									
+                                        /// break;
+                                    }
+                                    ///alert(fullPdtContentFromInDesign + ' Product In Success');
+                                    ///productStatus = 101;	
                                     /// break;
+                                } // found if close
+                                else {
+                                    productStatus = 102;	/// 102 -> Product In Warning,
+                                    productErrorPortion = pdtFromInDesign + ' - Product missing';
+                                    ///alert('in warning');
                                 }
-                                ///alert(fullPdtContentFromInDesign + ' Product In Success');
-                                ///productStatus = 101;	
-                                /// break;
-                            } // found if close
-                            else {
-                                productStatus = 102;	/// 102 -> Product In Warning,
-                                productErrorPortion = pdtFromInDesign + ' - Product missing';
-                                ///alert('in warning');
+                                ///alert('fullPdtContentFromInDesign-'+fullPdtContentFromInDesign+' | pdtFromAppData-'+pdtFromAppData+' | newTextForIndesign-'+newTextForIndesign);
                             }
-                            ///alert('fullPdtContentFromInDesign-'+fullPdtContentFromInDesign+' | pdtFromAppData-'+pdtFromAppData+' | newTextForIndesign-'+newTextForIndesign);
-                        }
-                        catch (er) {
-                            alert('Normal section-' + er);
+                            catch (er) {
+                                alert('Normal section-' + er);
+                            }
+
+                        }///productData loop
+
+                        if (allSkus.length > 1 && productStatus == 102) {
+                            break;
                         }
 
-                    }///productData loop
-                }///else 
+                    }///else 
+                }/// allSkus loop
 
-            }
+            } /// Else Warnings 
 
             //// alert('from normal fullPdtContentFromInDesign-' + fullPdtContentFromInDesign + 'productStatus-'+productStatus)
-
             if (productStatus == 101) /// 101 -> Product In Success,
             {
                 ////alert(pdtFromInDesign + 'Product In Success');					
@@ -1236,7 +1248,6 @@ function FindingSuccessErrorWarnings(result) {
                 }
                 isItaNewPageForError = false;
             }
-
         }
         catch (er) {
             alert('Errror from FindingSuccessErrorWarnings ' + row + ' errr-' + er);
@@ -1297,13 +1308,13 @@ function CheckAnyErrorInProduct(fullPdtContentFromInDesign) {
             return;
         }
         */
+
     productErrorPortion = fullPdtContentFromInDesign;
     if (fullPdtContentFromInDesign == ''
         || fullPdtContentFromInDesign == null
         || fullPdtContentFromInDesign == undefined) {
         return true;
     }
-
 
     var countOfLeftSqure = 0;
     var countOfRightSqure = 0;
@@ -1321,17 +1332,15 @@ function CheckAnyErrorInProduct(fullPdtContentFromInDesign) {
         return true;
     }
 
-
-    var lengthPortion = '';
-    var weightPortion = '';
-    var pricePortion = '';
+    var lengthPortions = [];
+    var weightPortions = [];
+    var pricePortions = [];
     var content = '';
     var hasLeftFound = false;
     var hasRightFound = false;
     ///alert('start scanning '+fullPdtContentFromInDesign);
     for (var inc = 0; inc < fullPdtContentFromInDesign.length; inc++) {
         ///alert(fullPdtContentFromInDesign[inc]);
-
         if (fullPdtContentFromInDesign[inc] == '[') {
             ///alert('[ found content-'+ content);
             hasLeftFound = true;
@@ -1347,13 +1356,22 @@ function CheckAnyErrorInProduct(fullPdtContentFromInDesign) {
 
         if (hasRightFound) {
             if (content.indexOf('ln') > -1) {
-                lengthPortion = content;
+                if ($.inArray(content, lengthPortions) == -1) {
+                    // Not found
+                    lengthPortions.push(content);
+                }
             }
             else if (content.indexOf('wt') > -1) {
-                weightPortion = content;
+                if ($.inArray(content, weightPortions) == -1) {
+                    // Not found
+                    weightPortions.push(content);
+                }
             }
             else if (content.indexOf('pr') > -1) {
-                pricePortion = content;
+                if ($.inArray(content, pricePortions) == -1) {
+                    // Not found
+                    pricePortions.push(content);
+                }
             }
 
             hasLeftFound = false;
@@ -1366,6 +1384,7 @@ function CheckAnyErrorInProduct(fullPdtContentFromInDesign) {
         }
     }
 
+    /*
     ///alert('lengthPortion-'+lengthPortion+' |weightPortion- '+weightPortion+' |pricePortion- '+pricePortion+'lengthFromAppData-'+lengthFromAppData+' |weightFromAppData-'+weightFromAppData+' | rateFromAppData-'+rateFromAppData);
     if (lengthPortion.length > 0 && lengthPortion.indexOf('|') == -1) {
         return true;
@@ -1380,16 +1399,33 @@ function CheckAnyErrorInProduct(fullPdtContentFromInDesign) {
         ///alert('wt missing-'+subMatch);		
         return true;
     }
+    */
+
     var totalSectionsInPdt = 0;
-    if (lengthPortion.length > 0) {
+    for (var inc = 0; inc < lengthPortions.length; inc++) {
+        var item = lengthPortions[inc];
+        if (item.length > 0 && item.indexOf('|') == -1) {
+            return true;
+        }
         totalSectionsInPdt++;
     }
-    if (weightPortion.length > 0) {
+
+    for (var inc = 0; inc < weightPortions.length; inc++) {
+        var item = weightPortions[inc];
+        if (item.length > 0 && item.indexOf('|') == -1) {
+            return true;
+        }
         totalSectionsInPdt++;
     }
-    if (pricePortion.length > 0) {
+
+    for (var inc = 0; inc < pricePortions.length; inc++) {
+        var item = pricePortions[inc];
+        if (item.length > 0 && item.indexOf('|') == -1) {
+            return true;
+        }
         totalSectionsInPdt++;
     }
+
     ///alert('totalSectionsInPdt-'+totalSectionsInPdt+' | (countOfLeftSqure + countOfRightSqure)'+(countOfLeftSqure + countOfRightSqure))
     if ((totalSectionsInPdt * 2) != (countOfLeftSqure + countOfRightSqure)) {
         return true;
@@ -1575,6 +1611,9 @@ function GetProductNameFromIndesignText(fullPdtContentFromInDesign) {
             }
 
             var matches = item.match(/\[(.*?)\]/);
+            if (matches == null) {
+                continue;
+            }
             var sku = '';
             var subMatch = '';
             if (matches) {
@@ -1712,8 +1751,61 @@ function GetProductNameFromIndesignText(fullPdtContentFromInDesign) {
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
+function GetProductNameFromIndesignTextWithMultipleSkus(fullPdtContentFromInDesign) {
+    try {
+        var allSkus = [];
+        var regex = /\[([^\][]*)]/g;
+        var results = [], m;
+        while (m = regex.exec(fullPdtContentFromInDesign)) {
+            results.push(m[1]);
+        }
 
+        for (var inc = 0; inc < results.length; inc++) {
+            var item = results[inc];
+            if (item.indexOf('|ln') > -1) {
+                var lengths = item.split('|ln');
+                if (lengths.length > 0) {
+                    inDesignText = lengths[0];
+                    if ($.inArray(inDesignText, allSkus) == -1) {
+                        // Not found
+                        allSkus.push(inDesignText);
+                    }
+                }
+            }
+            else if (item.indexOf('|wt') > -1) {
+                var weights = item.split('|wt');
+                if (weights.length > 0) {
+                    inDesignText = weights[0];
+                    if ($.inArray(inDesignText, allSkus) == -1) {
+                        // Not found
+                        allSkus.push(inDesignText);
+                    }
+                }
+            }
+            else if (item.indexOf('|pr') > -1) {
+                var prices = item.split('|pr');
+                if (prices.length > 0) {
+                    inDesignText = prices[0];
+                    if ($.inArray(inDesignText, allSkus) == -1) {
+                        // Not found
+                        allSkus.push(inDesignText);
+                    }
+                }
+            }
+            ////alert(newTextForIndesign);
+        }
 
+        if (allSkus.length > 0) {
+            return allSkus.join("𝄞");
+        }
+
+        return '';
+    }
+    catch (er) {
+
+        ////alert('HandleMultipleSkus'+er);
+    }
+}
 
 ////////////////////////////////// 30 April 2021 End
 /*
@@ -2010,16 +2102,16 @@ function WriteLog(error) {
 }
 
 function ReplaceCharacterFromString(strText, replaceChar) {
-	var newString = '';
-	if (strText == '') {
-		return newString;
-	}
+    var newString = '';
+    if (strText == '') {
+        return newString;
+    }
 
-	for (var inc = 0; inc < strText.length; inc++) {
-		if (strText[inc] != replaceChar) {
-			newString += strText[inc];
-		}
-	}
+    for (var inc = 0; inc < strText.length; inc++) {
+        if (strText[inc] != replaceChar) {
+            newString += strText[inc];
+        }
+    }
 
-	return newString;
+    return newString;
 }
