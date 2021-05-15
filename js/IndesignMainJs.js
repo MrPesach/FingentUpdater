@@ -488,191 +488,191 @@ $(document).ready(function () {
     }
 });
 
-function ScanningProcess()
-{
+function ScanningProcess() {
 
-            ///swal( 'swal from aTagProccedToScanningPage' );
-            $.get("../html/ScanningInDesignResult.html", function (data) {
-                $('#divPageContentDiv').html(data);
-                //// alert('errorValues'+errorValues.length );
-                if (errorValues != '' && errorValues.length > 0) {
-                    try {
-                        $('#btnErrorCopy').show();
-                        $('#divErrors').show();
-                        if (warningValues != '' && warningValues.length > 0) {
-                            $('#btnWarningsCopy').show();
-                            $('#divWarnings').show();
-                        }
-                        else {
-                            $('#btnWarningsCopy').hide();
-                            $('#divWarnings').remove();
-                        }
-
-                        $('#divSuccess').remove();
-                        $('#pFooterForErrorWarning').show();
-                        $('#pFooterForSuccess').remove();
-                        ///  $('#divCopyCtrls').remove();
-                        var rows = errorValues.split('R12W');
-                        ////swal('rows.length'+rows.length);
-                        var errorHtml = "<div class='row' style='color:#FF3E5A'> Errors</div>";
-                        for (var row = 0; row < rows.length; row++) {
-                            var eachRow = rows[row];
-                            var columns = eachRow.split('C12L');
-                            if (columns[0] == 1)///is it a new page
-                            {
-                                //product
-                                if (row == 0) {
-                                    errorHtml += "<div id='divErrorPage" + row + "' class='info-hd errorPage'>Page-" + columns[1] + "</div>";
-                                }
-                                else {
-                                    errorHtml += "</ul> <div id='divErrorPage" + row + "' class='info-hd errorPage'>Page-" + columns[1] + "</div>";
-                                }
-                                errorHtml += "<ul style='display:none;' class='info-list error-list' id='ulErrors" + row + "'>";
-                                errorHtml += "<li><img src='../img/error.png' class='tick'> <span class='PdtCls'>" + columns[2] + "</span></li>";
-                            }
-                            else {
-                                //product
-                                errorHtml += "<li><img src='../img/error.png' class='tick'> <span class='PdtCls'>" + columns[2] + "</span> </li>";
-                            }
-                        }
-
-                        errorHtml += " </ul>";
-                        $('#divErrors').html(errorHtml);
-                    }
-                    catch (er) {
-                        $('#spanEror').text('Error btnScanningProceed from -' + er);
-                        //// swal('btnScanningProceed click error- ' + er);
-                    }
-                }
-                ////  alert('warningValues'+warningValues.length);
+    ///swal( 'swal from aTagProccedToScanningPage' );
+    $.get("../html/ScanningInDesignResult.html", function (data) {
+        $('#divPageContentDiv').html(data);
+        //// alert('errorValues'+errorValues.length );
+        debugger;
+        if (errorValues != '' && errorValues.length > 0) {
+            try {
+                $('#btnErrorCopy').show();
+                $('#divErrors').show();
                 if (warningValues != '' && warningValues.length > 0) {
-                    try {
+                    $('#btnWarningsCopy').show();
+                    $('#divWarnings').show();
+                }
+                else {
+                    $('#btnWarningsCopy').hide();
+                    $('#divWarnings').remove();
+                }
 
-                        $('#btnWarningsCopy').show();
-                        $('#divWarnings').show();
-                        if (errorValues != '' && errorValues.length > 0) {
-                            $('#btnErrorCopy').show();
-                            $('#divErrors').show();
+                $('#divSuccess').remove();
+                $('#pFooterForErrorWarning').show();
+                $('#pFooterForSuccess').remove();
+                ///  $('#divCopyCtrls').remove();
+                var rows = errorValues.split('R12W');
+                ////swal('rows.length'+rows.length);
+                var errorHtml = "<div class='row' style='color:#FF3E5A'> Errors</div>";
+                for (var row = 0; row < rows.length; row++) {
+                    var eachRow = rows[row];
+                    var columns = eachRow.split('C12L');
+                    if (columns[0] == 1)///is it a new page
+                    {
+                        //product
+                        if (row == 0) {
+                            errorHtml += "<div id='divErrorPage" + row + "' class='info-hd errorPage'>Page-" + columns[1] + "</div>";
                         }
                         else {
-                            $('#btnErrorCopy').hide();
-                            $('#divErrors').remove();
+                            errorHtml += "</ul> <div id='divErrorPage" + row + "' class='info-hd errorPage'>Page-" + columns[1] + "</div>";
                         }
+                        errorHtml += "<ul style='display:none;' class='info-list error-list' id='ulErrors" + row + "'>";
+                        errorHtml += "<li><img src='../img/error.png' class='tick'> <span class='PdtCls'>" + columns[2] + "</span></li>";
+                    }
+                    else {
+                        //product
+                        errorHtml += "<li><img src='../img/error.png' class='tick'> <span class='PdtCls'>" + columns[2] + "</span> </li>";
+                    }
+                }
 
-                        $('#divSuccess').remove();
-                        $('#pFooterForErrorWarning').show();
-                        $('#pFooterForSuccess').remove();
-                        ///   $('#divCopyCtrls').show();
+                errorHtml += " </ul>";
+                $('#divErrors').html(errorHtml);
+            }
+            catch (er) {
+                $('#spanEror').text('Error btnScanningProceed from -' + er);
+                //// swal('btnScanningProceed click error- ' + er);
+            }
+        }
+        ////  alert('warningValues'+warningValues.length);
+        if (warningValues != '' && warningValues.length > 0) {
+            try {
+
+                $('#btnWarningsCopy').show();
+                $('#divWarnings').show();
+                if (errorValues != '' && errorValues.length > 0) {
+                    $('#btnErrorCopy').show();
+                    $('#divErrors').show();
+                }
+                else {
+                    $('#btnErrorCopy').hide();
+                    $('#divErrors').remove();
+                }
+
+                $('#divSuccess').remove();
+                $('#pFooterForErrorWarning').show();
+                $('#pFooterForSuccess').remove();
+                ///   $('#divCopyCtrls').show();
 
 
-                        var rows = warningValues.split('R12W');
-                        //// swal('rows.length-'+rows.length);
-                        var warningHtml = "<div class='row' style='color:#F0B65B'>Warnings</div>";
-                        for (var row = 0; row < rows.length; row++) {
-                            var eachRow = rows[row];
-                            var columns = eachRow.split('C12L');
-                            ///swal(eachRow);
-                            if (columns[0] == 1)///is it a new page
-                            {
-                                //product               
-                                if (row == 0) {
-                                    warningHtml += "<div id='divWarningPage" + row + "' class='info-hd warningPage'>Page-" + columns[1] + "</div>";
-                                }
-                                else {
-                                    warningHtml += "</ul><div id='divWarningPage" + row + "' class='info-hd warningPage'>Page-" + columns[1] + "</div>";
-                                }
-                                warningHtml += " <ul style='display:none;' class='info-list error-list warring-list' id='ulWarnings" + row + "'>";
-                                warningHtml += "<li><img src='../img/warring.png' class='tick'> <span class='PdtCls'> " + columns[2] + "</span></li>";
+                var rows = warningValues.split('R12W');
+                //// swal('rows.length-'+rows.length);
+                var warningHtml = "<div class='row' style='color:#F0B65B'>Warnings</div>";
+                for (var row = 0; row < rows.length; row++) {
+                    var eachRow = rows[row];
+                    var columns = eachRow.split('C12L');
+                    ///swal(eachRow);
+                    if (columns[0] == 1)///is it a new page
+                    {
+                        //product               
+                        if (row == 0) {
+                            warningHtml += "<div id='divWarningPage" + row + "' class='info-hd warningPage'>Page-" + columns[1] + "</div>";
+                        }
+                        else {
+                            warningHtml += "</ul><div id='divWarningPage" + row + "' class='info-hd warningPage'>Page-" + columns[1] + "</div>";
+                        }
+                        warningHtml += " <ul style='display:none;' class='info-list error-list warring-list' id='ulWarnings" + row + "'>";
+                        warningHtml += "<li><img src='../img/warring.png' class='tick'> <span class='PdtCls'> " + columns[2] + "</span></li>";
+                    }
+                    else {
+                        //product
+                        warningHtml += "<li><img src='../img/warring.png' class='tick'> <span class='PdtCls'> " + columns[2] + "</span> </li>";
+                    }
+                    /*  if(row < 5)
+                      {
+                          alert('row'+row+' value-'+eachRow+'COL[3]'+columns[3]);9847
+                      }
+          */
+
+
+
+                    /// var jsonData = JSON.parse(allProductData);
+                    var data = $.grep(allProductData, function (item, index) {
+                        return item.Product == columns[3];
+                    });
+
+
+                    if (data != null && data.length > 0) {
+                        wholeProductFromInDesign.push(data[0]);
+                    }
+
+                }
+                warningHtml += " </ul>";
+                $('#divWarnings').html(warningHtml);
+            }
+            catch (er) {
+                $('#spanEror').text('Error from btnScanningProceed-' + er);
+                ////swal('btnScanningProceed click warning ' + er);
+            }
+        }
+        ////alert('successValues.length-'+successValues.length);
+        if (successValues != '' && successValues.length > 0) {
+            try {
+                var rows = successValues.split('R12W');
+                if (warningValues.length == 0 && errorValues.length == 0) {
+                    $('#divErrors').remove();
+                    $('#divWarnings').remove();
+                    $('#divSuccess').show();
+                    $('#pFooterForErrorWarning').remove();
+                    $('#pFooterForSuccess').show();
+                    $('#divCopyCtrls').remove();
+
+                    //// swal('rows.length-'+rows.length);
+                    var successHtml = "<div class='row' style='color:#1DC198'>Success</div>";
+                    for (var row = 0; row < rows.length; row++) {
+                        var eachRow = rows[row];
+                        var columns = eachRow.split('C12L');
+                        ///swal(eachRow);
+                        if (columns[0] == 1)///is it a new page
+                        {
+                            //product           
+                            if (row == 0) {
+                                successHtml += "<div id='divSuccess" + row + "' class='info-hd successPage'>Page-" + columns[1] + "</div>";
                             }
                             else {
-                                //product
-                                warningHtml += "<li><img src='../img/warring.png' class='tick'> <span class='PdtCls'> " + columns[2] + "</span> </li>";
+                                successHtml += "</ul><div id='divSuccess" + row + "' class='info-hd successPage'>Page-" + columns[1] + "</div>";
                             }
-                            /*  if(row < 5)
-                              {
-                                  alert('row'+row+' value-'+eachRow+'COL[3]'+columns[3]);9847
-                              }
-                  */
-
-
-
-                            /// var jsonData = JSON.parse(allProductData);
-                            var data = $.grep(allProductData, function (item, index) {
-                                return item.Product == columns[3];
-                            });
-
-
-                            if (data != null && data.length > 0) {
-                                wholeProductFromInDesign.push(data[0]);
-                            }
-
+                            successHtml += " <ul style='display:none;' class='info-list' id='ulSuccess" + row + "'>";
+                            successHtml += "<li><img src='../img/tick.png' class='tick'> <span class='PdtCls'> " + columns[2] + " </span> </li>";
                         }
-                        warningHtml += " </ul>";
-                        $('#divWarnings').html(warningHtml);
+                        else {
+                            //product
+                            successHtml += "<li><img src='../img/tick.png' class='tick'> <span class='PdtCls'> " + columns[2] + " </span></li>";
+                        }
                     }
-                    catch (er) {
-                        $('#spanEror').text('Error from btnScanningProceed-' + er);
-                        ////swal('btnScanningProceed click warning ' + er);
+                    successHtml += " </ul>";
+                    $('#divSuccess').html(successHtml);
+                }
+
+                for (var row = 0; row < rows.length; row++) {
+                    var eachRow = rows[row];
+                    var columns = eachRow.split('C12L');
+                    //var jsonData = JSON.parse(allProductData);
+                    var data = $.grep(allProductData, function (item, index) {
+                        return item.Product == columns[3];
+                    });
+                    if (data != null && data.length > 0) {
+                        wholeProductFromInDesign.push(data[0]);
                     }
                 }
-                ////alert('successValues.length-'+successValues.length);
-                if (successValues != '' && successValues.length > 0) {
-                    try {
-                        var rows = successValues.split('R12W');
-                        if (warningValues.length == 0 && errorValues.length == 0) {
-                            $('#divErrors').remove();
-                            $('#divWarnings').remove();
-                            $('#divSuccess').show();
-                            $('#pFooterForErrorWarning').remove();
-                            $('#pFooterForSuccess').show();
-                            $('#divCopyCtrls').remove();
 
-                            //// swal('rows.length-'+rows.length);
-                            var successHtml = "<div class='row' style='color:#1DC198'>Success</div>";
-                            for (var row = 0; row < rows.length; row++) {
-                                var eachRow = rows[row];
-                                var columns = eachRow.split('C12L');
-                                ///swal(eachRow);
-                                if (columns[0] == 1)///is it a new page
-                                {
-                                    //product           
-                                    if (row == 0) {
-                                        successHtml += "<div id='divSuccess" + row + "' class='info-hd successPage'>Page-" + columns[1] + "</div>";
-                                    }
-                                    else {
-                                        successHtml += "</ul><div id='divSuccess" + row + "' class='info-hd successPage'>Page-" + columns[1] + "</div>";
-                                    }
-                                    successHtml += " <ul style='display:none;' class='info-list' id='ulSuccess" + row + "'>";
-                                    successHtml += "<li><img src='../img/tick.png' class='tick'> <span class='PdtCls'> " + columns[2] + " </span> </li>";
-                                }
-                                else {
-                                    //product
-                                    successHtml += "<li><img src='../img/tick.png' class='tick'> <span class='PdtCls'> " + columns[2] + " </span></li>";
-                                }
-                            }
-                            successHtml += " </ul>";
-                            $('#divSuccess').html(successHtml);
-                        }
-
-                        for (var row = 0; row < rows.length; row++) {
-                            var eachRow = rows[row];
-                            var columns = eachRow.split('C12L');
-                            //var jsonData = JSON.parse(allProductData);
-                            var data = $.grep(allProductData, function (item, index) {
-                                return item.Product == columns[3];
-                            });
-                            if (data != null && data.length > 0) {
-                                wholeProductFromInDesign.push(data[0]);
-                            }
-                        }
-
-                    }
-                    catch (er) {
-                        $('#spanEror').text('Error from btnScanningProceed -' + er);
-                        ////swal('btnScanningProceed click warning ' + er);
-                    }
-                }
-            });
+            }
+            catch (er) {
+                $('#spanEror').text('Error from btnScanningProceed -' + er);
+                ////swal('btnScanningProceed click warning ' + er);
+            }
+        }
+    });
 }
 
 function LoadIndexSubPage() {
@@ -882,15 +882,15 @@ function GetProductDetails() {
                             warningValues = splitResults[1];
                             successValues = splitResults[2];
                             ///swal(successValues);
-                           /// $('#btnScanningProceed').prop('disabled', false);
+                            /// $('#btnScanningProceed').prop('disabled', false);
                             $('.maskedCircle').remove();
                             $('#divScanningProgressBar').css("width", "100%");
                             ///swal('Process completed');
                             /////swal("Process completed.", "", "success");                       
 
                             setTimeout(() => {
-                               /// $('#btnScanningProceed').trigger('click');
-                               ScanningProcess();
+                                /// $('#btnScanningProceed').trigger('click');
+                                ScanningProcess();
                             }, 650);
                         }
                         else {
@@ -1318,33 +1318,27 @@ function FindingSuccessErrorWarnings(result) {
             /// 102 -> Product In Warning,
             /// 103 -> Product In Error,			
             ///alert('productData.length'+productData.length);
-
-            if (CheckAnyErrorInProduct(fullPdtContentFromInDesign)) {
-                productStatus = 103;
-                /// 103 -> Product In Error,									
-                //// alert('Error occurred ');								
-            }
-            else {
-                /// Warnings 
-                ///alert('allProductData-'+allProductData);
-                var allSkus = pdtFromInDesign.split('𝄞');
-                for (var inc = 0; inc < allSkus.length; inc++) {
-                    pdtFromInDesign = allSkus[inc];
+            var allSkus = pdtFromInDesign.split('𝄞');
+            for (var inc = 0; inc < allSkus.length; inc++) {debugger;
+                pdtFromInDesign = allSkus[inc];
+                productErrorPortion ='';
+                if (CheckAnyErrorInProduct(fullPdtContentFromInDesign)) {
+                    productStatus = 103;
+                    /// 103 -> Product In Error,									
+                    //// alert('Error occurred ');	
+                    break;
+                }
+                else {
+                    /// Warnings 
+                    ///alert('allProductData-'+allProductData);
                     var productData = $.grep(allProductData, function (item, index) {
                         return item.Product == pdtFromInDesign;
                     });
 
-                    ///alert('productData-'+productData);
-                    ///
+                    ///alert('productData-'+productData);                   
                     if ((productData != null && productData.length == 0) || (productData == null || productData == undefined)) {
-                        productStatus = 102;	/// 102 -> Product In Warning,
-                        if (allSkus.length == 1) {
-                            productErrorPortion = pdtFromInDesign + ' - Product missing';
-                        }
-                        else {
-                            productErrorPortion = fullPdtContentFromInDesign + ' - Product missing';
-                            break;
-                        }
+                        productStatus = 102;	/// 102 -> Product In Warning,                        
+                            productErrorPortion = fullPdtContentFromInDesign + ' - Product missing';                                            
                     }
                     else {
 
@@ -1364,7 +1358,8 @@ function FindingSuccessErrorWarnings(result) {
                                     ///alert('Product found '+pdtFromInDesign+' | fullPdtContentFromInDesign-'+fullPdtContentFromInDesign);
                                     /// Product found in indesign	
                                     /////GetAllWarningsFromTheIndesignProduct(fullPdtContentFromInDesign, lengthFromAppData, weightFromAppData, pdtFromAppData, rateFromAppData )
-                                    if (CheckAnyWarningInProduct(fullPdtContentFromInDesign, lengthFromAppData, weightFromAppData, pdtFromAppData, rateFromAppData)) {
+                                    debugger;
+                                    if (CheckAnyWarningInProduct(fullPdtContentFromInDesign, pdtFromInDesign, lengthFromAppData, weightFromAppData, pdtFromAppData, rateFromAppData)) {
                                         ///alert('CheckAnyWarningInProduct calling frm page normal');
                                         productStatus = 102;///Warning with skip
                                         ///alert('fullPdtContentFromInDesign-' + fullPdtContentFromInDesign + 'productStatus-'+productStatus);					
@@ -1389,51 +1384,51 @@ function FindingSuccessErrorWarnings(result) {
                         }///productData loop
 
                         if (allSkus.length > 1 && productStatus == 102) {
-                            break;
+                            ///break;
                         }
-
                     }///else 
-                }/// allSkus loop
+                }/// Else Warnings 
 
-            } /// Else Warnings 
 
-            //// alert('from normal fullPdtContentFromInDesign-' + fullPdtContentFromInDesign + 'productStatus-'+productStatus)
-            if (productStatus == 101) /// 101 -> Product In Success,
-            {
-                ////alert(pdtFromInDesign + 'Product In Success');					
-                if (successReturnValue.length == 0) {
-                    successReturnValue += (isItaNewPageForSucess == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L" + pdtFromInDesign;
+                //// alert('from normal fullPdtContentFromInDesign-' + fullPdtContentFromInDesign + 'productStatus-'+productStatus)
+                if (productStatus == 101) /// 101 -> Product In Success,
+                {
+                    ////alert(pdtFromInDesign + 'Product In Success');					
+                    if (successReturnValue.length == 0) {
+                        successReturnValue += (isItaNewPageForSucess == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L" + pdtFromInDesign;
+                    }
+                    else {
+                        successReturnValue += "R12W" + (isItaNewPageForSucess == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L" + pdtFromInDesign;
+                    }
+                    isItaNewPageForSucess = false;
+                    ////alert('successReturnValue-'+successReturnValue);
                 }
-                else {
-                    successReturnValue += "R12W" + (isItaNewPageForSucess == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdtFromInDesign + "C12L" + pdtFromInDesign;
+                else if (productStatus == 102) //// Product missing from group 	/// 102 -> Product In Warning
+                {
+                    ////alert(fullPdtContentFromInDesign + ' Product In Warning');						
+                    ///var pdt = GetProductFromWarning(fullPdtContentFromInDesign);
+                    if (warningReturnValue.length == 0) {
+                        warningReturnValue += (isItaNewPageForWarning == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + productErrorPortion + "C12L" + pdtFromInDesign;
+                    }
+                    else {
+                        warningReturnValue += "R12W" + (isItaNewPageForWarning == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + productErrorPortion + "C12L" + pdtFromInDesign;
+                    }
+                    isItaNewPageForWarning = false;
                 }
-                isItaNewPageForSucess = false;
-                ////alert('successReturnValue-'+successReturnValue);
-            }
-            else if (productStatus == 102) //// Product missing from group 	/// 102 -> Product In Warning
-            {
-                ////alert(fullPdtContentFromInDesign + ' Product In Warning');						
-                ///var pdt = GetProductFromWarning(fullPdtContentFromInDesign);
-                if (warningReturnValue.length == 0) {
-                    warningReturnValue += (isItaNewPageForWarning == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + productErrorPortion + "C12L" + pdtFromInDesign;
+                else if (productStatus == 103) /// 101 -> Product In Error,
+                {
+                    //var pdt =	GetProductFromError(fullPdtContentFromInDesign);
+                    pdt = fullPdtContentFromInDesign;
+                    if (errorReturnValue.length == 0) {
+                        errorReturnValue += (isItaNewPageForError == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdt + "C12L" + pdtFromInDesign;
+                    }
+                    else {
+                        errorReturnValue += "R12W" + (isItaNewPageForError == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdt + "C12L" + pdtFromInDesign;
+                    }
+                    isItaNewPageForError = false;
                 }
-                else {
-                    warningReturnValue += "R12W" + (isItaNewPageForWarning == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + productErrorPortion + "C12L" + pdtFromInDesign;
-                }
-                isItaNewPageForWarning = false;
-            }
-            else if (productStatus == 103) /// 101 -> Product In Error,
-            {
-                //var pdt =	GetProductFromError(fullPdtContentFromInDesign);
-                pdt = fullPdtContentFromInDesign;
-                if (errorReturnValue.length == 0) {
-                    errorReturnValue += (isItaNewPageForError == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdt + "C12L" + pdtFromInDesign;
-                }
-                else {
-                    errorReturnValue += "R12W" + (isItaNewPageForError == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdt + "C12L" + pdtFromInDesign;
-                }
-                isItaNewPageForError = false;
-            }
+
+            } /// allSkus loop
         }
         catch (er) {
             alert('Errror from FindingSuccessErrorWarnings ' + row + ' errr-' + er);
@@ -1455,15 +1450,15 @@ function ListingAllSuccessErrorWarnings(newResult) {
         //// alert('warningValues'+warningValues);
         //// alert('successValues'+successValues);
         ///swal(successValues);
-       /// $('#btnScanningProceed').prop('disabled', false);
+        /// $('#btnScanningProceed').prop('disabled', false);
         $('.maskedCircle').remove();
         $('#divScanningProgressBar').css("width", "100%");
         ///swal('Process completed');
         /////swal("Process completed.", "", "success");                       
 
         setTimeout(() => {
-           /// $('#btnScanningProceed').trigger('click');
-           ScanningProcess();
+            /// $('#btnScanningProceed').trigger('click');
+            ScanningProcess();
         }, 650);
     }
     else {
@@ -1656,7 +1651,9 @@ function CheckAnyErrorInProduct(fullPdtContentFromInDesign) {
 }
 
 //////////////////////////////////////
-function CheckAnyWarningInProduct(fullPdtContentFromInDesign, lengthFromAppData, weightFromAppData, pdtFromAppData, rateFromAppData) {
+function CheckAnyWarningInProduct(fullPdtContentFromInDesign, pdtFromInDesign, lengthFromAppData, weightFromAppData, pdtFromAppData, rateFromAppData) {
+
+    debugger;
     /* 
     ///alert('CheckAnyWarningInProduct');
        if(fullPdtContentFromInDesign.indexOf('RC6979-07') == -1 )
@@ -1664,7 +1661,7 @@ function CheckAnyWarningInProduct(fullPdtContentFromInDesign, lengthFromAppData,
            ///return;
        }	
        */
-    productErrorPortion = fullPdtContentFromInDesign;
+    productErrorPortion = '';
     if (fullPdtContentFromInDesign == ''
         || fullPdtContentFromInDesign == null
         || fullPdtContentFromInDesign == undefined) {
@@ -1695,13 +1692,13 @@ function CheckAnyWarningInProduct(fullPdtContentFromInDesign, lengthFromAppData,
         }
 
         if (hasRightFound) {
-            if (content.indexOf('ln') > -1) {
+            if (content.indexOf('ln') > -1 && content.indexOf(pdtFromInDesign) > -1) {
                 lengthPortion = content;
             }
-            else if (content.indexOf('wt') > -1) {
+            else if (content.indexOf('wt') > -1 && content.indexOf(pdtFromInDesign) > -1) {
                 weightPortion = content;
             }
-            else if (content.indexOf('pr') > -1) {
+            else if (content.indexOf('pr') > -1 && content.indexOf(pdtFromInDesign) > -1) {
                 pricePortion = content;
             }
 
@@ -1714,23 +1711,38 @@ function CheckAnyWarningInProduct(fullPdtContentFromInDesign, lengthFromAppData,
             content += fullPdtContentFromInDesign[inc];
         }
     }
-
+    debugger;
     ///alert('lengthPortion-'+lengthPortion+' |weightPortion- '+weightPortion+' |pricePortion- '+pricePortion+'lengthFromAppData-'+lengthFromAppData+' |weightFromAppData-'+weightFromAppData+' | rateFromAppData-'+rateFromAppData);
     if (lengthPortion.length > 0 && (lengthFromAppData == '' || lengthFromAppData == null || lengthFromAppData == undefined)) {
         ///alert('lengthPortion-'+lengthPortion+' | lengthFromAppData-'+lengthFromAppData);
-        productErrorPortion = '[' + lengthPortion + '] - Length missing';
-        return true;
+        productErrorPortion += '[' + lengthPortion + '] - Length missing';
+        // return true;
     }
-    else if (weightPortion.length > 0 && (weightFromAppData == '' || weightFromAppData == null || weightFromAppData == undefined)) {
+    if (weightPortion.length > 0 && (weightFromAppData == '' || weightFromAppData == null || weightFromAppData == undefined)) {
         ///alert('weightPortion-'+weightPortion+' | weightFromAppData-'+weightFromAppData);
         ///alert('ln missing'+subMatch);
-        productErrorPortion = '[' + weightPortion + '] - Weight missing';
-        return true;
+        if (productErrorPortion.length > 0) {
+            productErrorPortion += ', Weight missing';
+        }
+        else {
+            productErrorPortion += '[' + weightPortion + '] - Weight missing';
+        }
+
+        // return true;
     }
-    else if (pricePortion.length > 0 && (rateFromAppData == '' || rateFromAppData == null || rateFromAppData == undefined)) {
+    if (pricePortion.length > 0 && (rateFromAppData == '' || rateFromAppData == null || rateFromAppData == undefined)) {
         ///alert('pricePortion-'+pricePortion+' | rateFromAppData-'+rateFromAppData);
         ///alert('wt missing-'+subMatch);
-        productErrorPortion = '[' + pricePortion + '] - Price Missing';
+        if (productErrorPortion.length > 0) {
+            productErrorPortion += ', Price missing';
+        }
+        else {
+            productErrorPortion += '[' + pricePortion + '] - Price Missing';
+        }
+        //return true;
+    }
+
+    if (productErrorPortion != '' && productErrorPortion.length > 0) {
         return true;
     }
 

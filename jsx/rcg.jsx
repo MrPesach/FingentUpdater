@@ -1124,8 +1124,11 @@ function GetProductFirstPart(fullPdtContentFromInDesign) {
 /////---------------------------------------------------------------------------------------------------
 
 function UpdateProductDetailsIntheIndesignFile(productData) {
-	try {
-		///alert('productData-'+productData);
+	try {debugger;
+		///alert('productData-'+productData.length);
+
+		
+		///alert('productDataNew-'+productDataNew.length);
 		strProducts = '';
 		for (var t = 0; t < productData.length; t++) {
 			if (strProducts.length > 0) {
@@ -1381,13 +1384,7 @@ function UpdateSKUDetailsToIndesign(tfNormal, productData, pageName) {
 				if (!CheckSKUExistsInIndexFile(stringReturnValue, productFirstPart)) {
 					stringReturnValue += "R12W" + productFirstPart + 'C12L' + pageName;
 				}
-				/*	
-					if(stringReturnValue.indexOf(productFirstPart) == -1)
-					{
-						stringReturnValue += "R12W" + productFirstPart + 'C12L' + pageName;
-						///alert('I-> '+stringReturnValue);
-					}
-				*/
+				
 				continue;
 			}
 			else if (strProducts.indexOf(pdtFromInDesign) == -1) {
@@ -1415,7 +1412,7 @@ function UpdateSKUDetailsToIndesign(tfNormal, productData, pageName) {
 							/////GetAllWarningsFromTheIndesignProduct(fullPdtContentFromInDesign, lengthFromAppData, weightFromAppData, pdtFromAppData, rateFromAppData )
 							if (CheckAnyWarningInProduct(fullPdtContentFromInDesign, lengthFromAppData, weightFromAppData, pdtFromAppData, rateFromAppData)) {
 								///alert('Warning in update '+pdtFromInDesign);;
-								productStatus = 102;///Warning with skip	
+								productStatus = 102;///Warning	
 							}
 
 
