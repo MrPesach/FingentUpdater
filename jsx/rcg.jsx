@@ -509,85 +509,101 @@ function CheckAnyErrorInProduct(fullPdtContentFromInDesign, lengthFromAppData, w
 }
 
 //////////////////////////////////////
-function CheckAnyWarningInProduct(fullPdtContentFromInDesign, lengthFromAppData, weightFromAppData, pdtFromAppData, rateFromAppData) {
-	/* 
-	///alert('CheckAnyWarningInProduct');
-	   if(fullPdtContentFromInDesign.indexOf('RC6979-07') == -1 )
-	   {
-		   ///return;
-	   }	
-	   */
-	productErrorPortion = fullPdtContentFromInDesign;
-	if (fullPdtContentFromInDesign == ''
-		|| fullPdtContentFromInDesign == null
-		|| fullPdtContentFromInDesign == undefined) {
-		return true;
-	}
+//////////////////////////////////////
+function CheckAnyWarningInProduct(fullPdtContentFromInDesign, pdtFromInDesign, lengthFromAppData, weightFromAppData, pdtFromAppData, rateFromAppData) {    
+    /* 
+    ///alert('CheckAnyWarningInProduct');
+       if(fullPdtContentFromInDesign.indexOf('RC6979-07') == -1 )
+       {
+           ///return;
+       }	
+       */
+    productErrorPortion = '';
+    if (fullPdtContentFromInDesign == ''
+        || fullPdtContentFromInDesign == null
+        || fullPdtContentFromInDesign == undefined) {
+        return true;
+    }
 
-	var lengthPortion = '';
-	var weightPortion = '';
-	var pricePortion = '';
-	var content = '';
-	var hasLeftFound = false;
-	var hasRightFound = false;
-	///alert('start scanning '+fullPdtContentFromInDesign);
-	for (var inc = 0; inc < fullPdtContentFromInDesign.length; inc++) {
-		///alert(fullPdtContentFromInDesign[inc]);
+    var lengthPortion = '';
+    var weightPortion = '';
+    var pricePortion = '';
+    var content = '';
+    var hasLeftFound = false;
+    var hasRightFound = false;
+    ///alert('start scanning '+fullPdtContentFromInDesign);
+    for (var inc = 0; inc < fullPdtContentFromInDesign.length; inc++) {
+        ///alert(fullPdtContentFromInDesign[inc]);
 
-		if (fullPdtContentFromInDesign[inc] == '[') {
-			///alert('[ found content-'+ content);
-			hasLeftFound = true;
-			content = '';
-			continue;
-		}
+        if (fullPdtContentFromInDesign[inc] == '[') {
+            ///alert('[ found content-'+ content);
+            hasLeftFound = true;
+            content = '';
+            continue;
+        }
 
-		if (fullPdtContentFromInDesign[inc] == ']') {
-			///alert('] found content-'+ content);
-			hasRightFound = true;
-			hasLeftFound = false;
-		}
+        if (fullPdtContentFromInDesign[inc] == ']') {
+            ///alert('] found content-'+ content);
+            hasRightFound = true;
+            hasLeftFound = false;
+        }
 
-		if (hasRightFound) {
-			if (content.indexOf('ln') > -1) {
-				lengthPortion = content;
-			}
-			else if (content.indexOf('wt') > -1) {
-				weightPortion = content;
-			}
-			else if (content.indexOf('pr') > -1) {
-				pricePortion = content;
-			}
+        if (hasRightFound) {
+            if (content.indexOf('ln') > -1 && content.indexOf(pdtFromInDesign) > -1) {
+                lengthPortion = content;
+            }
+            else if (content.indexOf('wt') > -1 && content.indexOf(pdtFromInDesign) > -1) {
+                weightPortion = content;
+            }
+            else if (content.indexOf('pr') > -1 && content.indexOf(pdtFromInDesign) > -1) {
+                pricePortion = content;
+            }
 
-			hasLeftFound = false;
-			hasRightFound = false;
-			content = '';
-		}
+            hasLeftFound = false;
+            hasRightFound = false;
+            content = '';
+        }
 
-		if (hasLeftFound) {
-			content += fullPdtContentFromInDesign[inc];
-		}
-	}
+        if (hasLeftFound) {
+            content += fullPdtContentFromInDesign[inc];
+        }
+    }
+    
+    ///alert('lengthPortion-'+lengthPortion+' |weightPortion- '+weightPortion+' |pricePortion- '+pricePortion+'lengthFromAppData-'+lengthFromAppData+' |weightFromAppData-'+weightFromAppData+' | rateFromAppData-'+rateFromAppData);
+    if (lengthPortion.length > 0 && (lengthFromAppData == '' || lengthFromAppData == null || lengthFromAppData == undefined)) {
+        ///alert('lengthPortion-'+lengthPortion+' | lengthFromAppData-'+lengthFromAppData);
+        productErrorPortion += '[' + lengthPortion + '] - Length missing';
+        // return true;
+    }
+    if (weightPortion.length > 0 && (weightFromAppData == '' || weightFromAppData == null || weightFromAppData == undefined)) {
+        ///alert('weightPortion-'+weightPortion+' | weightFromAppData-'+weightFromAppData);
+        ///alert('ln missing'+subMatch);
+        if (productErrorPortion.length > 0) {
+            productErrorPortion += ', Weight missing';
+        }
+        else {
+            productErrorPortion += '[' + weightPortion + '] - Weight missing';
+        }
 
-	///alert('lengthPortion-'+lengthPortion+' |weightPortion- '+weightPortion+' |pricePortion- '+pricePortion+'lengthFromAppData-'+lengthFromAppData+' |weightFromAppData-'+weightFromAppData+' | rateFromAppData-'+rateFromAppData);
-	if (lengthPortion.length > 0 && (lengthFromAppData == '' || lengthFromAppData == null || lengthFromAppData == undefined)) {
-		///alert('lengthPortion-'+lengthPortion+' | lengthFromAppData-'+lengthFromAppData);
-		productErrorPortion = '[' + lengthPortion + '] - Length missing';
-		return true;
-	}
-	else if (weightPortion.length > 0 && (weightFromAppData == '' || weightFromAppData == null || weightFromAppData == undefined)) {
-		///alert('weightPortion-'+weightPortion+' | weightFromAppData-'+weightFromAppData);
-		///alert('ln missing'+subMatch);
-		productErrorPortion = '[' + weightPortion + '] - Weight missing';
-		return true;
-	}
-	else if (pricePortion.length > 0 && (rateFromAppData == '' || rateFromAppData == null || rateFromAppData == undefined)) {
-		///alert('pricePortion-'+pricePortion+' | rateFromAppData-'+rateFromAppData);
-		///alert('wt missing-'+subMatch);
-		productErrorPortion = '[' + pricePortion + '] - Price Missing';
-		return true;
-	}
+        // return true;
+    }
+    if (pricePortion.length > 0 && (rateFromAppData == '' || rateFromAppData == null || rateFromAppData == undefined)) {
+        ///alert('pricePortion-'+pricePortion+' | rateFromAppData-'+rateFromAppData);
+        ///alert('wt missing-'+subMatch);
+        if (productErrorPortion.length > 0) {
+            productErrorPortion += ', Price missing';
+        }
+        else {
+            productErrorPortion += '[' + pricePortion + '] - Price Missing';
+        }
+        //return true;
+    }
 
-	return false;
+    if (productErrorPortion != '' && productErrorPortion.length > 0) {
+        return true;
+    }
+
+    return false;
 }
 
 function GetAllWarningsFromTheIndesignProduct(fullPdtContentFromInDesign, lengthFromAppData, weightFromAppData, pdtFromAppData, rateFromAppData) {
@@ -1124,10 +1140,8 @@ function GetProductFirstPart(fullPdtContentFromInDesign) {
 /////---------------------------------------------------------------------------------------------------
 
 function UpdateProductDetailsIntheIndesignFile(productData) {
-	try {debugger;
-		///alert('productData-'+productData.length);
-
-		
+	try {		
+		///alert('productData-'+productData.length);	
 		///alert('productDataNew-'+productDataNew.length);
 		strProducts = '';
 		for (var t = 0; t < productData.length; t++) {
@@ -2092,10 +2106,10 @@ function GetContentFromIndesignNewMethod(tfNormal, pageName, mode) {
 			/*	if(pageName != '11')
 				{
 					continue;
-				}
+				}*/
 			if (fullPdtContentFromInDesign.indexOf('WDB018-07') == -1) {
 				continue;
-			}*/
+			}
 
 			//blockOtherSKU- Get
 			var leftIndex = fullPdtContentFromInDesign.indexOf('[');
