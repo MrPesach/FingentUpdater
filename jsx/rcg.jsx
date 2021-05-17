@@ -1036,7 +1036,7 @@ function GetProductFirstPart(fullPdtContentFromInDesign) {
 		{
 			return '';
 		}
-		*/
+		*/		
 		//// alert('Capture sku');
 		//// ER11339 ER11339|wt]g [ER11339|pr]
 		var regex = /\[([^\][]*)]/g;
@@ -1046,19 +1046,19 @@ function GetProductFirstPart(fullPdtContentFromInDesign) {
 		}
 
 		for (var inc = 0; inc < results.length; inc++) {
-			var item = results[inc];
+			var item = results[inc];			
 			if (item.indexOf('|') > -1 || item.indexOf('-') > -1) {
-				///alert('item-'+item);
+					///alert('item-'+item);
 				for (var j = 0; j < item.length; j++) {
 					if (item[j] == '|' || item[j] == '-') {
 						inc = results.length;
 						break;
 					}
-					else {
+					else {					
 						firstPart += item[j];
 					}
 
-					///alert('firstPart-'+firstPart);
+						///alert('firstPart-'+firstPart);
 				}
 			}
 		}
@@ -1075,7 +1075,7 @@ function GetProductFirstPart(fullPdtContentFromInDesign) {
 				if (splits.length > 0) {
 					firstPart = splits[0].replace(/^\s+|\s+$/g, '');
 					if (firstPart.indexOf(' ') > -1) {
-						firstPart.split(' ')[0];
+						firstPart.split(' ')[0];						
 					}
 				}
 			}
@@ -1088,7 +1088,7 @@ function GetProductFirstPart(fullPdtContentFromInDesign) {
 		if (firstPart == '') {
 			var splits = fullPdtContentFromInDesign.split(' ');
 			if (splits.length > 0) {
-				firstPart = splits[0];
+				firstPart = splits[0];				
 			}
 
 			if (firstPart.indexOf('-') > -1 || firstPart.indexOf('[') > -1 || firstPart.indexOf(']') > -1 || firstPart.indexOf('|') > -1) {
@@ -1114,7 +1114,7 @@ function GetProductFirstPart(fullPdtContentFromInDesign) {
 						}
 					}
 				}
-
+				
 				firstPart = firstPartText;
 			}
 		}
@@ -1124,13 +1124,13 @@ function GetProductFirstPart(fullPdtContentFromInDesign) {
 		///	ER11339ER11339|wt]g [ER11339|pr]
 
 		if (firstPart == '') {
-			firstPart = fullPdtContentFromInDesign;
+			firstPart = fullPdtContentFromInDesign;			
 		}
 	}
 	catch (er) {
 		///alert('GetProductFirstPart-'+er);
 	}
-	//alert('firstPart-'+firstPart);
+	//alert('firstPart-'+firstPart);	
 	return firstPart;
 }
 
@@ -1277,11 +1277,11 @@ function UpdateSKUDetailsToIndesign(tfNormal, productData, pageName) {
 				continue;
 			}
 		
-			if(fullPdtContentFromInDesign.indexOf('WBOX024-18') == -1 )
+			if(fullPdtContentFromInDesign.indexOf('Adjustable') == -1 )
 			{
 				continue;
 			}
-		alert('fullPdtContentFromInDesign-'+fullPdtContentFromInDesign);
+		///alert('fullPdtContentFromInDesign-'+fullPdtContentFromInDesign);
 		*/
 			/// blockOtherSKU-Update///
 			var dollarIndex = fullPdtContentFromInDesign.indexOf('$');
@@ -1855,7 +1855,7 @@ function ResetAllValues() {
 
 function GetProductDetailsFromIndesignFileNewMethod() {
 	try {
-	////	alert('GetProductDetailsFromIndesignFileNewMethod');
+		////	alert('GetProductDetailsFromIndesignFileNewMethod');
 		var myDoc = '';
 		try {
 			myDoc = app.activeDocument;
@@ -1943,18 +1943,17 @@ function GetContentFromIndesignNewMethod(tfNormal, pageName, mode) {
 				continue;
 			}
 
-			/*	if(pageName != '11')
+			/*	if(pageName != '263')
 				{
 					continue;
 				}
 				////alert('->' + fullPdtContentFromInDesign + ' |Length->' + fullPdtContentFromInDesign.length)
-			
-			if (fullPdtContentFromInDesign.indexOf('DB023') == -1) {
-				continue;
+		
+			if (fullPdtContentFromInDesign.indexOf('SING025-10') == -1) {
+				///continue;
 			}
 */
-
-
+			///alert('fullPdtContentFromInDesign-' + fullPdtContentFromInDesign);
 			//blockOtherSKU- Get
 			var leftIndex = fullPdtContentFromInDesign.indexOf('[');
 			var rightIndex = fullPdtContentFromInDesign.indexOf(']');
@@ -2176,6 +2175,10 @@ function UpdateSKUDetailsToIndesignNewMethod(tfNormal, productData, pageName) {
 			var priceIndex = fullPdtContentFromInDesign.indexOf('|pr');
 			var dollarIndex = fullPdtContentFromInDesign.indexOf('$');
 			var squareIndex = fullPdtContentFromInDesign.indexOf('[');
+			if (leftIndex == rightIndex && leftIndex == -1)			
+			{
+				continue;				
+			}
 
 			/////alert('pdtFromInDesign-'+pdtFromInDesign);
 			if (dollarIndex == 0 && squareIndex == 1 && fullPdtContentFromInDesign.indexOf('pr')) {
@@ -2350,23 +2353,23 @@ function GenerateNewCaptionForWarnedProductNewMethod(fullPdtContentFromInDesign,
 	///alert('newTextForIndesign-'+newTextForIndesign);
 	return newTextForIndesign;
 }
-         
+
 function GenerateNewCaptionForSuccessProductNewMethod(fullPdtContentFromInDesign, pdtFromAppData, weightFromAppData, rateFromAppData, lengthFromAppData, productData) {
 	var newTextForIndesign = '';
 	try {
 		////alert('In GenerateNewCaptionForSuccessProductNewMethod');
 		var lengthIndex = fullPdtContentFromInDesign.indexOf('|ln');
-			var weightIndex = fullPdtContentFromInDesign.indexOf('|wt');
-			var priceIndex = fullPdtContentFromInDesign.indexOf('|pr');
+		var weightIndex = fullPdtContentFromInDesign.indexOf('|wt');
+		var priceIndex = fullPdtContentFromInDesign.indexOf('|pr');
 		var pdtFromInDesign = '';
 		var regex = /\[([^\][]*)]/g;
 		var results = [], m;
 		var locPdtFromInDesign = '';
 		var PdtFromInDesignArray = [];
-		var stringTextForPdtFromInDesign='';
+		var stringTextForPdtFromInDesign = '';
 		while (m = regex.exec(fullPdtContentFromInDesign)) {
 			var item = m[1];
-			results.push(item);			
+			results.push(item);
 			if (item.indexOf('|ln') > -1) {
 				locPdtFromInDesign = item.split('|ln')[0];
 			}
@@ -2378,10 +2381,10 @@ function GenerateNewCaptionForSuccessProductNewMethod(fullPdtContentFromInDesign
 			}
 
 			if (stringTextForPdtFromInDesign.indexOf(locPdtFromInDesign) == -1) {
-			////alert('pushed->'+locPdtFromInDesign);
+				////alert('pushed->'+locPdtFromInDesign);
 				PdtFromInDesignArray.push(locPdtFromInDesign);
 				stringTextForPdtFromInDesign += locPdtFromInDesign;
-			}			
+			}
 		}
 
 		var tempProductData = [];
@@ -2417,7 +2420,7 @@ function GenerateNewCaptionForSuccessProductNewMethod(fullPdtContentFromInDesign
 				for (var g = 0; g < tempProductData.length; g++) {
 					try {
 						///alert('tempProductData[g].PdtFromInDesign-'+ tempProductData[g].PdtFromInDesign+' | pdtFromInDesign-'+pdtFromInDesign);
-						if (tempProductData[g].PdtFromInDesign == pdtFromInDesign) {							
+						if (tempProductData[g].PdtFromInDesign == pdtFromInDesign) {
 							lengthFromAppData = tempProductData[g].Length;
 							weightFromAppData = tempProductData[g].Weight;
 							rateFromAppData = tempProductData[g].Price;
