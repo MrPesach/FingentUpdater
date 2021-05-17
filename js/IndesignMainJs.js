@@ -982,9 +982,9 @@ function GetProductDetails() {
 
 ////////////// JSX CALLS  //////////////
 function UpdateProductDetailsIntheIndesignFile() {
-    //// alert('wholeProductFromInDesign-'+wholeProductFromInDesign.length);
+     alert('wholeProductFromInDesign-'+wholeProductFromInDesign.length);
     var data = JSON.stringify(wholeProductFromInDesign);    
-    var fnAndArgs = 'UpdateProductDetailsIntheIndesignFile(' + data + ')';
+    var fnAndArgs = 'UpdateProductDetailsIntheIndesignFileNewMethod(' + data + ')';
     ///swal(fnAndArgs);
     /*
     CSLibrary.addEventListener("jsxLog", function(event){ 
@@ -1231,6 +1231,27 @@ function FindingSuccessErrorWarnings(result) {
             {
                 fullPdtContentFromInDesign = columns[2];
             }
+/*
+            for (var j = 0; j < 5; j++) {
+				try {
+					if (j == 0) {
+						if (fullPdtContentFromInDesign[j] == '' || fullPdtContentFromInDesign[j] == "" || fullPdtContentFromInDesign[j] == null) {
+							alert('fullPdtContentFromInDesign empty');
+						}
+						else {
+							alert(fullPdtContentFromInDesign[j] + ' not empty');
+						}
+					}
+
+					alert('j->' + j + ' Indesign->' + fullPdtContentFromInDesign[j]);
+				}
+				catch (er) {
+					alert('Aeesh-' + er)
+					j = 220;
+				}
+			}
+            */
+
             /*  alert('pdt-' + fullPdtContentFromInDesign + ' | pageName-' + pageName + ' | isItANewPage-' + isItANewPage);
                     if(pageName != '11')
                       {
@@ -1455,7 +1476,7 @@ function FindingSuccessErrorWarnings(result) {
                 });
                 if (data != null && data.length > 0) {
                     wholeProductFromInDesign.push(
-                        { "Product": data[0].Product, "Length": data[0].Length, "Weight": data[0].Weight, "Price": data[0].Price, "ProductStatus": productStatus, 'FullPdtContentFromInDesign': fullPdtContentFromInDesign }
+                        { "Product": data[0].Product, "Length": data[0].Length, "Weight": data[0].Weight, "Price": data[0].Price, "ProductStatus": productStatus, 'FullPdtContentFromInDesign': fullPdtContentFromInDesign, 'PdtFromInDesign': pdtFromInDesign }
                     );
                 }
 
