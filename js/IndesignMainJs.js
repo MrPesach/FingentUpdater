@@ -1235,9 +1235,9 @@ function FindingSuccessErrorWarnings(result) {
                                  {
                                      continue;
                                  }
-            if (fullPdtContentFromInDesign.indexOf('DB023') == -1) {
+            if (fullPdtContentFromInDesign.indexOf('RC6980') == -1) {
                 continue;
-            }*/    
+            }*/
             if (fullPdtContentFromInDesign == '' || fullPdtContentFromInDesign == null) {
                 continue;
             }
@@ -1356,7 +1356,7 @@ function FindingSuccessErrorWarnings(result) {
                 if (CheckAnyErrorInProduct(fullPdtContentFromInDesign)) {
                     productStatus = 103;
                     /// 103 -> Product In Error,									
-                    ////alert('Error occurred ');
+                    ////alert('Error occurred in get ');
                     pdt = fullPdtContentFromInDesign;
                     if (errorReturnValue.length == 0) {
                         errorReturnValue += (isItaNewPageForError == true ? "1" : "0") + 'C12L' + pageName + 'C12L' + pdt + "C12L" + pdtFromInDesign;
@@ -1466,7 +1466,7 @@ function FindingSuccessErrorWarnings(result) {
                     return item.Product == pdtFromInDesign;
                 });
                 if (data != null && data.length > 0) {
-                    ////alert('pdtFromInDesign-' + pdtFromInDesign + 'found');
+                  ////  alert('pdtFromInDesign-' + pdtFromInDesign + 'pushed to wholeProductFromInDesign productStatus-'+productStatus);
                     wholeProductFromInDesign.push(
                         { "Product": data[0].Product, "Length": data[0].Length, "Weight": data[0].Weight, "Price": data[0].Price, "ProductStatus": productStatus, 'FullPdtContentFromInDesign': fullPdtContentFromInDesign, 'PdtFromInDesign': pdtFromInDesign }
                     );
