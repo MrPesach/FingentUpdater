@@ -1521,7 +1521,7 @@ function ListingAllSuccessErrorWarnings(newResult) {
 /////////////////////////////////////////////////////////////////////////////////////////
 
 function CheckAnyErrorInProduct(fullPdtContentFromInDesign) {
-    
+
     ////  alert('CheckAnyErrorInProduct');
     /*  if(fullPdtContentFromInDesign.indexOf('RW020-18') == -1 )
       {
@@ -1674,44 +1674,54 @@ function CheckAnyErrorInProduct(fullPdtContentFromInDesign) {
     var lengthOccu = OccurrencesOfString(fullPdtContentFromInDesign, '|ln', false);
     var weightOccu = OccurrencesOfString(fullPdtContentFromInDesign, '|wt', false);
     var priceOccu = OccurrencesOfString(fullPdtContentFromInDesign, '|pr', false);
+
+    var uniqueSkus = [];
+    var regex = /\[([^\][]*)]/g;
+    var results = [], m;
+    while (m = regex.exec(fullPdtContentFromInDesign)) {
+        results.push(m[1]);
+    }
+
+    for (var inc = 0; inc < results.length; inc++) {
+        var itemWithoutBracket = results[inc];
+        if (itemWithoutBracket.indexOf('|ln') > -1) {
+            var lengthSplits = itemWithoutBracket.split('|ln');
+            if (lengthSplits.length > 0) {
+                if ($.inArray(lengthSplits[0], uniqueSkus) == -1) {
+                    uniqueSkus.push(lengthSplits[0]);
+                }
+            }
+        }
+        else if (itemWithoutBracket.indexOf('|wt') > -1) {
+            var weightSplits = itemWithoutBracket.split('|wt');
+            if (weightSplits.length > 0) {
+                if ($.inArray(weightSplits[0], uniqueSkus) == -1) {
+                    uniqueSkus.push(weightSplits[0]);
+                }
+            }
+        }
+        else if (itemWithoutBracket.indexOf('|pr') > -1) {
+            var priceSplits = itemWithoutBracket.split('|pr');
+            if (priceSplits.length > 0) {
+                if ($.inArray(priceSplits[0], uniqueSkus) == -1) {
+                    uniqueSkus.push(priceSplits[0]);
+                }
+            }
+        }
+    }
+    
+    var occuArray = [];
+    occuArray.push(lengthOccu);
+    occuArray.push(weightOccu);
+    occuArray.push(priceOccu);
+
     if (lengthOccu > 1 || weightOccu > 1 || priceOccu > 1) {
+        var maxOccur = Math.max.apply(Math, occuArray);
+        if (uniqueSkus.length > maxOccur) {
+            return true;
+        }
     }
     else {
-        var uniqueSkus = [];
-        var regex = /\[([^\][]*)]/g;
-        var results = [], m;
-        while (m = regex.exec(fullPdtContentFromInDesign)) {
-            results.push(m[1]);
-        }
-
-        for (var inc = 0; inc < results.length; inc++) {
-            var itemWithoutBracket = results[inc];
-            if (itemWithoutBracket.indexOf('|ln') > -1) {
-                var lengthSplits = itemWithoutBracket.split('|ln');
-                if (lengthSplits.length > 0) {
-                    if ($.inArray(lengthSplits[0], uniqueSkus) == -1) {
-                        uniqueSkus.push(lengthSplits[0]);
-                    }
-                }
-            }
-            else if (itemWithoutBracket.indexOf('|wt') > -1) {
-                var weightSplits = itemWithoutBracket.split('|wt');
-                if (weightSplits.length > 0) {
-                    if ($.inArray(weightSplits[0], uniqueSkus) == -1) {
-                        uniqueSkus.push(weightSplits[0]);
-                    }
-                }
-            }
-            else if (itemWithoutBracket.indexOf('|pr') > -1) {
-                var priceSplits = itemWithoutBracket.split('|pr');
-                if (priceSplits.length > 0) {
-                    if ($.inArray(priceSplits[0], uniqueSkus) == -1) {
-                        uniqueSkus.push(priceSplits[0]);
-                    }
-                }
-            }
-        }
-
         if (uniqueSkus.length > 1) {
             return true;
         }
