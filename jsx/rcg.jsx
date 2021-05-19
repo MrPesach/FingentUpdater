@@ -1971,7 +1971,7 @@ function GetContentFromIndesignNewMethod(tfNormal, pageName, mode) {
 					continue;
 				}
 				////alert('->' + fullPdtContentFromInDesign + ' |Length->' + fullPdtContentFromInDesign.length)				
-			if (fullPdtContentFromInDesign.indexOf('RC6980') == -1) {
+			if (fullPdtContentFromInDesign.indexOf('RC6970') == -1) {
 				continue;
 			}*/
 
@@ -2174,7 +2174,7 @@ function UpdateSKUDetailsToIndesignNewMethod(tfNormal, productData, pageName) {
 				continue;
 			}
 			/*
-			if (fullPdtContentFromInDesign.indexOf('RC6980') == -1) {
+			if (fullPdtContentFromInDesign.indexOf('RC6970') == -1) {
 				continue;
 			}*/
 			var leftIndex = fullPdtContentFromInDesign.indexOf('[');
@@ -2260,7 +2260,8 @@ function UpdateSKUDetailsToIndesignNewMethod(tfNormal, productData, pageName) {
 			////102 -> Product In Warning,
 			else if (productStatus == 102) {
 				///	alert('Called GenerateNewCaptionForWarnedProduct');
-				newTextForIndesign = GenerateNewCaptionForWarnedProductNewMethod(fullPdtContentFromInDesign, pdtFromAppData, weightFromAppData, rateFromAppData, lengthFromAppData, productFirstPart, productData)
+				////newTextForIndesign = GenerateNewCaptionForWarnedProductNewMethod(fullPdtContentFromInDesign, pdtFromAppData, weightFromAppData, rateFromAppData, lengthFromAppData, productData)
+				newTextForIndesign = GenerateNewCaptionForSuccessProductNewMethod(fullPdtContentFromInDesign, pdtFromAppData, weightFromAppData, rateFromAppData, lengthFromAppData, productData)
 			}
 
 			if (productStatus == 101 || productStatus == 102) {
@@ -2287,7 +2288,7 @@ function UpdateSKUDetailsToIndesignNewMethod(tfNormal, productData, pageName) {
 
 
 
-function GenerateNewCaptionForWarnedProductNewMethod(fullPdtContentFromInDesign, pdtFromAppData, weightFromAppData, rateFromAppData, lengthFromAppData, productFirstPart, productData) {
+function GenerateNewCaptionForWarnedProductNewMethod(fullPdtContentFromInDesign, pdtFromAppData, weightFromAppData, rateFromAppData, lengthFromAppData, productData) {
 	var newTextForIndesign = '';
 	try {
 		var pdtFromInDesign = '';
